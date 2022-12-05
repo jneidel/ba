@@ -1,0 +1,28 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ make-if-changed
+make file if it has changed
+EOF
+  exit
+fi
+
+TEX_FILE=thesis.tex
+SUM_FILE=${TEX_FILE%.*}.sum
+
+command -v md5sum >/dev/null || { echo "md5sum is not installed" 1>&2; exit 127; }
+
+create_sum() {
+  md5sum $TEX_FILE >$SUM_FILE
+}
+check_sum_matches() {
+  md5sum -c $SUM_FILE >/dev/null 2>&1
+}
+
+if ! check_sum_matches; then
+  create_sum
+  make
+else
+  echo "No changes found"
+fi
