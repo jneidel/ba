@@ -1,16 +1,18 @@
-all: thesis
+all: compile
 
-thesis: thesis.tex
-	pdflatex thesis
+compile: thesis.tex
+	pdflatex thesis && cp thesis.pdf /tmp/thesis.pdf
 	# biber thesis
 	# pdflatex thesis
 bib:
-	biber thesis
+	ls bibliography.bib | entr -rp biber thesis
 
-watch: thesis.tex
-	ls thesis.tex | entr -crp ./make-if-changed
-pdf: thesis.pdf
-	ls thesis.pdf | entr -r zathura thesis.pdf
+watch: recompile rerender bib
+recompile: thesis.tex
+	ls thesis.tex | entr -rp ./make-if-changed
+rerender: thesis.pdf
+	cp thesis.pdf /tmp/thesis.pdf
+	ls /tmp/thesis.pdf | entr -r zathura /tmp/thesis.pdf
 	# ls thesis.bbl | entr -r zathura thesis.pdf
 
 clean: thesis.aux
