@@ -22,7 +22,7 @@ check_sum_matches() {
 
 if ! check_sum_matches; then
   create_sum
-  make
+  make compile_complete
 else
   echo "No changes found"
 fi
