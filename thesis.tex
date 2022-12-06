@@ -12,6 +12,7 @@ citestyle=authoryear,
 autocite=footnote
 ]{biblatex}
 \addbibresource{bibliography.bib}
+\addbibresource{extra.bib}
 
 \usepackage{graphicx}
 \graphicspath{ {images/} }
@@ -96,7 +97,7 @@ autocite=footnote
 \linebreak[4]
 \linebreak[4]
 \linebreak[4]
-\textit{\large Titel der Abschlussarbeit}
+\textit{\large Entwicklung und Evaluation von Methoden zur Absenkung der Nutzungsschwelle von Kommandozeilen-Interfaces}
 \linebreak[4]
 \linebreak[4]
 \linebreak[4]
@@ -229,7 +230,7 @@ Einflussfaktoren dafür sind:
   \item Applikationen sind nicht für Neulinge konzipiert
 \end{enumerate}
 
-Problemstellung dieser Arbeit soll das zweite der gelisten Probleme sein: Das Zusammentragen und Evaluieren der Faktoren welche Kommandozeilen Applikation für Neulinge zugänglich machen. Oder konkreter als Forschungfrage definiert:
+Problemstellung dieser Arbeit soll das zweite der gelisteten Probleme sein: Das Zusammentragen und Evaluieren der Faktoren welche Kommandozeilen Applikation für Neulinge zugänglich machen. Oder konkreter als Forschungfrage definiert:
 
 \bigbreak
 
@@ -241,44 +242,129 @@ zugänglich zu machen?
 
 \section{Aufbau der Arbeit}
 % [Beschreibung des Aufbaus der Arbeit]
+
+Die Arbeit gliedert sich in folgende drei Hauptteile:
+
+\begin{enumerate}
+  \item \textbf{Erarbeitung von Methoden zur Absenkung der Nutzungsschwelle von Kommandozeilen Interfaces}:
+    \smallbreak
+    In Literaturrecherche werden Methoden zusammengetragen und formuliert.
+    Diese sind - wie im Sinne des Wortes Methode (``Weg zu etwas hin'' laut \cite{duden_methode}) - deskriptiv und beschreiben wie ein gewünschter Effekt zu erzielen sein soll.
+    \begin{enumerate}
+      \item \textbf{Probleme mit Kommandozeilen Interfaces}:
+        \smallbreak
+        Es werden zuerst Probleme, welche die Nutzung von Kommandozeilen Interfaces erschweren erläutert.
+      \item \textbf{Methoden zur Absenkung der Nutzungsschwelle von Kommandozeilen Interfaces}:
+        \smallbreak
+        Methoden werden formuliert und wie diese zuvor geschilderte Probleme adressieren.
+    \end{enumerate}
+
+  \item \textbf{Implementation einer Anwendung auf Basis der erarbeiteten Methoden}:
+    \smallbreak
+    Gesammelte Methoden werden in der Implementation einer App demonstriert.
+    Die App ist überschaubar komplex und adressiert das manuelle Festhalten von Arbeitsstunden.
+    \begin{enumerate}
+      \item \textbf{Anforderungsanalyse}:
+        \smallbreak
+        Zuerst werden die von der App zu erfüllenden Anforderungen erörtert.
+      \item \textbf{Implementation der App unter Berücksichtigung gesammelter Methoden}:
+        \smallbreak
+        Es werden die Anforderungen unter Beachtung ermittelter Methoden implementiert.
+    \end{enumerate}
+
+  \item \textbf{Evaluation der implementierten Anwendung}:
+    \smallbreak
+    Die App wird von mit dem Anwendungsfall vertrauten Kommandozeilen Einsteigern getestet.
+    Und Anhand einer Umfrage evaluiert.
+    \begin{enumerate}
+      \item \textbf{Umfragengestaltung}:
+        \smallbreak
+        Es wird die Umfrage gestaltet.
+      \item \textbf{Auswertung}:
+        \smallbreak
+        Ergebnisse der Umfrage werden ausgewertet.
+    \end{enumerate}
+\end{enumerate}
+
 \chapter{Grundlagen und Definitionen}
 % [Beschreibung des Kontextes der Arbeit mit allen durch die Problemstellung tangierten Bereichen, Methoden, Theorien, Erkenntnissen, Technologien, ... ]
-% \section{Kontext}
-% \subsection{Domain}
-% \subsection{Technologien}
-% \subsection{Methoden und Konzepte}
-% \section{...}
-% \subsection{...}
-% \subsection{...}
-\chapter{Methodologie}
-% [Beschreibung des geplanten Vorgehens(-modells) zur L\"osung der Problemstellung; umfasst u.a.:
+
+% was meint kommandozeile?
+
+% Vergleich zu GUI
+% function-orient vs object-oriented vgl. nielson1993
+
+%%% Methoden
+\chapter{Methoden zur Absenkung der Nutzungsschwelle von Kommandozeilen Interfaces}
+% TODO: intro here
+
+\section{Methodologie}
+% [Beschreibung des geplanten Vorgehens(-modells) zur Lösung der Problemstellung; umfasst u.a.:
+
+Die Artefakte dieses Kapitels sind die folgenden:
+\begin{enumerate}
+  \item Eine Auflistung von Problemen mit Kommandozeilen Interfaces
+  \item Eine Auflistung von Methoden, welche diese Probleme adressieren
+\end{enumerate}
+
+In Literaturrecherche sollen Probleme erschlossen werden, als auch die dafür -
+möglicherweise vielfach - vorliegenden Lösungsansätze. Welche dann, unter Bezug
+auf das Problem, als Methoden formuliert dokumentiert werden.
+\\
+Die Formulierung als Methode soll dabei den Lösungsansatz so beschreiben das
+dieser anwendbar ist. Dies ist u.a. erforderlich da die Methoden im nächsten
+Schritt angewandt werden sollen.
+
+\section{Probleme mit Kommandozeilen Interfaces}
+
+Es folgen, in nicht priorisierter Reihenfolge, Probleme welche die
+Nutzungsschwelle von Kommandozeilen Interfaces erhöhen, d.h. diese weniger
+zugänglich für Neulinge machen.
+\\
+Diese bestmöglich zu adressieren sollte zu einer Absenkung der Nutzungsschwelle
+und damit besser zugänglichen Applikationen führen.
+
+\subsection{Erinnern von Kommandos}
+
+Ein Hauptproblem stellt sich darin das der Nutzer alle - für den Anwendungsfall
+relevanten - Kommandos und Parameter wissen muss um die Schnittstelle nutzen zu
+können \parencite{Raskin_2008}.
+
+\begin{figure}
+  \centering
+  \includegraphics[scale=0.5]{empty-prompt.png}
+  \caption{Ohne Wissen um Kommandos passiert nichts}
+\end{figure}
+
+\section{Gesammelte Methoden}
+
+%%% Bauen
+\chapter{Anforderungsanalyse}
+% [Beschreibung der Erhebung, Granularisierung und Priorisierung der zu Grunde liegenden Anforderungen]
+\section{Konzept}
+\section{Anforderungen}
+% Anforderungserhebung nur durch mich, da App nicht Fokus der Arbeit und ich User bin
+
+\chapter{Implementation der App unter Berücksichtigung gesammelter Methoden}
+\section{Fundament}
+
+Das Fundament der App stellen die zugrundelegenden technologischen Aspekte dar,
+welche nicht oder nur indirekt die Nutzbarkeit, und damit den Fokus der Arbeit
+betreffen.
+% ... get into tech
+
+\section{Anwendung gesammelter Methoden}
+% hier List wie die Methoden angewandt wurden
+
+%%% Umfrage
+\chapter{Umfragengestaltung}
+\section{Methodologie}
 \section{Ergebnisartefakte}
 % [Beschreibung der Ergebnisse / Ergebnistypen, welche Sie im Rahmen der Probleml\"osung generieren / erzielen wollen, z.B. Algorithmus, Prototyp einer Software(komponente), ... ]
-\chapter{Anforderungserhebung und -analyse}
-% [Beschreibung der Erhebung, Granularisierung und Priorisierung der zu Grunde liegenden Anforderungen]
-\section{Nutzer- und Systemanforderungen}
-\subsection{Funktionale Anforderungen}
-\subsubsection{Obligatorisch (MUSS)}
-\subsubsection{Fakultativ (Kann)}
-\subsection{Nicht-funktionale Anforderungen}
-\subsubsection{Obligatorisch (MUSS)}
-\subsubsection{Fakultativ (Kann)}
-\section{...}
-\chapter{Konzeption \& Entwurf}
-% [Beschreibung des Entwurfs auf Basis der Methodologie / der geplanten Vorgehensweise zur Probleml\"osung im Kontext der Anforderungen (i.A. der Art der Arbeit)]
-\section{Prozess}
-\section{Systemarchitektur}
-\section{Softwarearchitektur}
-\section{Schnittstellen}
-\section{Datenmanagement}
-\section{...}
-\chapter{Implementierung}
-% [Beschreibung der Implementierung\footnotemark auf Basis des Entwurfs und der Methodologie / der geplanten Vorgehensweise zur Probleml\"osung im Kontext der Anforderungen. Hier ist Raum f\"ur Listings, wie z.B. das nun Folgende:
-Umfangreicher Quell-Code sollte in den Anhang ausgelagert werden.]
-\chapter{Test}
-% [Beschreibung, wie Sie auf Basis des geplanten Testvorgehens was mit welchen Kriterien und Technologien getestet haben]
-\chapter{Darstellung und Bewertung der Ergebnisse}
-% [Beschreibung der Ergebnisse aus allen voran gegangenen Kapiteln sowie der zuvor generierten Ergebnisartefakte mit Bewertung, wie diese einzuordnen sind]
+
+\chapter{Auswertung}
+
+%%% Finish
 \chapter{Zusammenfassung}
 % [Aggregierte retrograde Kurzbeschreibung der Arbeit]
 \section{Schlussfolgerungen}
@@ -287,6 +373,38 @@ Umfangreicher Quell-Code sollte in den Anhang ausgelagert werden.]
 % [Beschreibung der Ergebnisse einer kritischen Reflektion und Begr\"undung dessen, was die Arbeit nicht zu leisten vermag]
 \section{Ausblick}
 % [Beschreibung und Begr\"undung potenzieller zuk\"unftiger Folgeaktivit\"aten im Zusammenhang mit Ihrer Arbeit (z.B. weitere Anforderungen, Theoriebildung, ... ]
+
+%%% possible modules
+% \section{Kontext}
+% \subsection{Domain}
+% \subsection{Technologien}
+% \subsection{Methoden und Konzepte}
+% \section{...}
+% \subsection{...}
+% \subsection{...}
+% \chapter{Anforderungserhebung und -analyse}
+% \section{Nutzer- und Systemanforderungen}
+% \subsection{Funktionale Anforderungen}
+% \subsubsection{Obligatorisch (MUSS)}
+% \subsubsection{Fakultativ (Kann)}
+% \subsection{Nicht-funktionale Anforderungen}
+% \subsubsection{Obligatorisch (MUSS)}
+% \subsubsection{Fakultativ (Kann)}
+% \section{...}
+% \chapter{Konzeption \& Entwurf}
+% [Beschreibung des Entwurfs auf Basis der Methodologie / der geplanten Vorgehensweise zur Probleml\"osung im Kontext der Anforderungen (i.A. der Art der Arbeit)]
+% \section{Prozess}
+% \section{Systemarchitektur}
+% \section{Softwarearchitektur}
+% \section{Schnittstellen}
+% \section{Datenmanagement}
+% \section{...}
+% \chapter{Implementierung}
+% [Beschreibung der Implementierung\footnotemark auf Basis des Entwurfs und der Methodologie / der geplanten Vorgehensweise zur Probleml\"osung im Kontext der Anforderungen. Hier ist Raum f\"ur Listings, wie z.B. das nun Folgende: Umfangreicher Quell-Code sollte in den Anhang ausgelagert werden.]
+% \chapter{Test}
+% [Beschreibung, wie Sie auf Basis des geplanten Testvorgehens was mit welchen Kriterien und Technologien getestet haben]
+% \chapter{Darstellung und Bewertung der Ergebnisse}
+% [Beschreibung der Ergebnisse aus allen voran gegangenen Kapiteln sowie der zuvor generierten Ergebnisartefakte mit Bewertung, wie diese einzuordnen sind]
 
 % \bibliographystyle{apalike}
 % \bibliographystyle{ksfh_nat} % ein anderer Stil
@@ -311,7 +429,7 @@ title={Quellenverzeichnis}
 
 \begin{itemize}
 \item Achten Sie auf eine neutrale, fachliche Sprache. Keine \glqq{}Ich\grqq{}-Form.
-\item Zitieren Sie zitierf\"ahige und -w\"urdige Quellen (z.B. wissenschaftliche Artikel und Fachb\"ucher; nach M\"oglichkeit keine Blogs und keinesfalls Wikipedia\footnote{Wikipedia selbst empfiehlt, von der Zitation von Wikipedia-Inhalten im akademischen Umfeld Abstand zu nehmen \autocite{wikipedia2019}.}).
+\item Zitieren Sie zitierf\"ahige und -w\"urdige Quellen (z.B. wissenschaftliche Artikel und Fachb\"ucher; nach M\"oglichkeit keine Blogs und keinesfalls Wikipedia.
 \item Zitieren Sie korrekt und homogen.
 \item Verwenden Sie keine Fu{\ss}noten f\"ur die Literaturangaben.
 \item Recherchieren Sie ausf\"uhrlich den Stand der Wissenschaft und Technik.
