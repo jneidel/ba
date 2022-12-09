@@ -1,5 +1,6 @@
 default: once
-once: compile render
+once:
+	make compile && make render
 
 # latex
 compile_tex: thesis.tex

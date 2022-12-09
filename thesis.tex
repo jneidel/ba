@@ -86,6 +86,9 @@ autocite=footnote
   title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
 }
 
+\definecolor{mygrey}{RGB}{28,28,28}
+\newcommand{\codeinline}[1]{\colorbox{mygray}{\csname lstinline\endcsname!#1!}}
+
 \begin{document}
 
 % Titelseite
@@ -181,12 +184,6 @@ Datum
 
 % \footnote{Erg\"anzende Informationen k\"onnen Sie auch in eine Fu"snote auslagern. Hier wird die Fu"snote dazu genutzt, um Ihnen bei Interesse am Thema Zitation vertiefende Quellen (z.B. \autocite{balzert2011} oder \autocite{franck2013}) anzubieten.}
 
-% \begin{figure}
-% \centering
-% \includegraphics{steinlaus.jpg}
-%   \caption{Beispielgrafik: Steinlaus; Bildquelle \autocite{loriot}}
-% \end{figure}
-
 % \begin{table}
 % \caption{\"Ubersicht: Untersuchte Steinl\"ause}
 % \centering
@@ -230,7 +227,7 @@ Einflussfaktoren dafür sind:
   \item Applikationen sind nicht für Neulinge konzipiert
 \end{enumerate}
 
-Problemstellung dieser Arbeit soll das zweite der gelisteten Probleme sein: Das Zusammentragen und Evaluieren der Faktoren welche Kommandozeilen Applikation für Neulinge zugänglich machen. Oder konkreter als Forschungfrage definiert:
+Problemstellung dieser Arbeit soll das zweite der gelisteten Probleme sein: Das Zusammentragen und Evaluieren der Faktoren welche Kommandozeilen Applikation für Neulinge zugänglich machen. Oder konkreter als Forschungsfrage definiert:
 
 \bigbreak
 
@@ -289,7 +286,34 @@ Die Arbeit gliedert sich in folgende drei Hauptteile:
 \chapter{Grundlagen und Definitionen}
 % [Beschreibung des Kontextes der Arbeit mit allen durch die Problemstellung tangierten Bereichen, Methoden, Theorien, Erkenntnissen, Technologien, ... ]
 
-% was meint kommandozeile?
+% TODO: CLI, how did we get here, <-> GUI
+
+% TODO: citation needed, multiple tech definitions
+\textbf{Kommandozeilen Interface}: (Engl. command-line interface) oft auch als \textbf{CLI} abgekürzt
+
+Die Kommandozeile nimmt eine Anfrage, in Form von einer Zeile Text, entgegen und antwortet darauf.
+
+\begin{figure}
+  \centering
+  \includegraphics[scale=0.5]{mullvad-status.png}
+  \caption{Ändern und Überprüfen des VPN Standorts in der Linux Kommandozeile mit dem \codeinline{mullvad} CLI}
+  \label{fig:mullvad-status}
+\end{figure}
+
+Die Kommandozeile existiert in zwei Ausprägungen: dem Betriebssystem CLI, auch als Shell bekannt (siehe die Linux Shell in Abbildung \ref{fig:mullvad-status}) oder der Kommandozeile einer Anwendung (siehe die Node.js Kommandozeile in Abbildung \ref{fig:node-calc}).
+
+\begin{figure}
+  \centering
+  \includegraphics[scale=0.5]{node-calc.png}
+  \caption{Durchführung einer Berechnung in der Node.js Kommandozeile}
+  \label{fig:node-calc}
+\end{figure}
+
+\cite{Spolsky_2001} beschreibt neben der CLI noch zwei weitere Terminal Interfaces welche sich aus diesem entstanden sind:
+\\
+\textbf{Interaktive CLI}: Ein ``question and answer model'' \parencite[42]{Spolsky_2001} der Kommandozeile, wo der Nutzer mittels Fragen, auf die eine Antwort erwartet wird, entlastet wird. Mehr dazu in Kapitel \ref{chap:interactive}.
+\\
+\textbf{Menu-driven CLI}: auch als Ncurses CLI bekannt. Das Menü-basierte CLI ähnelt dem GUI indem
 
 % Vergleich zu GUI
 % function-orient vs object-oriented vgl. nielson1993
@@ -303,13 +327,13 @@ Die Arbeit gliedert sich in folgende drei Hauptteile:
 
 Die Artefakte dieses Kapitels sind die folgenden:
 \begin{enumerate}
-  \item Eine Auflistung von Problemen mit Kommandozeilen Interfaces
+  \item Eine Auflistung von Problemen welche den Umgang mit Kommandozeilen Interfaces erschweren
   \item Eine Auflistung von Methoden, welche diese Probleme adressieren
 \end{enumerate}
 
 In Literaturrecherche sollen Probleme erschlossen werden, als auch die dafür -
 möglicherweise vielfach - vorliegenden Lösungsansätze. Welche dann, unter Bezug
-auf das Problem, als Methoden formuliert dokumentiert werden.
+auf das Problem, als Methoden formuliert dokumentiert werden sollen.
 \\
 Die Formulierung als Methode soll dabei den Lösungsansatz so beschreiben das
 dieser anwendbar ist. Dies ist u.a. erforderlich da die Methoden im nächsten
@@ -319,7 +343,7 @@ Schritt angewandt werden sollen.
 
 Es folgen, in nicht priorisierter Reihenfolge, Probleme welche die
 Nutzungsschwelle von Kommandozeilen Interfaces erhöhen, d.h. diese weniger
-zugänglich für Neulinge machen.
+zugänglich.
 \\
 Diese bestmöglich zu adressieren sollte zu einer Absenkung der Nutzungsschwelle
 und damit besser zugänglichen Applikationen führen.
@@ -336,7 +360,13 @@ können \parencite{Raskin_2008}.
   \caption{Ohne Wissen um Kommandos passiert nichts}
 \end{figure}
 
+
 \section{Gesammelte Methoden}
+
+\subsection{Interaktive CLI}
+\label{chap:interactive}
+
+% Methoden beziehen sich direkt auf ein Problem welches adressiert werden soll.
 
 %%% Bauen
 \chapter{Anforderungsanalyse}
