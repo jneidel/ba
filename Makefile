@@ -1,18 +1,20 @@
+MAKEFLAGS += --no-print-directory
+
 default: once
 once:
-	make compile && make render
+	$(MAKE) compile && $(MAKE) render
 
 # latex
 compile_tex: thesis.tex
 	pdflatex thesis
 compile: thesis.tex
-	make compile_tex && \
-		make compute_bib && \
-		make compile_tex && \
-		make copy_pdf
+	$(MAKE) compile_tex && \
+		$(MAKE) compute_bib && \
+		$(MAKE) compile_tex && \
+		$(MAKE) copy_pdf
 
 # pdf
-copy_pdf: /tmp/thesis.pdf
+copy_pdf: thesis.pdf
 	cp thesis.pdf /tmp/thesis.pdf 2>/dev/null
 render:
 	make copy_pdf
@@ -24,7 +26,7 @@ compute_bib:
 	biber thesis
 import_bib:
 	/bin/pubs -c ~/projects/uni/z_ba/pubs/pubsrc export >bibliography.bib
-	make compute_bib
+	$(MAKE) compute_bib
 bib: import_bib
 
 # watch
@@ -32,10 +34,10 @@ watch: recompile rerender
 recompile: thesis.tex
 	ls thesis.tex 2>/dev/null | entr -rp ./make-if-changed
 rerender: thesis.pdf
-	make copy_pdf
+	$(MAKE) copy_pdf
 	ls /tmp/thesis.pdf | entr -r zathura /tmp/thesis.pdf
 recompute: bibliography.bib
-	ls bibliography.bib | entr -rp make compute_bib
+	ls bibliography.bib | entr -rp $(MAKE) compute_bib
 
 # cleanup
 clean:
