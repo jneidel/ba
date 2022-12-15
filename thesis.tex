@@ -167,9 +167,6 @@ Datum
 %\setcounter{page}{1}
 
 \tableofcontents
-\listoffigures
-\listoftables
-\lstlistoflistings
 .
 \newpage
 
@@ -319,7 +316,7 @@ Die Kommandozeile existiert in zwei Ausprägungen: dem Betriebssystem CLI, auch 
 % function-orient vs object-oriented vgl. nielson1993
 
 %%% Methoden
-\chapter{Methoden zur Absenkung der Nutzungsschwelle von Kommandozeilen Interfaces}
+\chapter{Methoden zur Absenkung der Nutzungsschwelle}
 % TODO: intro here
 
 \section{Methodologie}
@@ -350,23 +347,122 @@ und damit besser zugänglichen Applikationen führen.
 
 \subsection{Erinnern von Kommandos}
 
-Ein Hauptproblem stellt sich darin das der Nutzer alle - für den Anwendungsfall
-relevanten - Kommandos und Parameter wissen muss um die Schnittstelle nutzen zu
-können \parencite{Raskin_2008}.
+Das Problem des Erinnern von Kommandos (engl. Command recall) beschreibt das
+Nutzer sich bei Verwendung eines Programmes an dessen Namen, Kommandos und
+Parameter erinnern müssen \parencite{Raskin_2008}.
+
+\fbox{\parbox{\linewidth}{
+  \label{prob:command-recall}
+  \textbf{Problem \ref{prob:command-recall}}: Es muss sich an Programmname, Kommandos und Parameter erinnert werden.
+}}
+
+Um dieses allgemeine Problem zu adressieren wird es sind kleinere Teilprobleme
+aufgespalten.
+
+\medskip
 
 \begin{figure}
   \centering
   \includegraphics[scale=0.5]{empty-prompt.png}
-  \caption{Ohne Wissen um Kommandos passiert nichts}
+  \caption{Die Shell bietet nichts an, ohne ein Programm zu kennen passiert nichts.}
 \end{figure}
 
+\cite{Gentner_1996} beschreibt auch den Fakt das es keinen einfachen Weg zum
+Auffinden von Programmen gibt.
+\\
+Der Nutzer muss also den Namen des Programmes kennen um dieses zu nutzen.
+
+\smallskip
+
+Unter der Annahme den Names des Programmes zu kennen, geht es nun darum einen
+Programmaufruf mit Kommandos und Parametern zusammen zu bauen.
+Hierzu können verschiedene Szenarien betrachtet werden.
+Der Nutzer:
+
+\begin{enumerate}
+  \item hat Kommandos und Parameter auswendig gelernt
+  \item baut den Programmaufruf mit Hilfe der Dokumentation zusammen
+  \item fügt den Programmaufruf (mit copy-paste) ein
+  \item ruft das das Programm indirekt auf (über ein Script oder Alias)
+\end{enumerate}
+
+Diese Szenarien sind aber alle nicht ideal:
+
+\medskip
+
+Das 1. Szenario gilt nur mit dem Programm vertraute Nutzer. Und selbst diese
+vergessen mit der Zeit. % TODO: citation needed, vergessen
+
+\medskip
+
+Szenario Nummer 2. ist zeitintensiv für den Nutzer. Auch gilt die Annahme das
+Dokumentation existiert und das der Nutzer mit dieser umgehen kann.
+
+\medskip
+
+Für Szenario Nummer 3. muss der Nutzer von irgendwo kopieren, die Quelle ist
+hier entweder auch die Dokumentation oder externe Portale wie Foren oder
+Stack Overflow. In der Dokumentation musst der Programmaufruf auch erstmal
+gefunden werden. Und die externen Portale sind für den Bau des Interfaces nicht
+verlässlich.
+
+\medskip
+
+Szenario Nummer 4. gilt nur für erfahrene Nutzer die schon mit der Shell
+vertraut sind.
+
+\medskip
+
+Es gibt auch Mischformen, wie das der Nutzer Kommando aber nicht Parameter kennt
+und dieses nachschaut, diese sind aber in der Betrachtung zu vernachlässigen, da
+die Kritiken an den Reinformen auch für sie gelten.
+
+\subsection{Syntax und Semantik}
+
+``Commands and associated parameters must be typed, maintaining the correct
+semantic content and syntactic form.'' \parencite[184]{Westerman_1997}
+
+\cite{Gentner_1996} beschreibt die Kommandozeile auch als sehr starr und wenig
+Tolerant gegenüber imperfekter Syntax.
+
+\fbox{\parbox{\linewidth}{
+  \label{prob:syntax-semantik}
+  \textbf{Problem \ref{prob:syntax-semantik}}: Die richtige Syntax and Semantik muss gewährleistet werden.
+}}
+
+\bigskip
+
+Ein Beispiel für fehlerintolerante Syntax am Beispiel von \codeinline{grep}.
+Die man page beschreibt die Syntax: \codeinline{grep [OPTION...] PATTERNS [FILE...]}.
+Beim schnell-geschehenen Vertauschen von \codeinline{FILE} und \codeinline{PATTERNS}:
+
+\begin{lstlisting}[caption={Fehlerhafte Kommando Syntax bei grep}]
+grep ./file "[a-z]{3}"
+/bin/grep: [a-z]{3}: No such file or directory
+\end{lstlisting}
+
+\medskip
+
+Der Bedeutungsgehalt von Kommandos kann an diesem Beispiel dargestellt werden:
+
+\begin{lstlisting}[caption={Kommando Semantik am Beispiel von git}]
+git remote add [..]
+git add remote
+\end{lstlisting}
+
+Das Kommando \codeinline{git remote} ist zum verwalten von `tracked repositories'.
+\codeinline{git add} markiert eine Datei für den nächsten `commit'.
+Je nach Kontext haben \codeinline{add} und \codeinline{remote} eine andere Bedeutung.
+\codeinline{git remote add} fügt eine neue `repository' hinzu, \codeinline{git
+add remote} markiert aber eine Datei mit dem Namen \codeinline{./remote} für den
+nächsten `commit'.
 
 \section{Gesammelte Methoden}
 
 \subsection{Interaktive CLI}
-\label{chap:interactive}
-
+\label{sol:interactive}
 % Methoden beziehen sich direkt auf ein Problem welches adressiert werden soll.
+
 
 %%% Bauen
 \chapter{Anforderungsanalyse}
@@ -444,9 +540,6 @@ heading=bibintoc,
 title={Quellenverzeichnis}
 ]
 
-\newpage
-
-\chapter{Abk\"urzungsverzeichnis}
 \newpage
 \chapter{Glossar}
 \begin{appendix}
