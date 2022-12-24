@@ -4,6 +4,7 @@
 
 \usepackage{marvosym}
 \usepackage{csquotes}
+\usepackage{hyperref}
 
 \usepackage[
 backend=biber,
@@ -18,7 +19,6 @@ autocite=footnote
 \graphicspath{ {images/} }
 
 % \usepackage[hyphens]{url}
-% \usepackage{hyperref}
 
 \usepackage[sc]{mathpazo} % Use the Palatino font
 \usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
@@ -297,7 +297,10 @@ Die Kommandozeile nimmt eine Anfrage, in Form von einer Zeile Text, entgegen und
   \label{fig:mullvad-status}
 \end{figure}
 
-Die Kommandozeile existiert in zwei Ausprägungen: dem Betriebssystem CLI, auch als Shell bekannt (siehe die Linux Shell in Abbildung \ref{fig:mullvad-status}) oder der Kommandozeile einer Anwendung (siehe die Node.js Kommandozeile in Abbildung \ref{fig:node-calc}).
+Die Kommandozeile existiert in zwei Ausprägungen: dem Betriebssystem CLI, auch
+als Shell bekannt (siehe die Linux Shell in Abbildung \ref{fig:mullvad-status})
+oder der Kommandozeile einer Anwendung (siehe die Node.js Kommandozeile in
+Abbildung \ref{fig:node-calc}).
 
 \begin{figure}
   \centering
@@ -353,7 +356,7 @@ Parameter erinnern müssen \parencite{Raskin_2008}.
 
 \fbox{\parbox{\linewidth}{
   \label{prob:command-recall}
-  \textbf{Problem \ref{prob:command-recall}}: Es muss sich an Programmname, Kommandos und Parameter erinnert werden.
+  \textbf{Problem~\ref{prob:command-recall}}: Es muss sich an Programmname, Kommandos und Parameter erinnert werden.
 }}
 
 Um dieses allgemeine Problem zu adressieren wird es sind kleinere Teilprobleme
@@ -458,11 +461,118 @@ add remote} markiert aber eine Datei mit dem Namen \codeinline{./remote} für de
 nächsten `commit'.
 
 \section{Gesammelte Methoden}
-
-\subsection{Interaktive CLI}
-\label{sol:interactive}
 % Methoden beziehen sich direkt auf ein Problem welches adressiert werden soll.
 
+\newcommand{\methbox}[2]{
+  \fbox{\parbox{\linewidth}{
+    \label{meth:#1}
+    \textbf{Methode~\ref{meth:#1}}: #2
+  }}
+}
+\newcommand{\methref}[1]{
+  Methode~\ref{meth:#1}
+}
+
+\subsection{Interaktive CLI}
+% TODO: move this section into definitions
+
+Als Interaktive CLI ist eine solche bekannt die dem Nutzer nach und nach Fragen
+stellt, ähnlich einem Formular. Wie bei einem Formular kann neben Freitext kann
+dem Nutzer mit Radiobuttons (auswählen von einer Option aus einer Liste) oder
+Checkboxen (auswählen mehrerer Optionen aus einer Liste) zum auswählen. % TODO: fix
+
+% TODO: screenshot mit Q&A format
+
+% TODO: extend, reference sources
+% bland2007design, Gentner_1996
+
+\subsubsection{Interaktive Frage bei fehlendem Parameter}
+
+% TODO: vgl. Command recall
+Man stelle sich folgendes Szenario vor. Eine CLI hat ein Kommando welches einen Parameter erfordert.
+Normalerweise erfolgt beim Vergessen der Übergabe dieses Parameters eine Fehlermeldung welche diesen Fakt schildert.
+
+\begin{lstlisting}[caption={Fehlermeldung bei fehlendem Parameter in mullvad (VPN) CLI}]
+mullvad relay set location
+
+error: The following required arguments were not provided:
+    <country>
+
+USAGE:
+    mullvad relay set location <country> [ARGS]
+
+For more information try --help
+\end{lstlisting}
+
+Die CLI weiß aber schon was der Nutzer tun möchte und könnte anstatt der Fehlermeldung einen Prompt geben welcher den Nutzer fragt eine Parameter zu übergeben oder, je nach Kontext, einen vorzuschlagen.
+
+\begin{lstlisting}[caption={Prompt welcher direkt nach fehlendem Parameter fragt}]
+mullvad relay set location
+Enter location country code:
+\end{lstlisting}
+
+Fairerweise ist zu bemerken das die mullvad CLI dies auch an anderer Stelle so handhabt, so fragt die CLI bei \codeinline{mullvad account login} nach der fehlenden Accountnummer.
+
+% TODO: method declaration
+
+Negativ an dieser Methode wäre das der Nutzer nicht im gleichen Maße auf die
+Möglichkeit einer komplexeren Verwendung des Kommandos hingewiesen wird (so
+nimmt das mullvad Kommando aus obigem Beispiel nicht nur Landes- sondern auch
+Stadt- und Hostkennungen). Außerdem wird der Programmaufruf ohne den Parameter
+in der Shell History gespeichert, was bedeutet bei das bei zurückgehen zu dem
+Aufruf der fehlende Parameter immer noch fehlt und ergänzt oder erneut über den
+Prompt übergeben werden muss. % TODO: shorten
+
+Beide Punkte sind aber für Einsteiger eher zu vernachlässigen.
+
+\subsection{Menü oder TUI}
+
+% TODO: screenshot
+Das Menü oder auch `Text-based user interfaces' ähneln dem GUI dadurch das der
+Nutzer seine Optionen visuell präsentiert bekommt und daraus ausgewählen kann.
+\\
+Da es aber wie die CLI in Terminal lebt werden auch zum darstellen des Menüs
+nur Textelemente verwendet. Zur Implementation wird oft die ncurses Bibliothek
+verwendet.
+
+\bigskip
+
+Im einem Experiment von \cite{Westerman_1997} hatte das Menü-basierte
+Interface, für manche Nutzergruppen, unsignifikant bessere Performance als
+ein Kommandozeilen Interface. Auch wurde bei freier Wahl das Menü über alle
+Nutzergruppen hinweg doppelt so häufig verwendet.
+
+\subsection{Autovervollständigung zum Vorschlagen und Vervollständigen von Kommandos/Flaggen}
+
+Auto-completion in der Kommandozeile beschreibt das Verhalten das bei drücken der
+(normalerweise) `TAB' Taste etwas vervollständigt wird.
+
+In der Shell funktioniert dies etwa für Programmnamen und die Pfade von Dateien:
+\begin{lstlisting}[caption={Autovervollständigung in der Shell}]
+wg # Nutzer drückt TAB
+wget
+
+cat ./note # Nutzer drückt TAB
+cat ./notes.md
+\end{lstlisting}
+
+Bei Programmen kann dies, neben der Vervollständigung von Dateipfaden, auch
+Kommandos und Flaggen umfassen.
+
+\begin{figure}
+  \centering
+  \includegraphics[scale=0.5]{mullvad-autocomplete.png}
+  \caption{Bei mullvad's CLI werden nach dem drücken von `TAB' mögliche Kommandos aufgelistet}
+  \label{fig:autocomplete}
+\end{figure}
+
+% TODO: Vorschlagen beschreiben
+
+Auto-completion adressierte beide Probleme welche das CLI mit sich bringt, durch
+das Vorschlagen und Vervollständigen erleichert das Erinnern des gesuchten
+Kommandos. Und dadurch das nur valide Kommandos vorgeschlagen werden ist das
+einhalten von Syntax- und Semantikregeln erleichtert. Auch profitiert der Nutzer
+von Kontext-bezogenen Beschreibungen.
 
 %%% Bauen
 \chapter{Anforderungsanalyse}
