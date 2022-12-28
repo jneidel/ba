@@ -473,6 +473,15 @@ nächsten `commit'.
   Methode~\ref{meth:#1}
 }
 
+Anders als erhofft gestaltete sich die Recherche nach Methoden zur Absenkung
+der Nutzungsschwelle als schwierig da, wie bereits angesprochen, das GUI oder
+eine andere Form von Nutzerinterface oft als Lösung für die Probleme von
+Kommandozeilen angeführt wird.
+
+% TODO: ...
+
+\cite{nagarajan2018} zum Beispiel stellt auf Basis 
+
 \subsection{Interaktive CLI}
 % TODO: move this section into definitions
 
@@ -549,10 +558,10 @@ Auto-completion in der Kommandozeile beschreibt das Verhalten das bei drücken d
 
 In der Shell funktioniert dies etwa für Programmnamen und die Pfade von Dateien:
 \begin{lstlisting}[caption={Autovervollständigung in der Shell}]
-wg # Nutzer drückt TAB
+wg # Nutzer drueckt TAB
 wget
 
-cat ./note # Nutzer drückt TAB
+cat ./note # Nutzer drueckt TAB
 cat ./notes.md
 \end{lstlisting}
 
@@ -569,10 +578,39 @@ Kommandos und Flaggen umfassen.
 % TODO: Vorschlagen beschreiben
 
 Auto-completion adressierte beide Probleme welche das CLI mit sich bringt, durch
-das Vorschlagen und Vervollständigen erleichert das Erinnern des gesuchten
+das Vorschlagen und Vervollständigen erleichtert das Erinnern des gesuchten
 Kommandos. Und dadurch das nur valide Kommandos vorgeschlagen werden ist das
 einhalten von Syntax- und Semantikregeln erleichtert. Auch profitiert der Nutzer
 von Kontext-bezogenen Beschreibungen.
+
+\subsection{Relevante Defaults}
+
+Relevante Defaults sind nicht Kommandozeilen spezifisch, können dort aber
+wichtiger sein als in grafischen Anwendungen.
+\\
+Dem Nutzer werden die Möglichkeiten eben nicht zur Auswahl gestellt und dieser
+klickt die gewünschte Option an. Sondern ist das Auflisten der Möglichkeiten
+i.d.R. ein separater Schritt, losgelöst von dem Schritt der Nutzung der Option
+(z.B. werden mit \codeinline{ls -d} zuerst die Ordner aufgelistet, um sich dann
+mit \codeinline{cd ORDNER} in einen von diesen hineinzubewegen, siehe auch Abbildung \ref{fig:defaults-demo}.)
+\\
+Es greift wieder das fundamentale Problem des `Command Recall' (vgl. Problem
+\ref{prob:command-recall}). Den Schritt des Auflistens der Möglichkeiten
+(ähnlich wie das Auflisten von möglichen Kommandos) ist ein extra Schritt, außer
+der Nutzer kann sich an die gewünschte Option erinnern.
+
+\begin{figure}
+  \centering
+  \includegraphics[scale=0.5]{defaults-demo.png}
+  \caption{Der erforderte Parameter in dieser Literaturverwaltung ist einer Liste zu entnehmen}
+  \label{fig:defaults-demo}
+\end{figure}
+
+\bigskip
+
+\methbox{relevant-defaults}{Falls möglich, sollen Argumente relevanten Defaults haben.}
+
+% TODO: elaborate
 
 %%% Bauen
 \chapter{Anforderungsanalyse}
