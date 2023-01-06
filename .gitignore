@@ -11,3 +11,4 @@
 *.blg
 *.run.xml
 *.sum
+_minted*

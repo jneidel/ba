@@ -6,12 +6,12 @@ once:
 
 # latex
 compile_tex: thesis.tex
-	pdflatex thesis
+	xelatex -shell-escape thesis
 compile: thesis.tex
 	$(MAKE) compile_tex && \
-		$(MAKE) compute_bib && \
-		$(MAKE) compile_tex && \
 		$(MAKE) copy_pdf
+		# $(MAKE) compute_bib && \
+		# $(MAKE) compile_tex && \
 
 # pdf
 copy_pdf: thesis.pdf

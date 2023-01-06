@@ -2,9 +2,10 @@
 
 \usepackage[ngerman]{babel}
 
-\usepackage{marvosym}
-\usepackage{csquotes}
-\usepackage{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage{fontspec}
+% \setmainfont{Times}
+\setmonofont{FuraCode Nerd Font Mono} % from fc-list
 
 \usepackage[
 backend=biber,
@@ -18,6 +19,29 @@ autocite=footnote
 \usepackage{graphicx}
 \graphicspath{ {images/} }
 
+\usepackage[newfloat]{minted}
+\usepackage[hang, small,labelfont=bf,up,textfont=it,up]{caption}
+
+\newenvironment{code}{\captionsetup{type=listing, skip=0pt}}{}
+\SetupFloatingEnvironment{listing}{name=Code}
+
+\newminted{shell}{
+  linenos,
+  numbersep=6pt,
+  frame=lines,
+  framesep=2mm,
+  fontsize=\footnotesize
+}
+\newmintinline[codeinline]{shell}{
+  fontsize=\small
+}
+
+%%%%%% other packages %%%%%%
+
+\usepackage{marvosym}
+\usepackage{csquotes}
+\usepackage{hyperref}
+
 % \usepackage[hyphens]{url}
 
 \usepackage[sc]{mathpazo} % Use the Palatino font
@@ -26,7 +50,6 @@ autocite=footnote
 \usepackage{microtype} % Slightly tweak font spacing for aesthetics
 
 \usepackage[hmarginratio=1:1,top=32mm,columnsep=20pt]{geometry} % Document margins
-\usepackage[hang, small,labelfont=bf,up,textfont=it,up]{caption} % Custom captions under/above floats in tables or figures
 \usepackage{booktabs} % Horizontal rules in tables
 \usepackage{lettrine} % The lettrine is the first enlarged letter at the beginning of the text
 \usepackage{enumitem} % Customized lists
@@ -50,44 +73,6 @@ autocite=footnote
 % \fancyfoot[RO,LE]{\thepage} % Custom footer text
 
 \usepackage{titling} % Customizing the title section
-
-\usepackage{listings}
-\usepackage{color}
-\definecolor{mygreen}{rgb}{0,0.6,0}
-\definecolor{mygray}{rgb}{0.5,0.5,0.5}
-\definecolor{mymauve}{rgb}{0.58,0,0.82}
-
-\lstset{
-  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}; should come as last argument
-  basicstyle=\footnotesize,        % the size of the fonts that are used for the code
-  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
-  breaklines=true,                 % sets automatic line breaking
-  captionpos=b,                    % sets the caption-position to bottom
-  commentstyle=\color{mygreen},    % comment style
-  deletekeywords={...},            % if you want to delete keywords from the given language
-  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
-  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
-  firstnumber=1,                % start line enumeration with line 1000
-  frame=single,	                   % adds a frame around the code
-  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
-  keywordstyle=\color{blue},       % keyword style
-  language=Octave,                 % the language of the code
-  morekeywords={*,...},            % if you want to add more keywords to the set
-  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
-  numbersep=5pt,                   % how far the line-numbers are from the code
-  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
-  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
-  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
-  showstringspaces=false,          % underline spaces within strings only
-  showtabs=false,                  % show tabs within strings adding particular underscores
-  stepnumber=1,                    % the step between two line-numbers. If it's 1, each line will be numbered
-  stringstyle=\color{mymauve},     % string literal style
-  tabsize=2,	                   % sets default tabsize to 2 spaces
-  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
-}
-
-\definecolor{mygrey}{RGB}{28,28,28}
-\newcommand{\codeinline}[1]{\colorbox{mygray}{\csname lstinline\endcsname!#1!}}
 
 \begin{document}
 
@@ -197,14 +182,6 @@ Datum
 % \bottomrule
 % \end{tabular}
 % \end{table}
-
-% \begin{lstlisting}[caption={Ein Beispiel: Hello World (Scala)}]
-% object HelloWorld {
-%   def main(args: Array[String]): Unit = {
-%     println("Hello, world!")
-%   }
-% }
-% \end{lstlisting}
 
 \chapter{Einleitung}
 \section{Hintergrund der Arbeit}
@@ -317,6 +294,62 @@ Abbildung \ref{fig:node-calc}).
 
 % Vergleich zu GUI
 % function-orient vs object-oriented vgl. nielson1993
+
+\textbf{Flagge}: Zusammen mit Argumenten sind Flaggen der primäre Weg für eine
+CLI App um Werte von Nutzern entgegen zu nehmen \parencite{12factor}. Sie
+existieren meist in langer, erkennbar durch die \codeinline{--} am Anfang, oder
+kurzer Version, mit nur einem \codeinline{-} und meist dem Anfangsbuchstaben der
+Langversion.
+
+\begin{code}
+\begin{shellcode}
+grep --file FILE
+grep -f FILE
+\end{shellcode}
+\captionof{listing}{Kurze und lange Flaggen am Beispiel equivalenter grep Aufrufe}
+\medskip
+\end{code}
+
+In dem Beispiel mit grep wird von \codeinline{--file FILE} eine Datei mit
+Mustern zum Vergleichen übergeben. Bei mehreren Flaggen ist die Reihenfolge
+egal.
+
+\begin{code}
+  \begin{shellcode}
+  grep --ignore-case
+  grep -i
+  \end{shellcode}
+  \captionof{listing}{Ein Beispiel von Boolean Flaggen}
+  \medskip
+\end{code}
+
+Die \codeinline{--ignore-case} Flagge von Grep ist eine Boolean Flagge. Meist
+wird durch Abwesenheit eine Verneinung ausgedrückt und durch Anwesenheit
+\codeinline{true}. Boolean Flaggen übergeben keine Werte sondern ändern das
+Verhalten der App. Im Falle von grep's \codeinline{ignore-case} existiert
+zusätzliche noch eine \codeinline{--no-ignore-case} Flagge, falls der Nutzer
+explizit sein möchte. Kurze Booleanflaggen ermöglichen auch konstrukte
+wie dieses: \codeinline{tar -xzf file.tgz}. Es werden die Booleanflaggen
+\codeinline{-x}, \codeinline{-z}, wie auch die normale \codeinline{-f FILE}
+Flagge kombiniert.
+
+\textbf{Argument}: Argumente erlauben es der CLI Werte von Nutzer anzunehmen.
+
+\begin{code}
+  \begin{shellcode}
+mv SOURCE DEST
+  \end{shellcode}
+  \captionof{listing}{Manual Auszug von mv, in seiner simpelsten Form}
+  \medskip
+\end{code}
+
+Anders als bei Flaggen ist Reihenfolge ausschlaggebend. Beim obigen
+\codeinline{mv} Programmaufruf ist das erste Argument die Ausgangsdatei und das
+zweite die Zieldatei. Die eigentlichen Dateien unterscheidet nichts, einzig die
+Reihenfolge beschreibt die Absicht.
+
+
+% TODO: Pipe, Interaktive, Menu -> alternative Wege zur Übergabe von Werten
 
 %%% Methoden
 \chapter{Methoden zur Absenkung der Nutzungsschwelle}
@@ -439,19 +472,25 @@ Ein Beispiel für fehlerintolerante Syntax am Beispiel von \codeinline{grep}.
 Die man page beschreibt die Syntax: \codeinline{grep [OPTION...] PATTERNS [FILE...]}.
 Beim schnell-geschehenen Vertauschen von \codeinline{FILE} und \codeinline{PATTERNS}:
 
-\begin{lstlisting}[caption={Fehlerhafte Kommando Syntax bei grep}]
+\begin{code}
+  \begin{shellcode}
 grep ./file "[a-z]{3}"
 /bin/grep: [a-z]{3}: No such file or directory
-\end{lstlisting}
-
-\medskip
+  \end{shellcode}
+  \captionof{listing}{Fehlerhafte Kommando Syntax bei grep}
+  \medskip
+\end{code}
 
 Der Bedeutungsgehalt von Kommandos kann an diesem Beispiel dargestellt werden:
 
-\begin{lstlisting}[caption={Kommando Semantik am Beispiel von git}]
+\begin{code}
+  \begin{shellcode}
 git remote add [..]
 git add remote
-\end{lstlisting}
+  \end{shellcode}
+  \captionof{listing}{Kommando Semantik am Beispiel von git}
+  \medskip
+\end{code}
 
 Das Kommando \codeinline{git remote} ist zum verwalten von `tracked repositories'.
 \codeinline{git add} markiert eine Datei für den nächsten `commit'.
@@ -459,6 +498,33 @@ Je nach Kontext haben \codeinline{add} und \codeinline{remote} eine andere Bedeu
 \codeinline{git remote add} fügt eine neue `repository' hinzu, \codeinline{git
 add remote} markiert aber eine Datei mit dem Namen \codeinline{./remote} für den
 nächsten `commit'.
+
+\section{Adressierung der Probleme durch Weiterentwicklungen}
+
+Ziel dieser Arbeit ist es Methoden zur Adressierung dieser fundamentalen
+Probleme innerhalb der Form der Kommandozeile zu beschreiben.
+
+Die meisten Abhandlungen über das Angehen dieser Probleme versuchen aber aus
+dieser Form von Interface auszubrechen.
+
+Historisch wurde die grafische Benutzeroberfläche als Lösung für die Probleme der
+CLI gesehen (\cite{Norman_2007}). % TODO: other cite
+
+Laut \cite{nielson1993} vollzog sich damit ein Wechsel von `function-oriented',
+der in der Kommandozeile typischerweise vorhandenen Verb-Nomen Struktur (z.B.
+\codeinline{rm file}), hin zu der Objekt-orientierten GUI, dem Auswählen des
+Objektes und dann der Aktion welche darauf angewandt werden soll (z.B. Datei in
+den Papierkorb ziehen.)
+
+% TODO: modern answer engine, shared DNA with CLI
+ % \cite{Norman_2007}
+
+% TODO: human language, über Syntax hinaus, menschliche Sprache verstehen
+% Raskin_2008
+
+% Conclusions von seneviratne2008new lesen
+
+% TODO: visual cli a la Glaser et al. (1995), see seneviratne2008new
 
 \section{Gesammelte Methoden}
 % Methoden beziehen sich direkt auf ein Problem welches adressiert werden soll.
@@ -478,9 +544,12 @@ der Nutzungsschwelle als schwierig da, wie bereits angesprochen, das GUI oder
 eine andere Form von Nutzerinterface oft als Lösung für die Probleme von
 Kommandozeilen angeführt wird.
 
+% Konkrete Handlungsanweisungen, wie bei \cite{12factor} und
+% \cite{nagarajan2018}, halten sich nicht exakt
+
 % TODO: ...
 
-\cite{nagarajan2018} zum Beispiel stellt auf Basis 
+%  philosophie/prinzipien
 
 \subsection{Interaktive CLI}
 % TODO: move this section into definitions
@@ -501,7 +570,8 @@ Checkboxen (auswählen mehrerer Optionen aus einer Liste) zum auswählen. % TODO
 Man stelle sich folgendes Szenario vor. Eine CLI hat ein Kommando welches einen Parameter erfordert.
 Normalerweise erfolgt beim Vergessen der Übergabe dieses Parameters eine Fehlermeldung welche diesen Fakt schildert.
 
-\begin{lstlisting}[caption={Fehlermeldung bei fehlendem Parameter in mullvad (VPN) CLI}]
+\begin{code}
+  \begin{shellcode}
 mullvad relay set location
 
 error: The following required arguments were not provided:
@@ -511,18 +581,28 @@ USAGE:
     mullvad relay set location <country> [ARGS]
 
 For more information try --help
-\end{lstlisting}
+  \end{shellcode}
+  \captionof{listing}{Fehlermeldung bei fehlendem Parameter in mullvad (VPN) CLI}
+  \medskip
+\end{code}
 
-Die CLI weiß aber schon was der Nutzer tun möchte und könnte anstatt der Fehlermeldung einen Prompt geben welcher den Nutzer fragt eine Parameter zu übergeben oder, je nach Kontext, einen vorzuschlagen.
+Die CLI weiß aber schon was der Nutzer tun möchte und könnte anstatt der
+Fehlermeldung einen Prompt geben welcher den Nutzer fragt eine Parameter zu
+übergeben oder, je nach Kontext, einen vorzuschlagen. Dem Nutzer wird erspart
+sich mit der richtigen Syntax und den Vokabeln auseinander zu setzen.
 
-\begin{lstlisting}[caption={Prompt welcher direkt nach fehlendem Parameter fragt}]
+\methbox{interactive_missing_param}{Bei fehlendem Parameter soll interaktiv nachgefragt werden.}
+
+\begin{code}
+  \begin{shellcode}
 mullvad relay set location
 Enter location country code:
-\end{lstlisting}
+  \end{shellcode}
+  \captionof{listing}{Prompt welcher direkt nach fehlendem Parameter fragt}
+  \medskip
+\end{code}
 
 Fairerweise ist zu bemerken das die mullvad CLI dies auch an anderer Stelle so handhabt, so fragt die CLI bei \codeinline{mullvad account login} nach der fehlenden Accountnummer.
-
-% TODO: method declaration
 
 Negativ an dieser Methode wäre das der Nutzer nicht im gleichen Maße auf die
 Möglichkeit einer komplexeren Verwendung des Kommandos hingewiesen wird (so
@@ -551,19 +631,27 @@ Interface, für manche Nutzergruppen, unsignifikant bessere Performance als
 ein Kommandozeilen Interface. Auch wurde bei freier Wahl das Menü über alle
 Nutzergruppen hinweg doppelt so häufig verwendet.
 
+\methbox{menu}{Biete ein Menü-Interface an.}
+
+% TODO: move and complete
+
 \subsection{Autovervollständigung zum Vorschlagen und Vervollständigen von Kommandos/Flaggen}
 
 Auto-completion in der Kommandozeile beschreibt das Verhalten das bei drücken der
 (normalerweise) `TAB' Taste etwas vervollständigt wird.
 
 In der Shell funktioniert dies etwa für Programmnamen und die Pfade von Dateien:
-\begin{lstlisting}[caption={Autovervollständigung in der Shell}]
+\begin{code}
+  \begin{shellcode}
 wg # Nutzer drueckt TAB
 wget
 
 cat ./note # Nutzer drueckt TAB
 cat ./notes.md
-\end{lstlisting}
+  \end{shellcode}
+  \captionof{listing}{Autovervollständigung in der Shell}
+  \medskip
+\end{code}
 
 Bei Programmen kann dies, neben der Vervollständigung von Dateipfaden, auch
 Kommandos und Flaggen umfassen.
@@ -577,11 +665,20 @@ Kommandos und Flaggen umfassen.
 
 % TODO: Vorschlagen beschreiben
 
+\methbox{autocomplete}{Dem Nutzer sollte innerhalb der App Autovervollständigung zu verfügung gestellt werden.}
+
 Auto-completion adressierte beide Probleme welche das CLI mit sich bringt, durch
 das Vorschlagen und Vervollständigen erleichtert das Erinnern des gesuchten
 Kommandos. Und dadurch das nur valide Kommandos vorgeschlagen werden ist das
 einhalten von Syntax- und Semantikregeln erleichtert. Auch profitiert der Nutzer
 von Kontext-bezogenen Beschreibungen.
+
+In \cite{dutta} geht der Author sogar noch einen Schritt weiter und empfehlen
+das automatische Vorschlagen aller Flaggen und Argumente für ein Kommando,
+sodass der Nutzer sich nicht mal anschauen muss was für das Kommando benötigt
+wird. So wie vom Author beschrieben ist dies aber nicht in der Shell möglich,
+sondern müsste meiner Einschätzung nach eine eigene Kommandozeilen Umgebung
+gebaut werden, was nicht im Sinne der Zielstellung dieser Arbeit liegt.
 
 \subsection{Relevante Defaults}
 
@@ -612,23 +709,239 @@ der Nutzer kann sich an die gewünschte Option erinnern.
 
 % TODO: elaborate
 
+% TODO: describe 12 Factor methods
+% https://medium.com/@jdxcode/12-factor-cli-apps-dd3c227a0e46
+\subsection{Flaggen anstatt Argumenten}
+% 2. Prefer flags to args
+
+Sobald ein Kommando mehr als ein Argument annimmt, biete sich die Gelegenheit
+die für Argumente relevante Reihenfolge durcheinander zu bringen (vgl. Command
+Recall und Syntax % TODO: fix formating
+
+). \cite{12factor} empfiehlt deshalb bei zwei oder mehr Argumenten Flaggen zu
+verwenden. Das ist etwas mehr Aufwand zum Schreiben aber die Reihenfolge als
+Fehlerfaktor (vgl. Syntax
+
+) und Flaggen können nun auch mittels Autovervollständigung vorgeschlagen werden
+(vgl. \methref{autocomplete}).
+
+\methbox{flags_over_arguments}{Wenn zwei oder mehr Argumenten erforderlich sind nutze stattdessen Flaggen.}
+
+Dies trifft vorallem zu wenn wenn bei dem Kommando schon andere Werte über
+Flaggen übergeben werden.
+
+\begin{code}
+  \begin{shellcode}
+oraclett project add INTPD999DXD --taskDetail "01 - Career development"
+oraclett project add --project INTPD999DXD --taskDetail "01 - Career development"
+  \end{shellcode}
+  \captionof{listing}{Argument ersetzt durch Flaggen: vorher und nachher}
+  \medskip
+\end{code}
+
+Außen vor sind auch Kommandos welche eine variable Anzahl an Argumenten nehmen,
+Beispielsweise \codeinline{rm file1 file2 file3}, weil es sich bei diesen nicht
+um verschiedene Typen von Argument handelt \parencite{12factor}.
+
+\subsection{Aliase für Kommandos und Flaggen}
+% 3. What version am I on? -> aliases, get the user what they are looking for
+
+\begin{code}
+  \begin{shellcode}
+app -h
+app --help
+app help
+
+app -v
+app -V
+app --version
+app version
+  \end{shellcode}
+  \captionof{listing}{Es ist klar was der Nutzer hier angezeigt bekommen will}
+  \medskip
+\end{code}
+
+\newcommand\checkmark{\ttfamily{\char"2611}} % or 2713
+\newcommand\cross{\ttfamily{\char"2610}}
+
+\begin{table}[h!]
+  \begin{center}
+    \caption{Auflistung von 15 Programmen darüber welche Varianten funktionieren um Hilfe bzw. Version anzuzeigen}
+    \label{tab:help_version}
+    \begin{tabular}{l c c c c c c c}
+Programm & -h & ---help & help & -v & -V & ---version & version \\
+      \hline
+git & \checkmark & \checkmark & \checkmark & \checkmark & \cross & \checkmark & \checkmark \\
+node & \checkmark & \checkmark & \cross & \checkmark & \cross & \checkmark & \cross \\
+mullvad & \checkmark & \checkmark & \cross & \cross & \cross & \cross & \checkmark \\
+grep & \cross & \checkmark & \cross & \cross & \checkmark & \checkmark & \cross \\
+zathura & \checkmark & \checkmark & \cross & \checkmark & \cross & \checkmark & \cross \\
+tsp & \checkmark & \cross & \cross & \cross & \checkmark & \cross & \cross \\
+pubs & \checkmark & \checkmark & \cross & \checkmark & \cross & \checkmark & \cross \\
+mp3cut & \checkmark & \cross & \cross & \cross & \cross & \cross & \cross \\
+systemctl & \checkmark & \checkmark & \cross & \cross & \cross & \checkmark & \cross \\
+pacman & \checkmark & \checkmark & \cross & \cross & \checkmark & \checkmark & \cross \\
+make & \checkmark & \checkmark & \cross & \checkmark & \cross & \checkmark & \cross \\
+synctex & \checkmark & \checkmark & \checkmark & \checkmark & \checkmark & \checkmark & \checkmark \\
+curl & \checkmark & \checkmark & \cross & \cross & \checkmark & \checkmark & \cross \\
+ansible & \checkmark & \checkmark & \checkmark & \cross & \cross & \checkmark & \cross \\
+nvim & \checkmark & \checkmark & \cross & \checkmark & \cross & \checkmark & \cross \\
+      Summe & 14 & 13 & 3 & 7 & 5 & 12 & 3 \\
+    \end{tabular}
+  \end{center}
+\end{table}
+
 %%% Bauen
 \chapter{Anforderungsanalyse}
 % [Beschreibung der Erhebung, Granularisierung und Priorisierung der zu Grunde liegenden Anforderungen]
-\section{Konzept}
-\section{Anforderungen}
-% Anforderungserhebung nur durch mich, da App nicht Fokus der Arbeit und ich User bin
 
-\chapter{Implementation der App unter Berücksichtigung gesammelter Methoden}
+Die zu bauende Anwendung wurde konzipiert nicht zu trivial - um genug
+Spielraum im Interface Design zuzulassen - aber auch nicht zu komplex - um die
+Umsetzbarkeit zu gewährleisten - zu sein.
+
+\section{Konzept}
+\subsection{Problem}
+
+Bei Endava werden die Arbeitsstunden über ein Oracle System festgehalten. Dieses
+glänzt nicht in Usability, es führt aber kein Weg dran vorbei.
+
+% TODO: screenshot best case
+
+Das System funktioniert so, dass ein mal wöchentlich die Zeiten der vergangen
+Woche abgegeben werden müssen. In diesen Timecards wird angegeben an welchen
+Wochentagen man wie viele Stunden an welchem Projekt gearbeitet hat. Bei einem
+Projekt und 40 Stunden Woche ist das ausfüllen trivial. Aber sobald man seine
+Zeit zwischen mehreren Projekten mit schwankender Stundenzahl aufteilt wird
+es komplizierter. Außerdem wird teils gefordert sich Notizen zu machen woran
+gearbeitet wurde. Zusammengenommen heißt dies: täglich müssen Dinge bei Oracle
+eingetragen werden.
+
+% TODO: screenshot realistic case
+
+\subsection{Lösungsansatz}
+
+Die entworfene Lösung ist eine Kommandozeilen App welche das tägliche loggen der
+Arbeitszeiten, und Notizen woran gearbeitet wurde, vereinfacht. Und diese Daten
+dann zum wöchentlichen Übertragen in Oracle in strukturierter Form ausgibt.
+Dadurch wird erreicht nur das erforderliche Minimum der Zeit mit Oracle zu
+verbringen, dessen Workflow im übrigen auch am besten funktioniert wenn alles in
+einem Rutsch erledigt wird.
+\\
+Weil es den Rahmen sprengen würde, ohne dem Thema dienlich zu sein, wurde davon
+abgesehen die CLI an ggf. bestehende Oracle APIs anzubinden.
+
+\section{Anforderungen}
+
+Die Anforderungen wurden in Form von User Stories festgehalten. Erhoben wurden
+diese durch den Author in Analyse der eigenen Nutzungsmuster mit Oracle,
+abgeglichen in Rücksprache mit anderen Mitarbeitern.
+
+\begin{enumerate}
+  \item \textbf{Verwaltung von Projekten}:
+    \begin{enumerate}
+      \item Als Nutzer möchte ich einen Projekt Schlüssel hinzufügen.
+      \item Als Nutzer möchte ich einem Projekt Schlüssel ein oder mehrere Task Details anfügen.
+      \item Als Nutzer möchte ich die Projekt Schlüssel sowie deren Task Details aufgelistet sehen.
+      \item Als Nutzer möchte ich Projekt Schlüssen und Task Details anpassen oder löschen.
+    \end{enumerate}
+  \item \textbf{Arbeitszeit loggen}:
+    \begin{enumerate}
+      \item Als Nutzer möchte ich meine Arbeitsstunden an einem Tag für eine Project Code-Task Detail Kombination loggen.
+      \item Als Nutzer möchte ich die geloggten Arbeitsstunden einer gegebenen Woche einsehen.
+      \item Als Nutzer möchte ich geloggte Arbeitsstuden anpassen oder löschen.
+    \end{enumerate}
+  \item \textbf{Verwaltung von Arbeitsnotizen}:
+    \begin{enumerate}
+      \item Als Nutzer möchte ich etwas festhalten an dem ich an einem Tag gearbeitet habe.
+      \item Als Nutzer möchte ich meine Notizen für einen Tag bearbeiten oder löschen.
+    \end{enumerate}
+  \item \textbf{Report Generierung}:
+    \begin{enumerate}
+      \item Als Nutzer möchte ich einen Report für eine gegebene Arbeitswoche generieren, um die Daten in Oracle zu übertragen.
+    \end{enumerate}
+\end{enumerate}
+
+Diese User Stories sollen einen Eindruck über die Anforderungen der App
+und deren Komplexität vermitteln. Das Bauen der App steht aber nicht im
+Vordergrund, weshalb u.a. hier die Akzeptanzkriterien der User Stories,
+Implementationsdetails wie Datenpersistierung, etc. nicht weiter beschrieben
+werden.
+
+\chapter{Implementation}
 \section{Fundament}
 
 Das Fundament der App stellen die zugrundelegenden technologischen Aspekte dar,
 welche nicht oder nur indirekt die Nutzbarkeit, und damit den Fokus der Arbeit
 betreffen.
-% ... get into tech
+
+Node.js wurde als Programmiersprache gewählt, weil der Author damit vertraut
+war, eine vielzahl von Liberies zum Bauen von CLI's existieren und der
+Paketveröffentlichungsprozess mit npm relativ simpel ist.
+Weiterhin wurden noch Typescript, für Typisierung, und Eslint, für gleichmäßigen
+Code Style, verwendet.
+
+\section{Libraries}
+
+Ein Überblick über die Libraries welche für das Bauen des Interfaces und die
+Umsetzung der Methoden relevant waren.
+
+\subsection{oclif}
+
+``oclif is an open source framework for building a command line interface
+(CLI) in Node.js. Create CLIs with a few flags or advanced CLIs that have
+subcommands.'' \parencite{oclif}
+
+oclif biete ein System um ohne viel Boilerplate Kommandos zu bauen, dessen
+Flaggen und Argumente zu beschreiben und dann eigene Businesslogik auszuführen
+(siehe Abbildung \ref{fig:oclif-list}.) Während oclif Kommando- und
+Flaggenparsing, das generieren der Hilfsseite uvm. übernimmt.
+
+\begin{figure}
+  \centering
+  \includegraphics[scale=0.5]{oclif-list.png}
+  \caption{Beschreiben eines Kommandos in oclif am Beispiel des implementierten \codeinline{project list} Kommandos}
+  \label{fig:oclif-list}
+\end{figure}
+
+Die Hierarchie von Kommandos wird über eine Strukurierung der Dateien erreicht (siehe nachstehendes Listing) und der Feinschliff wird noch per Konfiguration in der \codeinline{package.json} erreicht.
+
+\begin{code}
+  \begin{shellcode}
+ src/commands
+ ├── hours
+ │   └── list.ts
+ └── project
+     ├── add.ts
+     ├── edit.ts
+     ├── list.ts
+     └── remove.ts
+  \end{shellcode}
+  \captionof{listing}{Kommandohierarchie über Dateistruktur: Kommandos und deren Subkommandos}
+  \medskip
+\end{code}
+
+% TODO: node noch andere libs, oclif warum gewählt? Verweis auf autocomplete
+
+\subsection{Inquirer.js}
+
+Inquirer stellt eine Ansammlung an interaktiven % TODO: reference to earlier chapter
+Fragetypen zusammen.
+% TODO: ...
+
+\begin{figure}
+  \centering
+  \includegraphics[scale=0.5]{inquirer-example.png}
+  \caption{Eine mit Inquirer.js implementierter Frage und Antwort Flow zum herausfinden was der Nutzer bearbeiten möchte}
+  \label{fig:inquirer-example}
+\end{figure}
 
 \section{Anwendung gesammelter Methoden}
-% hier List wie die Methoden angewandt wurden
+
+% TODO: relevant-defaults
+% TODO: autocomplete
+% TODO: interactive_missing_param
+% TODO: menu
+% TODO: flags_over_arguments
 
 %%% Umfrage
 \chapter{Umfragengestaltung}
