@@ -32,6 +32,13 @@ autocite=footnote
   framesep=2mm,
   fontsize=\footnotesize
 }
+\newminted{javascript}{
+  linenos,
+  numbersep=6pt,
+  frame=lines,
+  framesep=2mm,
+  fontsize=\footnotesize
+}
 \newmintinline[codeinline]{shell}{
   fontsize=\small
 }
@@ -568,7 +575,7 @@ Checkboxen (auswählen mehrerer Optionen aus einer Liste) zum auswählen. % TODO
 
 % TODO: vgl. Command recall
 Man stelle sich folgendes Szenario vor. Eine CLI hat ein Kommando welches einen Parameter erfordert.
-Normalerweise erfolgt beim Vergessen der Übergabe dieses Parameters eine Fehlermeldung welche diesen Fakt schildert.
+Normalerweise erfolgt beim Weglassen der Übergabe dieses Parameters eine Fehlermeldung welche einen Hinweis darauf gibt.
 
 \begin{code}
   \begin{shellcode}
@@ -586,10 +593,11 @@ For more information try --help
   \medskip
 \end{code}
 
-Die CLI weiß aber schon was der Nutzer tun möchte und könnte anstatt der
-Fehlermeldung einen Prompt geben welcher den Nutzer fragt eine Parameter zu
-übergeben oder, je nach Kontext, einen vorzuschlagen. Dem Nutzer wird erspart
-sich mit der richtigen Syntax und den Vokabeln auseinander zu setzen.
+Die CLI weiß aber bereits was der Nutzer tun möchte und könnte anstatt der
+Fehlermeldung einen Prompt geben welcher den Nutzer nach den fehlenden
+Parametern fragt \parencite{12factor} oder, je nach Kontext, diesem sogar eine
+Liste von Vorschlägen geben, um daraus auswählen. Dem Nutzer wird erspart sich
+mit der richtigen Syntax und den Vokabeln auseinander zu setzen.
 
 \methbox{interactive_missing_param}{Bei fehlendem Parameter soll interaktiv nachgefragt werden.}
 
@@ -602,7 +610,9 @@ Enter location country code:
   \medskip
 \end{code}
 
-Fairerweise ist zu bemerken das die mullvad CLI dies auch an anderer Stelle so handhabt, so fragt die CLI bei \codeinline{mullvad account login} nach der fehlenden Accountnummer.
+Fairerweise ist zu bemerken das die mullvad CLI dies auch an anderer Stelle
+so handhabt, so fragt die CLI bei \codeinline{mullvad account login} nach der
+fehlenden Accountnummer.
 
 Negativ an dieser Methode wäre das der Nutzer nicht im gleichen Maße auf die
 Möglichkeit einer komplexeren Verwendung des Kommandos hingewiesen wird (so
@@ -680,16 +690,17 @@ wird. So wie vom Author beschrieben ist dies aber nicht in der Shell möglich,
 sondern müsste meiner Einschätzung nach eine eigene Kommandozeilen Umgebung
 gebaut werden, was nicht im Sinne der Zielstellung dieser Arbeit liegt.
 
-\subsection{Relevante Defaults}
+\subsection{Relevante Standardwerte}
 
 Relevante Defaults sind nicht Kommandozeilen spezifisch, können dort aber
 wichtiger sein als in grafischen Anwendungen.
 \\
 Dem Nutzer werden die Möglichkeiten eben nicht zur Auswahl gestellt und dieser
 klickt die gewünschte Option an. Sondern ist das Auflisten der Möglichkeiten
-i.d.R. ein separater Schritt, losgelöst von dem Schritt der Nutzung der Option
-(z.B. werden mit \codeinline{ls -d} zuerst die Ordner aufgelistet, um sich dann
-mit \codeinline{cd ORDNER} in einen von diesen hineinzubewegen, siehe auch Abbildung \ref{fig:defaults-demo}.)
+i.d.R. ein separater Schritt, losgelöst von der eigentlich beabsichtigten Aktion
+(z.B. siehe Abbildung \ref{fig:defaults-demo} oder das mit \codeinline{ls -d}
+zuerst die verfügbaren Ordner aufgelistet, um sich dann mit \codeinline{cd
+ORDNER} in einen von diesen hineinzubewegen,auch .)
 \\
 Es greift wieder das fundamentale Problem des `Command Recall' (vgl. Problem
 \ref{prob:command-recall}). Den Schritt des Auflistens der Möglichkeiten
@@ -699,15 +710,20 @@ der Nutzer kann sich an die gewünschte Option erinnern.
 \begin{figure}
   \centering
   \includegraphics[scale=0.5]{defaults-demo.png}
-  \caption{Der erforderte Parameter in dieser Literaturverwaltung ist einer Liste zu entnehmen}
+  \caption{Der erforderte Parameter in dieser Literaturverwaltung ist einer Liste zu entnehmen.}
   \label{fig:defaults-demo}
 \end{figure}
 
 \bigskip
 
-\methbox{relevant-defaults}{Falls möglich, sollen Argumente relevanten Defaults haben.}
+\methbox{relevant_defaults}{Falls möglich haben Argumente relevante Defaultwerte.}
 
-% TODO: elaborate
+Dem Nutzer relevante Standardwerte zu geben erlaubt es diesem weniger
+Argumente an die CLI App übergeben zu müssen. Es gibt weniger Fehlermeldungen
+die den Nutzer zurückweisen, weil dieser etwas vergessen hat.
+
+Es ist aber auch elementar die Nutzung dieser Standardwerte zu kommunizieren.
+Damit der Nutzer von ihnen nicht überrascht wird.
 
 % TODO: describe 12 Factor methods
 % https://medium.com/@jdxcode/12-factor-cli-apps-dd3c227a0e46
@@ -743,8 +759,11 @@ Außen vor sind auch Kommandos welche eine variable Anzahl an Argumenten nehmen,
 Beispielsweise \codeinline{rm file1 file2 file3}, weil es sich bei diesen nicht
 um verschiedene Typen von Argument handelt \parencite{12factor}.
 
-\subsection{Aliase für Kommandos und Flaggen}
+\subsection{Unterstützung aller Versions- und Helpflaggen}
 % 3. What version am I on? -> aliases, get the user what they are looking for
+
+Alle Apps biete eine Hilfs- und eine Versionsseite. Nutzer haben ihre Präferenzen
+wenn es darum geht welche Flagge sie verwenden um diese angezeigt zu bekommen.
 
 \begin{code}
   \begin{shellcode}
@@ -757,19 +776,27 @@ app -V
 app --version
 app version
   \end{shellcode}
-  \captionof{listing}{Es ist klar was der Nutzer hier angezeigt bekommen will}
+  \captionof{listing}{Gängige Varianten der Hilfs- und Versionsflaggen}
   \medskip
 \end{code}
 
-\newcommand\checkmark{\ttfamily{\char"2611}} % or 2713
-\newcommand\cross{\ttfamily{\char"2610}}
+Laut \cite{12factor} sollten möglichst alle in die App eingebaut sein. So kann
+vermieden werden das ein Nutzer nicht das angezeigt bekommt wonach er sucht.
 
+\medskip
+
+\methbox{support_all_help_version}{Unterstütze alle gängigen Formen der Versions- und Helpflaggen.}
+
+\bigskip % TODO: necessary?
+
+\newcommand\checkmark{\ttfamily{\char"2611}}
+\newcommand\cross{\ttfamily{\char"2610}}
 \begin{table}[h!]
   \begin{center}
-    \caption{Auflistung von 15 Programmen darüber welche Varianten funktionieren um Hilfe bzw. Version anzuzeigen}
+    \caption{Unterstützte Varianten von Hilfs- und Versionsflaggen bei einer Stichprobe von 15 Programmen}
     \label{tab:help_version}
-    \begin{tabular}{l c c c c c c c}
-Programm & -h & ---help & help & -v & -V & ---version & version \\
+    \begin{tabular}{l | c c c | c c c c}
+      Programm & \codeinline{-h} & \codeinline{--help} & \codeinline{help} & \codeinline{-v} & \codeinline{-V} & \codeinline{--version} & \codeinline{version} \\
       \hline
 git & \checkmark & \checkmark & \checkmark & \checkmark & \cross & \checkmark & \checkmark \\
 node & \checkmark & \checkmark & \cross & \checkmark & \cross & \checkmark & \cross \\
@@ -778,7 +805,7 @@ grep & \cross & \checkmark & \cross & \cross & \checkmark & \checkmark & \cross 
 zathura & \checkmark & \checkmark & \cross & \checkmark & \cross & \checkmark & \cross \\
 tsp & \checkmark & \cross & \cross & \cross & \checkmark & \cross & \cross \\
 pubs & \checkmark & \checkmark & \cross & \checkmark & \cross & \checkmark & \cross \\
-mp3cut & \checkmark & \cross & \cross & \cross & \cross & \cross & \cross \\
+ffmpeg & \checkmark & \checkmark & \cross & \cross & \cross & \cross & \cross \\
 systemctl & \checkmark & \checkmark & \cross & \cross & \cross & \checkmark & \cross \\
 pacman & \checkmark & \checkmark & \cross & \cross & \checkmark & \checkmark & \cross \\
 make & \checkmark & \checkmark & \cross & \checkmark & \cross & \checkmark & \cross \\
@@ -786,21 +813,74 @@ synctex & \checkmark & \checkmark & \checkmark & \checkmark & \checkmark & \chec
 curl & \checkmark & \checkmark & \cross & \cross & \checkmark & \checkmark & \cross \\
 ansible & \checkmark & \checkmark & \checkmark & \cross & \cross & \checkmark & \cross \\
 nvim & \checkmark & \checkmark & \cross & \checkmark & \cross & \checkmark & \cross \\
-      Summe & 14 & 13 & 3 & 7 & 5 & 12 & 3 \\
+      \hline
+      Summe & 14 & 14 & 3 & 7 & 5 & 12 & 3 \\
     \end{tabular}
   \end{center}
 \end{table}
 
-%%% Bauen
-\chapter{Anforderungsanalyse}
+In meinem unrepresentativen Stichprobe stellte sich heraus das
+\codeinline{-h} und \codeinline{--help} eigentlich überall funktionieren. Mit
+\codeinline{--version} bekommt man in den meisten Fällen auch was man will. Aber
+wenn dies nicht zum Ziel führt kommt es zum durcheinander und man muss sich
+durchprobieren. Bei ffmpeg gibt es sogar nur eine krude \codeinline{-version}
+Flagge.
+
+Am wenigsten verbreitet sind \codeinline{help} und \codeinline{version}, welche
+aber auch etwas außen vor sind, weil das erste Argument bei vielen Programmen
+eine Input Datei bezeichnet. Aber soweit es die App erlaubt, vor allem bei Apps
+mit mehreren Kommandos, sollten auch diese Varianten unterstützt werden.
+
+% \subsection{Rechtschreibfehler }
+% % closer to natual language
+% match both project/projects
+%
+% Die Kommandozeile ist in der Regel sehr strikt  % TODO: ref syntax
+% und Rechtschreibfehler führen zu Fehlermeldungen.
+% Deswegen empfiehlt \cite{clig} das, wenn man sich denken kannst was der Nutzer
+% meint, dies vorgeschlagen werden soll.
+%
+% \begin{code}
+%   \begin{shellcode}
+% heroku pss
+%  ›   Warning: pss is not a heroku command.
+% Did you mean ps? [Y/n]:
+%   \end{shellcode}
+%   \captionof{listing}{Beispiel eines Vorschlags den Rechtschreibfehler zu korrigieren}
+%   \medskip
+% \end{code}
+%
+% http://www.catb.org/~esr/jargon/html/D/DWIM.html
+% Nach der Philosophie von `Do What I Mean' \parencite{DWIM} hingegen werden
+% Fehler direkt ohne Nutzerfeedback ausgebessert. Was natürlich schneller ist und
+% den Nutzungsflow nicht unnötig unterbricht, aber auch zu den in \cite{DWIM}
+% beschriebenen `notorious incident[s]' führen.
+% --camelCase --with-dashes: https://uxdesign.cc/user-experience-clis-and-breaking-the-world-baed8709244f
+
+\subsection{Menschliche Sprache als Input annehmen} % TODO: rename, make it less general/grandiose
+
+\cite{Raskin_2008} und \cite{Norman_2007} sprechen über die nächste Evolution
+des User Interfaces als eine Art Kommandozeile basierend auf menschlicher
+Sprache.
+
+Auch wird die Kommandozeile nicht mehr nur als Scripting Platform sondern als
+`human-first [..] text-based UI' gesehen \parencite{clig}.
+
+% Da liegt es nahe innerhalb der Einschränkungen des CLI trotzdem zu versuchen
+% menschliche Sprache zu verarbeiten.
+
+% -> human readable (relative) dates
+
+\chapter{Bauen}
+\section{Anforderungsanalyse}
 % [Beschreibung der Erhebung, Granularisierung und Priorisierung der zu Grunde liegenden Anforderungen]
 
 Die zu bauende Anwendung wurde konzipiert nicht zu trivial - um genug
 Spielraum im Interface Design zuzulassen - aber auch nicht zu komplex - um die
 Umsetzbarkeit zu gewährleisten - zu sein.
 
-\section{Konzept}
-\subsection{Problem}
+\subsection{Konzept}
+\subsubsection{Problem}
 
 Bei Endava werden die Arbeitsstunden über ein Oracle System festgehalten. Dieses
 glänzt nicht in Usability, es führt aber kein Weg dran vorbei.
@@ -818,7 +898,7 @@ eingetragen werden.
 
 % TODO: screenshot realistic case
 
-\subsection{Lösungsansatz}
+\subsubsection{Lösungsansatz}
 
 Die entworfene Lösung ist eine Kommandozeilen App welche das tägliche loggen der
 Arbeitszeiten, und Notizen woran gearbeitet wurde, vereinfacht. Und diese Daten
@@ -830,7 +910,7 @@ einem Rutsch erledigt wird.
 Weil es den Rahmen sprengen würde, ohne dem Thema dienlich zu sein, wurde davon
 abgesehen die CLI an ggf. bestehende Oracle APIs anzubinden.
 
-\section{Anforderungen}
+\subsection{Anforderungen}
 
 Die Anforderungen wurden in Form von User Stories festgehalten. Erhoben wurden
 diese durch den Author in Analyse der eigenen Nutzungsmuster mit Oracle,
@@ -867,8 +947,8 @@ Vordergrund, weshalb u.a. hier die Akzeptanzkriterien der User Stories,
 Implementationsdetails wie Datenpersistierung, etc. nicht weiter beschrieben
 werden.
 
-\chapter{Implementation}
-\section{Fundament}
+\section{Implementation}
+\subsection{Fundament}
 
 Das Fundament der App stellen die zugrundelegenden technologischen Aspekte dar,
 welche nicht oder nur indirekt die Nutzbarkeit, und damit den Fokus der Arbeit
@@ -876,16 +956,16 @@ betreffen.
 
 Node.js wurde als Programmiersprache gewählt, weil der Author damit vertraut
 war, eine vielzahl von Liberies zum Bauen von CLI's existieren und der
-Paketveröffentlichungsprozess mit npm relativ simpel ist.
-Weiterhin wurden noch Typescript, für Typisierung, und Eslint, für gleichmäßigen
-Code Style, verwendet.
+Paketveröffentlichungsprozess mit npm relativ simpel ist. Weiterhin wurden noch
+Typescript - für Typisierung - und Eslint - für gleichmäßigen Code Style -
+verwendet.
 
-\section{Libraries}
+\subsection{Libraries}
 
 Ein Überblick über die Libraries welche für das Bauen des Interfaces und die
 Umsetzung der Methoden relevant waren.
 
-\subsection{oclif}
+\subsubsection{oclif}
 
 ``oclif is an open source framework for building a command line interface
 (CLI) in Node.js. Create CLIs with a few flags or advanced CLIs that have
@@ -896,7 +976,7 @@ Flaggen und Argumente zu beschreiben und dann eigene Businesslogik auszuführen
 (siehe Abbildung \ref{fig:oclif-list}.) Während oclif Kommando- und
 Flaggenparsing, das generieren der Hilfsseite uvm. übernimmt.
 
-\begin{figure}
+\begin{figure} % TODO: redo, as listing?
   \centering
   \includegraphics[scale=0.5]{oclif-list.png}
   \caption{Beschreiben eines Kommandos in oclif am Beispiel des implementierten \codeinline{project list} Kommandos}
@@ -922,32 +1002,252 @@ Die Hierarchie von Kommandos wird über eine Strukurierung der Dateien erreicht 
 
 % TODO: node noch andere libs, oclif warum gewählt? Verweis auf autocomplete
 
-\subsection{Inquirer.js}
+\subsubsection{Inquirer.js}
 
-Inquirer stellt eine Ansammlung an interaktiven % TODO: reference to earlier chapter
+Inquirer stellt eine komplette Ansammlung an interaktiven % TODO: reference to earlier chapter
 Fragetypen zusammen.
-% TODO: ...
+
+Neben einfachen Fragen wie danach Text einzugeben oder aus einer Liste
+auswählen, gibt es auch eine Checkbox bei welcher mehrere Einträge einer
+Liste gewählt werden können oder einen Prompt zu bearbeiten von Text im
+\codeinline{\$EDITOR} (einer Shellvariable in welcher der Nutzer seinen
+präferierten Texteditor einträgt).
 
 \begin{figure}
   \centering
   \includegraphics[scale=0.5]{inquirer-example.png}
-  \caption{Eine mit Inquirer.js implementierter Frage und Antwort Flow zum herausfinden was der Nutzer bearbeiten möchte}
+  \caption{Ein Frage und Antwort Flow zum herausfinden was der Nutzer bearbeiten möchte}
   \label{fig:inquirer-example}
 \end{figure}
 
-\section{Anwendung gesammelter Methoden}
+\begin{code}
+  \medskip
+  \captionof{listing}{Code Beispiel zum Implementieren eines simplen \codeinline{inquirer list} Prompts}
+  \begin{javascriptcode}
+const { whatToEdit } = await inquirer.prompt( [ {
+  type   : "list",
+  name   : "whatToEdit",
+  message: "What do you want to edit?",
+  choices: [
+    {
+      name : "Project Name",
+      value: "project",
+    },
+    {
+      name : "Task Details (of a project)",
+      value: "taskDetail",
+    },
+  ],
+} ] );
+
+// wird zu:
+
+? What do you want to edit? (Use arrow keys)
+> Project Name
+  Task Details (of a project)
+  \end{javascriptcode}
+\end{code}
+
+\subsection{Vorstellung der Implementierten Lösung}
+
+% TODO: how does this chapter look?
+% TODO: texts to disjointed?
+% TODO: describe npm package
+
+Es folgt eine grobe Vorstellung der Implementierten App. Nachgehend wird
+noch einmal seperat auf die Implementation der Methoden zur Absenkung der
+Nutzungsschwelle eingegangen.
+
+\medskip
+
+Der Name der App `oraclett' ist kurz für `Oracle time tracker'. Gewählt wurde
+dieser weil er 1) kurz und prägnant als auch 2) mit Autovervollständigung leicht
+zu finden ist. Intern ist die Platform zu festhalten der Arbeitszeiten als
+`Oracle` bekannt, deshalb sollte der Name des Programmes mit \codeinline{oracle}
+beginnen damit beim drücken von TAB dann zu \codeinline{oraclett}
+vervollständigt wird. Andere in Erwägung gezogene Varianten waren
+\codeinline{oracle-time-tracker} oder \codeinline{ott}.
+
+\begin{code}
+  \medskip
+  \captionof{listing}{Das Hilfsmenu der CLI App}
+  \label{code:oraclett-help}
+  \begin{shellcode}
+  \$ oraclett --help
+
+  Oracle time tracker
+
+  VERSION
+    oraclett/0.0.0 linux-x64 node-v19.2.0
+
+  USAGE
+    \$ oraclett [COMMAND]
+
+  TOPICS
+    hours     Log working hours.
+    note      Note down what you worked on.
+    project   Add a project code.
+    timecard  Generate a report for filling out timecards.
+
+  COMMANDS
+    autocomplete  display autocomplete installation instructions
+    help          Display help for oraclett.
+    timecard      Generate a report for filling out timecards.
+  \end{shellcode}
+\end{code}
+
+Die Kommandos sind nach dem `noun verb' Prinzip \parencite{clig} strukturiert.
+Auf das Nomen, in unserem Fall etwa die Stunden (\codeinline{hours}), folgt
+ein Verb wie hinzufügen, bearbeiten, entfernen oder auflisten. Diese Verben
+sind bei allen Kommandos einheitlich. Zu bearbeiten eines Projekt wird ebenso
+\codeinline{edit} verwendet wie beim bearbeiten einer Notiz.
+
+\begin{code}
+  \label{code:hours-help}
+  \begin{shellcode}
+  \$ oraclett hours --help
+
+  Log working hours.
+
+  USAGE
+    \$ oraclett hours COMMAND
+
+  COMMANDS
+    hours add     Log working hours.
+    hours edit    Edit the logged hours interactively.
+    hours list    List all projects.
+    hours log     Log working hours.
+    hours remove  Remove logged hours interactively.
+  \end{shellcode}
+  \captionof{listing}{Hilfsseite des `hours' Kommandos}
+  \medskip
+\end{code}
+
+Die vorgesehene Nutzungsflow wäre wie folgt. Wenn man einem neuen Projekt
+zugewiesen wird fügt man dieses \codeinline{oraclett} mit \codeinline{project
+add} hinzu.
+\\
+Im normalen Arbeitsalltag würde man gearbeitete Stunden mit \codeinline{hours
+add} festhalten. Auch Notizen dazu woran gearbeitet wurde würden im Moment
+selbst mit \codeinline{note add} dokumentiert werden.
+\\
+Am Ende Arbeitswoche würde mit \codeinline{timecard} ein Report erstellt, dessen
+Daten dann in das interne Oracle System übertragen werden. Womit die Woche
+abgeschlossen wäre.
+\\
+Zum Verwalten oder Ausbessern der Daten im System gibt es jetzt noch die
+\codeinline{edit} und \codeinline{remove} Subkommandos. Diese stehen falls
+benötigt zur Verfügung, sind aber nicht teil des normalen Workflows.
+
+\begin{figure}
+  \centering
+  \includegraphics[scale=0.5]{project-add.png}
+  \caption{Interaktives hinzufügen eines Projektes.}
+  \label{fig:project-add}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[scale=0.5]{project-list.png}
+  \caption{Auflisten der im System vorhandenen Projekte.}
+  \label{fig:project-list}
+\end{figure}
+
+Die Farben für verschiedene Daten sind einheitlich über alle `list' Kommandos.
+So sind die Codes die Referenzcodes Projekte und `Task Details' Grün
+bzw. Blau. Dies ist u.a. in den Abbildungen \ref{fig:project-list} und
+\ref{fig:note-list} zu sehen. Notizen werden mit Gelb markiert, etwa auf der
+Abbildung \ref{fig:note-list}. Und Stundenanzahl sowie Wochentage werden mit
+Magenta hervorgehoben, wie zu sehen in Abbildungen \ref{fig:hours-list} und
+\ref{fig:timecard}.
+
+\begin{figure}
+  \centering
+  \includegraphics[scale=0.5]{note-add.png}
+  \caption{Hinzufügen von Notizen auf interaktivem und normalem Wege.}
+  \label{fig:note-add}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[scale=0.5]{note-list.png}
+  \caption{Die Auflistung der Notizen einer gewählten Woche.}
+  \label{fig:note-list}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[scale=0.5]{hours-add.png}
+  \caption{Loggen von Stunden. Beim Weglassen von Flaggen werden diese interaktiv erfragt.}
+  \label{fig:hours-add}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[scale=0.5]{hours-list-real.png}
+  \caption{Auflistung der festgehaltenen Stunden.}
+  \label{fig:hours-list}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[scale=0.5]{timecard-real.png}
+  \caption{Ein die ganze Woche zusammenfassender Report, welcher in seiner Struktur dafür ausgelegt ist in die Web-Oberfläche des internen Tools übertragen zu werden.}
+  \label{fig:timecard}
+\end{figure}
+
+\subsection{Anwendung gesammelter Methoden}
+
+Nach dem Verschaffen eines Überblicks, wird nun auf die Anwendung der
+gesammelten Methoden näher eingegangen.
+
+\subsubsection{Relevante Standardwerte}
+
+% TODO: methbox nochmal hier?
+
+Die \methref{relevant_defaults} wurde auf zwei Wegen implementiert. Einmal als
+exakte Implementation. Und einmal als Weiterführung im Sinne der Methode.
+
+\begin{code}
+  \begin{shellcode}
+-d, --date=<value>  [default: this week] A date to specify the week (can be human-readable)
+  \end{shellcode}
+  \captionof{listing}{Die mit default versehene \codeinline{--date} Flagge.}
+  \medskip
+\end{code}
+
+Obiger Auszug aus dem Hilfsmenü von \codeinline{hours list} kommuniziert das
+die \codeinline{--date} Flagge wenn nicht übergeben den Wert \codeinline{this
+week} annimmt. Wird das Kommando \codeinline{hours list} ohne Flaggen aufgerufen
+werden die Stunden der aktuellen Woche angezeigt. Natürlich kann auch ein
+anderer Zeitraum übergeben werden, die aktuelle Woche wird aber am relevantesten
+für die meisten Nutzer sein.
 
 % TODO: relevant-defaults
+% dates = today/this week; if only one option, use it; interaktive Vorschläge;
+
 % TODO: autocomplete
+% diskussion zu anderen Frameworks
+
 % TODO: interactive_missing_param
+% show implementation, warum edit/remove only interaktive?
+
 % TODO: menu
+% möglich die ganze App als Menü abzubilden, aber dann wären CLI und Interaktive zu kurz gekommen
+% -> outlook
+
 % TODO: flags_over_arguments
+% implementiert, show Reihenfolge does not matter, erleichtert auch aliasing,
+% kombiniert mit interaktive können nur manche Argumente angegeben werden (+)
+
+% TODO: other methods?
+
 
 %%% Umfrage
-\chapter{Umfragengestaltung}
-\section{Methodologie}
-\section{Ergebnisartefakte}
-% [Beschreibung der Ergebnisse / Ergebnistypen, welche Sie im Rahmen der Probleml\"osung generieren / erzielen wollen, z.B. Algorithmus, Prototyp einer Software(komponente), ... ]
+% \chapter{Umfragengestaltung}
+% \section{Methodologie}
+% \section{Ergebnisartefakte}
+% % [Beschreibung der Ergebnisse / Ergebnistypen, welche Sie im Rahmen der Probleml\"osung generieren / erzielen wollen, z.B. Algorithmus, Prototyp einer Software(komponente), ... ]
 
 \chapter{Auswertung}
 
@@ -960,6 +1260,41 @@ Fragetypen zusammen.
 % [Beschreibung der Ergebnisse einer kritischen Reflektion und Begr\"undung dessen, was die Arbeit nicht zu leisten vermag]
 \section{Ausblick}
 % [Beschreibung und Begr\"undung potenzieller zuk\"unftiger Folgeaktivit\"aten im Zusammenhang mit Ihrer Arbeit (z.B. weitere Anforderungen, Theoriebildung, ... ]
+
+\subsection{Erarbeitung weiter Methoden}
+
+Mit mehr Zeit hätten sich weitere Methoden formulieren lassen.
+% TODO: hier andere Methoden to look into
+
+\subsection{Strukturierung und Zugänglichkeit der Methoden}
+
+Die Methoden könnten in stärker strukturierter Form und außerhalb des Kontextes
+dieser Arbeit für sich stehend formuliert werden. Zusammen mit einer englischen
+Übersetzung wären sie dadurch dann leichter referenzier- und implementierbar.
+
+\subsection{Verbesserung der Implementation}
+
+Die konkrete Implementierung hat noch einige Schwächen. So gibt es Dopplungen in
+den Hilfsmenüs (etwa \codeinline{timecard} in Listing \ref{code:oraclett-help}
+oder \codeinline{hours add/log} in Listing \ref{code:hours-help}), inakkurate
+Hilfstexte in der Autovervollständigung oder im \codeinline{oraclett --help}
+Menü sowie das die Autocompletion erst durch den Nutzer konfiguiert werden
+muss. Diese Probleme sind der Nutzung des ocli Frameworks geschuldet. Es gibt
+Möglichkeiten diese zu Adressieren, das war aber im Rahmen dieser Arbeit nicht
+möglich.
+% TODO: reference to autocomplete implementaton
+
+Eine Anbindung an Oracle selbst war im Rahmen dieser Arbeit nicht vorgesehen,
+weil der Fokus auf den Methoden lag. Als zukünftige Verbesserung der App wäre
+dies aufgrund der Zeitersparnis aber sinnvoll.
+
+\subsection{Evaluation der Methoden}
+
+Es wäre sinnvoll den Effekt der Methoden auf die Nutzbarkeit zu messen. Etwa
+durch Implementierung einer zweiten App welche die gleichen Anforderungen
+erfüllt, aber mit explizit nicht implementierten Methoden. Um diese beiden Apps
+dann gegenüber zu stellen um zu schauen welche Effekte bei welchen Nutzergruppen
+auftreten.
 
 %%% possible modules
 % \section{Kontext}
