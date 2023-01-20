@@ -1,6 +1,11 @@
-# ba
+# Entwicklung und Evaluation von Methoden zur Absenkung der Nutzungsschwelle von Kommandozeilen-Interfaces
 
-> My bachelor thesis
+> Bachelor thesis on describing and evaluating methods for reducing the barrier of entry for the command-line
+
+My German bachelor thesis for my B.Sc. in Angewandte Informatik at HTW Berlin.
+
+- [PDF of the thesis](thesis.pdf)
+- The associated app can be found here: [oraclett](https://github.com/jneidel/oraclett)
 
 ## Dependencies
 
@@ -12,3 +17,14 @@ To install one:
 tllocalmgr install NAME
 sudo texhash
 ```
+
+## Build
+
+To build once:
+
+```sh
+make
+```
+
+For watch mode (rebuild on change) and other shenanigans check out the
+[Makefile](Makefile).

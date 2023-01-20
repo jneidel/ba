@@ -194,7 +194,7 @@ Datum
 \section{Hintergrund der Arbeit}
 % [Beschreibung des groben Kontextes der Arbeit; im Detail sollten Sie dies im Grundlagenteil darstellen]
 
-Die Kommandozeile und darauf basierende Applikationen bergen das Potential für Produktivitätssteigerungen im Vergleich zu GUI Applikationen, vorrausgesetzt der Nutzer weiß mit dieser umzugehen. % TODO: Citation needed
+Die Kommandozeile und darauf basierende Applikationen bergen das Potential für Produktivitätssteigerungen im Vergleich zu GUI Applikationen, vorausgesetzt der Nutzer weiß mit dieser umzugehen. % TODO: Citation needed
 
 
 \section{Problem- und Zielstellung (Scope)}
@@ -643,7 +643,7 @@ Nutzergruppen hinweg doppelt so häufig verwendet.
 
 \methbox{menu}{Biete ein Menü-Interface an.}
 
-% TODO: move and complete
+% TODO: move
 
 \subsection{Autovervollständigung zum Vorschlagen und Vervollständigen von Kommandos/Flaggen}
 
@@ -758,6 +758,43 @@ oraclett project add --project INTPD999DXD --taskDetail "01 - Career development
 Außen vor sind auch Kommandos welche eine variable Anzahl an Argumenten nehmen,
 Beispielsweise \codeinline{rm file1 file2 file3}, weil es sich bei diesen nicht
 um verschiedene Typen von Argument handelt \parencite{12factor}.
+
+Ein weiter Vorteil das Erstellen von Aliasen to vereinfachen. Man stelle sich
+vor ein App nimmt ein Datum und eine Anzahl von Stunden. Der Nutzer möchte nun
+einen Alias der den Tag immer auf heute stellt. Gewünschte Nutzung des Alias sieht so aus:
+
+\begin{code}
+  \begin{shellcode}
+\$ apptoday 8
+  \end{shellcode}
+\end{code}
+
+Wenn die App Argumenten nimmt sähe ein Aufruf sowie die Definition des Aliases so aus:
+
+\begin{code}
+  \begin{shellcode}
+\$ app HOURS DATE
+
+apptoday() {
+  app \$1 today
+}
+  \end{shellcode}
+\end{code}
+
+Im Vergleich zu dem Aufruf und Alias mit Flaggen:
+
+\begin{code}
+  \begin{shellcode}
+\$ app --hours HOURS --date DATE
+
+alias apptoday="app --date today --hours"
+  \end{shellcode}
+\end{code}
+
+In der Verwendung sind beide equivalent. Beim Schreiben des Alias ist die zweite
+Syntax Kommandozeilen Neulingen aber vertrauter, weil man mit dieser zuerst
+in Kontakt kommt. Auch ist kein Verständnis von Shell notwendig (hier das
+\codeinline{\$1} dem ersten übergebenen Parameter entspricht.)
 
 \subsection{Unterstützung aller Versions- und Helpflaggen}
 % 3. What version am I on? -> aliases, get the user what they are looking for
@@ -1223,8 +1260,92 @@ werden die Stunden der aktuellen Woche angezeigt. Natürlich kann auch ein
 anderer Zeitraum übergeben werden, die aktuelle Woche wird aber am relevantesten
 für die meisten Nutzer sein.
 
-% TODO: relevant-defaults
-% dates = today/this week; if only one option, use it; interaktive Vorschläge;
+\medskip
+
+Wenn nur eine Option besteht wird diese automatisch gewählt und der Nutzer
+darüber informiert. Am Beispiel von \codeinline{hours edit} sieht das wie folgt
+aus. Der Standardwert für das Datum ist \codeinline{today} und wenn heute nur
+Stunden für ein Projekt festgehalten wurden wird dieses Projekt automatisch
+ausgewählt (siehe Abbildung \ref{fig:hours-edit-defaults}.)
+
+\begin{figure}
+  \centering
+  \includegraphics[scale=0.5]{hours-edit-defaults.png}
+  \caption{Wenn nur eine Options zur Verfügung steht wird diese automatisch verwendet.}
+  \label{fig:hours-edit-defaults}
+\end{figure}
+
+\subsubsection{Unterstützung aller Versions- und Helpflaggen}
+
+Im Bezug auf \methref{support_all_help_version} ist zu sagen das natürlich alle
+gängigen Varianten verwendbar sind.
+
+Mit oclif war dies sogar sehr einfach:
+\begin{code}
+  \begin{javascriptcode}
+...
+"oclif": {
+  "additionalHelpFlags": [
+    "-h",
+    "help"
+  ],
+  "additionalVersionFlags": [
+    "-v",
+    "-V",
+    "version"
+  ],
+  ...
+  \end{javascriptcode}
+  \captionof{listing}{Konfiguration von Hilfs- und Versionsflaggen für oclif in der \codeinline{package.json}.}
+  \medskip
+\end{code}
+
+\subsubsection{Flaggen anstatt Argumenten}
+
+\methref{flags_over_arguments} wurde implementiert. Die Kommandos zum Hinzufügen
+von Objekten haben zwischen 2-4 Werten die übergeben werden sollen.
+
+\begin{code}
+  \begin{shellcode}
+\$ oraclett hours add --help
+
+Log working hours.
+
+USAGE
+  \$ oraclett hours add [-t <value>] [-p <value>] [-d <value>] [-H <value>]
+
+FLAGS
+  -H, --hours=<value>       The number of hours to log. (1h: 1, 30min: 0.5, etc.)
+  -d, --date=<value>        [default: today] The date for which to log (can be human-readable)
+  -p, --project=<value>     A project code (it it's short version)
+  -t, --taskDetail=<value>  The task details (in it's short version, e.g. 01)
+
+DESCRIPTION
+  Log working hours.
+
+  Passing no arguments will start an interactive session.
+
+  This will add to existing hours, if this command is run twice the hours logged will be doubly.
+
+ALIASES
+  \$ oraclett hours log
+
+EXAMPLES
+  \$ oraclett hours add
+  \$ oraclett hours add 3
+  \$ oraclett hours add 3 -p INTPD999DXD -t 01
+  \$ oraclett hours add 3 -p INTPD999DXD -t 01 --date yesterday
+  \$ oraclett hours add 10 -p INTPD999DXD -t 01 -d today -f
+  \end{shellcode}
+  \captionof{listing}{Hilfsmenü von \codeinline{hours add}}
+  \medskip
+\end{code}
+
+Neben dem
+Wegfallen der Reihenfolge sind die Flaggen auch elementar für das Zusammenspiel
+mit anderen Methoden. Wenn der Nutzer Gebrauch von Defaultwerten machen möchte
+oder die Werte interaktiv beantworten will, kann die Flagge einfach weg gelassen
+werden. Das wäre mit Argumenten so nicht möglich gewesen.
 
 % TODO: autocomplete
 % diskussion zu anderen Frameworks
@@ -1236,16 +1357,78 @@ für die meisten Nutzer sein.
 % möglich die ganze App als Menü abzubilden, aber dann wären CLI und Interaktive zu kurz gekommen
 % -> outlook
 
-% TODO: flags_over_arguments
-% implementiert, show Reihenfolge does not matter, erleichtert auch aliasing,
-% kombiniert mit interaktive können nur manche Argumente angegeben werden (+)
+\subsubsection{Menu Interface}
 
-% TODO: other methods?
+Die \methref{menu} wurde nicht umgesetzt. Die Anforderungen hätten aber durchaus
+als Menü abgebildet werden können. Das Interface wäre komplett separat vom
+existierenden CLI Interface gewesen. Und hätte signifikanten Programmieraufwand
+mit sich gebracht und den Fokus der Implementation vom CLI und den anderen
+Methoden abgebracht.
+
+%%% Evaluation
+\chapter{Evaluation}
+\section{Methodologie}
+
+\subsection{}
 
 
-%%% Umfrage
-% \chapter{Umfragengestaltung}
-% \section{Methodologie}
+% Formulierung von Wertekriterien
+% Kriterien werden ausgewählt und definiert, die das Produkt erfüllen muss, um  als gut, wertvoll etc. gelten zu können.
+
+% Formulierung von Leistungsstandards
+% Für die oben eingeführten Kriterien wird eine Norm definiert, die das Produkt  erreichen muss, damit das Kriterium als erfüllt angesehen werden kann (Operationalisierung).
+
+% Messung und Vergleich (Analyse)
+% Das Produkt wird jetzt unter der Anwendung der Kriterien untersucht, gemessen und mit den vorgegebenen Leistungsstandards verglichen.
+
+% Werturteil (Synthese)
+% In dieser letzten Phase werden die verschiedenen Ergebnisse zu einem einheitlichen Werturteil verknüpft.
+
+Es wurde ein Usability-Test durchgeführt. Laut \cite[36]{henger2003} werden dabei
+``[..] konkrete Nutzungssituationen durch repräsentative Endnutzer simuliert,
+um die Bedienbarkeit eines Produkts oder Prototypen zu überprüfen.'' Ziel
+dieser bewertenden Evaluation war es die Zugänglichkeit der App zu prüfen. Die
+Annahme war ja, das der Einsatz der erarbeiteten Methoden zur Absenkung der
+Nutzungsschwelle führt. Um die Zugänglichkeit zu überprüfen wurden präferiert
+Nutzer mit keinen bis wenig Vorkenntnisse mit der Kommandozeile gewählt.
+
+% TODO: is up to date?
+Durchgeführt wurde die Evaluation via Videoanruf bei welchem die Nutzer Ihren
+Bildschirm teilten.
+
+% TODO: Welche Informationen werden gesammelt?  Was soll gemessen werden, welche Daten sind von Bedeutung?
+
+Im Rahmen der Evaluation wurden x Personen befragt. % TODO: number here
+
+\subsection{Fragenkatalog}
+
+Die Evaluation wurde auf Englisch durchgeführt. Deshalb werden die Fragen auch im
+verwendeten englisch Wortlaut wiedergegeben.
+
+\begin{enumerate}
+  \item How much prior experience do you have with CLIs?
+    \begin{enumerate}
+      \item None: have only ever pasted in commands
+      \item Little: used it occasionally, for specific things
+      \item Some:
+    \end{enumerate}
+\end{enumerate}
+
+Nach der bearbeiten von Aufgaben im System:
+
+Einschätzung nach Likert-Skala.
+
+\begin{enumerate}
+  \item Using the app felt good.
+  \item I could do what I needed to do.
+\end{enumerate}
+
+\subsection{Erhobene Daten}
+
+Zeit die ein Benutzer benötigt, um eine gegebene Aufgabe zu erfüllen.
+
+Zufriendenheit, die subjektive Einstellung des Nutzers gegenüber dem System
+
 % \section{Ergebnisartefakte}
 % % [Beschreibung der Ergebnisse / Ergebnistypen, welche Sie im Rahmen der Probleml\"osung generieren / erzielen wollen, z.B. Algorithmus, Prototyp einer Software(komponente), ... ]
 
