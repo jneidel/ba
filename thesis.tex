@@ -1034,16 +1034,37 @@ Die Hierarchie von Kommandos wird über eine Strukurierung der Dateien erreicht 
 \begin{code}
   \begin{shellcode}
  src/commands
- ├── hour
- │   ├── add.ts
- │   └── ...
  └── project
      ├── add.ts
      ├── edit.ts
      ├── list.ts
      └── remove.ts
   \end{shellcode}
-  \captionof{listing}{Kommandohierarchie über Dateistruktur: Kommandos und deren Subkommandos}
+  \captionof{listing}{Kommandohierarchie wird duch Dateistruktur angegeben: Am Beispiel von des \codeinline{project} Kommandos und dessen Subkommandos}
+  \medskip
+\end{code}
+
+oclif kümmert sich auch um Kleinigkeiten. Zum Beispiel sicherzustellen das der
+Text der Hilfsseiten richtig formatiert wird. Im unterstehenden Listing wird
+demonstriert wie oclif bei eingeschränkter Breite des Terminals so einrückt
+das immer noch klar zu erkennen ist was Beschreibung und was Flagge ist. Das
+Gegenbeispiel dazu entsteht wenn einfach nur der Text geschrieben wird, ohne die
+Terminalbreite zu berücksichtigen.
+
+\begin{code}
+  \begin{shellcode}
+# in oclif
+FLAGS
+  -d, --date=<value>  [default: today] A date to specify the day OR
+                      the week (can be human-readable)
+
+# ohne Framework
+FLAGS
+  -d, --date=<value>  [default: today] A date to specify the day OR
+the week (can be human-readable)
+  \end{shellcode}
+  \captionof{listing}{oclif's Handhabung von Zeilenumbrüchen in einem schmalen Terminal im Vergleich zu einer Implementierung ohne Framework}
+  \label{lst:oclif-umbruch}
   \medskip
 \end{code}
 
@@ -1291,7 +1312,17 @@ Wenn nur eine Option besteht wird diese automatisch gewählt und der Nutzer
 darüber informiert. Am Beispiel von \codeinline{hour edit} in der Abbildung
 \ref{fig:hours-edit-defaults} sieht das wie folgt aus. Der Standardwert für
 das Datum ist \codeinline{today}. Wenn heute nur Stunden für eine einzige
-Projekt-Task Detail Kombination festgehalten wurden ist dieses gemeint.
+Projekt-Task Detail Kombination festgehalten wurden ist dieses gemeint. Und
+am gewählten Tag keine Stunden oder Notizen festgehalten wurden, wird in den
+Wochenmodus gewechselt. Dieser erlaubt, wie auch in Abb. \ref{fig:day-week-mode}
+zu sehen, das Auswählen eines Wochentages für etwas im System vorliegt.
+
+\begin{figure}
+  \centering
+  \includegraphics[scale=0.5]{day-week-mode.png}
+  \caption{Wechsel vom Tagesmodus, in den Wochenmodus welcher aus Wochentagen mit vorliegenden Daten auswählen lässt.}
+  \label{fig:day-week-mode}
+\end{figure}
 
 Außerdem wurden eine Auswahl an häufigen geteilten Projekten eingebettet. Der
 Nutzer hat immer noch die Möglichkeit diese zu entfernen, aber wahrscheinlich
