@@ -1,11 +1,12 @@
 \documentclass[oneside,bibliography=totocnumbered,BCOR=5mm]{scrbook}
 
 \usepackage[ngerman]{babel}
-
-\usepackage[utf8]{inputenc}
 \usepackage{fontspec}
-% \setmainfont{Times}
-\setmonofont{FuraCode Nerd Font Mono} % from fc-list
+
+% look up system fonts via fc-list
+% \setmainfont
+\setsansfont{SFNS Display}
+\setmonofont{FuraCode Nerd Font Mono}
 
 \usepackage[
 backend=biber,
@@ -48,12 +49,6 @@ autocite=footnote
 \usepackage{marvosym}
 \usepackage{csquotes}
 \usepackage{hyperref}
-
-% \usepackage[hyphens]{url}
-
-\usepackage[sc]{mathpazo} % Use the Palatino font
-\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
-\linespread{1.05} % Line spacing - Palatino needs more space between lines
 \usepackage{microtype} % Slightly tweak font spacing for aesthetics
 
 \usepackage[hmarginratio=1:1,top=32mm,columnsep=20pt]{geometry} % Document margins
