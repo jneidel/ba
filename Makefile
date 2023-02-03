@@ -7,11 +7,13 @@ once:
 # latex
 compile_tex: thesis.tex
 	xelatex -shell-escape thesis
+compile_short: thesis.tex
+	$(MAKE) compile_tex && \
+	$(MAKE) copy_pdf
 compile: thesis.tex
 	$(MAKE) compile_tex && \
-		$(MAKE) copy_pdf
-		# $(MAKE) compute_bib && \
-		# $(MAKE) compile_tex && \
+	$(MAKE) compute_bib && \
+	$(MAKE) compile_short
 
 # pdf
 copy_pdf: thesis.pdf
