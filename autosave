@@ -1,0 +1,4 @@
+#! /bin/sh
+
+git -C ~/code/ba add -A
+git -C ~/code/ba commit -m "autosave"

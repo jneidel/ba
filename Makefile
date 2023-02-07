@@ -6,7 +6,7 @@ once:
 
 # latex
 compile_tex: thesis.tex
-	xelatex -shell-escape thesis || \
+	xelatex -shell-escape -interaction=nonstopmode thesis || \
 		$(MAKE) clean
 compile_short: thesis.tex
 	$(MAKE) compile_tex && \

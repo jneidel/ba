@@ -44,6 +44,9 @@ autocite=footnote
 \newmintinline[codeinline]{shell}{
   fontsize=\small
 }
+\newmintinline[codeinlinefn]{shell}{ % footnote
+  fontsize=\scriptsize
+}
 
 %%%%%% other packages %%%%%%
 
@@ -406,7 +409,7 @@ Dieses fundamentale Problem bedeutet das sich die Nutzer immer erst mit einem
 Kommando auseinander setzten müssen bevor sie dieses verwenden können. Auch
 spielt das Vergessen mit der Zeit eine große Rolle. \cite{Raskin_2008} weißt
 auch auf teilweise geringe Einprägsamheit von Befehle wie \codeinline{tar -xzf
-FILE}\footnote{Entpacken einer `gzipped tar' Datei (\codeinline{tar.gz}).} hin.
+FILE}\footnote{Entpacken einer `gzipped tar' Datei (\codeinlinefn{tar.gz}).} hin.
 
 \begin{figure}[H]
   \centering
@@ -733,7 +736,7 @@ $ apptoday 8
 
 Um diesen Alias zu ermögliche muss aber eine kompliziertere\footnote{Neulinge
 kommen mit der Alias Syntax meist früher in Kontakt. Neben unvertrauter Syntax
-spielt mit hinein das Shell Argumente (\codeinline{\$1}) verwendet werden müssen und das die
+spielt mit hinein das Shell Argumente (\codeinlinefn{\$1}) verwendet werden müssen und das die
 Möglichkeit entfällt dynamisch weitere Flaggen zu übergeben.} Shell Funktion
 definiert werden, weil das Argument an die richtige Stelle übergeben werden
 muss:
@@ -770,7 +773,7 @@ unabhängig von der durch den Entwickler definierten Reihenfolge.
 \section{Unterstützung aller Hilfs- und Versionsflaggen}
 
 Der Großteil aller Apps bietet eine Hilfs- und eine Versionsseite. Hilfsseiten
-beschreiben ähnlich wie eine `man page'\footnote{Einer über das \codeinline{man}
+beschreiben ähnlich wie eine `man page'\footnote{Einer über das \codeinlinefn{man}
 Kommando verfügbaren Hilfsseite.} die Subkommandos, Flaggen und Syntax. Meist
 sind diese auch relativ und beziehen sich auf das aktuelle Subkommando.
 Versionsseiten geben die Version der App\footnote{Sowie ggf. eine Liste von
@@ -1097,42 +1100,53 @@ Subkommandos vor \parencite{seneviratne2008new}.}
 \label{sec:beispiel-anwendung}
 
 \section{Anforderungsanalyse}
-% [Beschreibung der Erhebung, Granularisierung und Priorisierung der zu Grunde liegenden Anforderungen]
 
-Die zu bauende Anwendung wurde konzipiert nicht zu trivial - um genug
-Spielraum im Interface Design zuzulassen - aber auch nicht zu komplex - um die
-Umsetzbarkeit zu gewährleisten - zu sein.
+Die zu bauende Anwendung wurde so konzipiert das diese weder zu trivial noch
+zu komplex ist. Nicht zu trivial damit das Interface auch wirklich etwas
+leisten muss und nicht zu simpel sein kann. Aber auch nicht zu komplex um die
+Umsetzbarkeit innerhalb des Zeitrahmens zu gewährleisten.
 
 \subsection{Konzept}
 \subsubsection{Problem}
 
-Bei Endava werden die Arbeitsstunden über ein Oracle System festgehalten. Dieses
-glänzt nicht in Usability, es führt aber kein Weg dran vorbei.
+Bei Endava\footnote{Der Firma in welcher diese Arbeit geschrieben wurde.} werden
+die Arbeitsstunden über eine interne Webapp (ein Oracle System) festgehalten.
+Dieses glänzt nicht in Usability, es führt aber kein Weg dran vorbei. Weiterhin
+wird diese Webapp als \textbf{Oracle} bezeichnet\footnote{Unter diesem Namen ist
+es firmenintern bekannt.}.
 
-% TODO: screenshot best case
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.25]{oracle-ideal.png}
+  \caption{Idealtypische Oracle `Timecard'.}
+\end{figure}
 
-Das System funktioniert so, dass ein mal wöchentlich die Zeiten der vergangen
-Woche abgegeben werden müssen. In diesen Timecards wird angegeben an welchen
-Wochentagen man wie viele Stunden an welchem Projekt gearbeitet hat. Bei einem
-Projekt und 40 Stunden Woche ist das ausfüllen trivial. Aber sobald man seine
-Zeit zwischen mehreren Projekten mit schwankender Stundenzahl aufteilt wird
-es komplizierter. Außerdem wird teils gefordert sich Notizen zu machen woran
-gearbeitet wurde. Zusammengenommen heißt dies: täglich müssen Dinge bei Oracle
-eingetragen werden.
+Idealerweise werden am Ende der Arbeitswoche die Arbeitsstunden der vergangen
+Woche festgehalten. Dabei wird angegeben an welchen Wochtage wieviele Stunden
+an welchen Projekten gearbeitet wurde. Wenn man eine 40 Stundenwoche an einem
+einzigen Projekt arbeitet ist das trivial. Wenn man aber als Werkstudent an
+mehreren Projekten mit schwankenden Stundenzahlen arbeitet wird es schnell
+komplizierter. Und wenn dazu noch dokumentiert werden soll woran gearbeitet
+wurde noch umso mehr. In der Praxis heißt das: die ‘Timecard’ in Oracle muss
+täglich aktualisiert werden.
 
-% TODO: screenshot realistic case
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.25]{oracle-real.png}
+  \caption{Eine weniger idealtypische `Timecard'.}
+\end{figure}
 
 \subsubsection{Lösungsansatz}
 
-Die entworfene Lösung ist eine Kommandozeilen App welche das tägliche loggen der
-Arbeitszeiten, und Notizen woran gearbeitet wurde, vereinfacht. Und diese Daten
-dann zum wöchentlichen Übertragen in Oracle in strukturierter Form ausgibt.
-Dadurch wird erreicht nur das erforderliche Minimum der Zeit mit Oracle zu
-verbringen, dessen Workflow im übrigen auch am besten funktioniert wenn alles in
-einem Rutsch erledigt wird.
-\\
-Weil es den Rahmen sprengen würde, ohne dem Thema dienlich zu sein, wurde davon
-abgesehen die CLI an ggf. bestehende Oracle APIs anzubinden.
+Die entworfene Lösung ist eine Kommandozeilen App, welche das tägliche loggen
+der Arbeitszeiten erleichtert. Auch Notizen zu den bearbeiteten Aufgaben
+können schnell festgehalten werden. Diese Daten werden dann zum wöchentlichen
+Übertragen in Oracle in strukturierter Form ausgegeben\footnote{Eine mögliche,
+direkte Übertragung an Oracle selbst würde den Rahmen der Arbeit sprengen,
+ohne dem Thema dienlich zu sein. Weshalb davon abgesehen wurde.}. Dadurch wird
+erreicht nur das erforderliche Mindestmaß der Zeit mit Oracle zu verbringen,
+dessen Workflow im übrigen auch am besten funktioniert wenn alles in einem
+Rutsch erledigt wird.
 
 \subsection{Anforderungen}
 
@@ -1152,13 +1166,13 @@ abgeglichen in Rücksprache mit anderen Mitarbeitern.
     \begin{enumerate}
       \item Als Nutzer möchte ich meine Arbeitsstunden an einem Tag für eine Projekt-Task Detail Kombination loggen.
       \item Als Nutzer möchte ich die geloggten Arbeitsstunden einer gegebenen Woche einsehen.
-      \item Als Nutzer möchte ich geloggte Arbeitsstunden anpassen oder löschen.
+      \item Als Nutzer möchte ich geloggte Arbeitsstunden anpassen oder löschen können.
     \end{enumerate}
   \item \textbf{Arbeitsnotizen}:
     \begin{enumerate}
       \item Als Nutzer möchte ich festhalten woran ich gearbeitet habe.
       \item Als Nutzer möchte ich meine Notizen sehen können.
-      \item Als Nutzer möchte ich meine Notizen für einen Tag bearbeiten oder löschen.
+      \item Als Nutzer möchte ich meine Notizen bearbeiten oder löschen können.
     \end{enumerate}
   \item \textbf{Report Generierung}:
     \begin{enumerate}
@@ -1168,7 +1182,7 @@ abgeglichen in Rücksprache mit anderen Mitarbeitern.
 
 Diese User Stories sollen einen Eindruck über die Anforderungen der App
 und deren Komplexität vermitteln. Das Bauen der App steht aber nicht im
-Vordergrund, weshalb u.a. hier die Akzeptanzkriterien der User Stories,
+Vordergrund, weshalb hier u.a. die Akzeptanzkriterien der User Stories,
 Implementationsdetails wie Datenpersistierung, etc. nicht weiter beschrieben
 werden.
 
@@ -1177,6 +1191,8 @@ werden.
 Das Fundament der App stellen die zugrundelegenden technologischen Aspekte dar,
 welche nicht oder nur indirekt die Nutzbarkeit, und damit den Fokus der Arbeit
 betreffen.
+
+\smallskip
 
 Node.js wurde als Programmiersprache gewählt, weil der Author damit vertraut
 war, eine Vielzahl von Libraries zum Bauen von CLI's existieren und der
@@ -1193,14 +1209,16 @@ Umsetzung der Methoden relevant waren.
 
 ``oclif is an open source framework for building a command line interface
 (CLI) in Node.js. Create CLIs with a few flags or advanced CLIs that have
-subcommands.'' \parencite{oclif}
+subcommands.'' - \cite{oclif}
 
-oclif biete ein System um ohne viel Boilerplate Kommandos zu bauen, dessen
-Flaggen und Argumente zu beschreiben und dann eigene Businesslogik auszuführen
-(siehe Abbildung \ref{fig:oclif-list}.) Während oclif Kommando- und
+\smallskip
+
+oclif bietet ein System um ohne viel Boilerplate Kommandos zu bauen,
+dessen Flaggen und Argumente zu beschreiben und dann eigene Businesslogik
+auszuführen (siehe Abbildung \ref{fig:oclif-list}.) Während oclif Kommando- und
 Flaggenparsing, das generieren der Hilfsseite uvm. übernimmt.
 
-\begin{figure} % TODO: redo, as listing?
+\begin{figure}[H]
   \centering
   \includegraphics[scale=0.5]{oclif-list.png}
   \caption{Beschreiben eines Kommandos in oclif am Beispiel des implementierten \codeinline{project list} Kommandos}
@@ -1350,6 +1368,7 @@ vervollständigt wird. Andere in Erwägung gezogene Varianten waren
   \end{shellcode}
 \end{code}
 
+\label{text:noun-verb}
 Die Kommandos sind nach dem `noun verb' Prinzip \parencite{clig} strukturiert.
 Auf das Nomen, in unserem Fall etwa die Stunde (\codeinline{hour}), folgt
 ein Verb wie hinzufügen, bearbeiten, entfernen oder auflisten. Diese Verben
@@ -1743,10 +1762,12 @@ In Fehlermeldungen wurde der Geiste der Methode aber angewandt. So verweist ein 
   \label{fig:recommendation-invalid-project}
 \end{figure}
 
-
-
 \chapter{Evaluation}
 \label{sec:evaluation}
+
+Im Rahmen der Studie bezieht GUI App oder das GUI immer auf die Oracle Webapp.
+Gleichermaßen ist mit CLI App oder dem CLI immer die im Rahmen der Arbeit
+gebaute `oraclett' Anwendung gemeint.
 
 \section{Design der Studie}
 
@@ -1772,7 +1793,9 @@ Verständnis der Anwendungsdomäne der Apps war gegeben. Alle Teilnehmer waren
 Software Entwickler oder Entwicklungsnah. Expertise mit der Kommandozeile war
 zwischen ``wird nur benutzt wenn es nicht anders geht'' und ``wird regelmäßig
 verwendet''.
-\\
+
+\medskip
+
 Insgesamt wurden 6 Personen getestet. Laut \cite[11]{Spolsky_2001} ist ``[..]
 five or six users [..] all you need.''. Durchgeführt wurde dieser via Videoanruf
 mit geteiltem Bildschirm.
@@ -1799,7 +1822,7 @@ Funktionalität wurde also das Verwalten von Stunden und Notizen beschränkt.
 
 \smallskip
 
-% TODO: erlehrnbarkeit
+% TODO: Erlernbarkeit
 Auf Anratens von Prof. Israel wurde deshalb eine
 Menge von 20 Aufgaben gewählt.
 
@@ -1813,21 +1836,21 @@ Projekt/Task Detail genau gemeint war.
 
 \begin{enumerate}
   \item Add 8 hours for today on the Bench.
-  \item Describe that you worked on "Self-Learning" during that time today.
+  \item Describe that you worked on ``Self-Learning'' during that time today.
   \item Add another 8 hours for tomorrow on the Bench.
   \item Change the 8 hours for tomorrow to 6.
   \item Remove the 6 hours for tomorrow.
   \item Log 2 hours on the Bench for Friday this week.
-  \item Add 6 hours on "People Development - Certification" for Friday this week.
-  \item Describe that you did a "Node.js Certificate" in the hours you just logged.
+  \item Add 6 hours on ``People Development - Certification'' for Friday this week.
+  \item Describe that you did a ``Node.js Certificate'' in the hours you just logged.
   \item Change todays 8 hours on the bench to 2.
-  \item And delete your note ("Self-Learning") for today.
+  \item And delete your note (``Self-Learning'') for today.
   \item Add 4 hours of Dev Discipline for today.
   \item Add 4 hours of Testing Discipline for today.
   \item Add 3 hours of both Testing Discipline and Dev Discipline for Monday of this week.
   \item Log 6 hours on the bench for Monday, Tuesday and Wednesday of next week.
-  \item Add a note for Monday of next week that you "Played around with Golang".
-  \item Change the just added note to "Played around with Rust".
+  \item Add a note for Monday of next week that you ``Played around with Golang''.
+  \item Change the just added note to ``Played around with Rust''.
   \item Change the hours for next weeks Tuesday and Wednesday to 8.
   \item Delete the hours logged for next weeks Wednesday.
   \item Show and tell Jonathan how many hours you worked in total for this week.
@@ -1837,7 +1860,8 @@ Projekt/Task Detail genau gemeint war.
 Das Hinzufügen zum System spielt die Hauptrolle. In der echten Verwendung wäre
 das \codeinline{add} Kommando auch das meist verwendete.
 
-Die Anzahl von Aufgaben welche pro Kommando erledigt werden:
+\label{text:anzahl-aufgaben}
+Die Anzahl von Aufgaben welche pro Subkommando erledigt werden:
 \begin{itemize}
   \item 8: \codeinline{hour add}
   \item 3: \codeinline{note add}
@@ -1864,48 +1888,29 @@ eingegangen.
 
 \subsection{Erhobene Daten}
 
-Um die Performance zu messen wurde aufgezeichnet wie lange ein Benutzer
-benötigt um eine gegebene Aufgabe zu erfüllen. Dazu wurden die Test Sitzungen
-aufgezeichnet und dannach die Zeitmarken von Beginn und Beendung einer Aufgabe
-notiert.
+\subsubsection{Performance}
 
-Einschätzung der Attraktivität beider Oberflächen erfragt. Wie auf Abbildung
-\ref{fig:survey-values} zu sehen ist, bewerten die Teilnehmer die Apps auf einer
-Skala zwischen zwei Adjektiven.
+Um die Performance zu messen wurde aufgezeichnet wie lange ein Benutzer benötigt
+um eine gegebene Aufgabe zu erfüllen. Dazu wurden die Sitzungen aufgezeichnet
+und danach mit Zeitmarken versehen. Der Zeitstempel zum Start wurde nach dem
+Lesen der Aufgabe (bei erster Interaktion mit dem Interface) gesetzt und der
+Zeitstempel zum Ende nach Erfüllung der Aufgabe.
 
-\begin{figure}
+\subsubsection{Attraktivität}
+
+Um eine subjektive Bewertung der Interfaces zu erhalten wurde eine
+Attraktivitätsumfrage nach \cite{attrakdiff} durchgeführt. Es wurde nach
+dem Durcharbeiten der Aufgaben für ein Interface eine Einschätzung über
+dessen Attraktivität erfragt. Wie auf Abbildung \ref{fig:survey-values}
+zu sehen bewerteten die Teilnehmer dabei das Interface bezüglich mehrerer
+gegenüberliegender Adjektive.
+
+\begin{figure}[H]
   \centering
-  \includegraphics[scale=0.5]{survey-values.png}
-  \caption{Beurteilungsbogen der kurzen AttrakDiff Studie}
+  \includegraphics[scale=0.42]{survey-values.png}
+  \caption{Beurteilungsbogen der kurzen AttrakDiff Umfrage.}
   \label{fig:survey-values}
 \end{figure}
-
-\subsection{Hypothesen}
-
-\newcounter{hypo}
-\newenvironment{hypo}[1][]{
-  \refstepcounter{hypo}
-  Hypothese \thehypo:#1
-  \label{hypo:\thehypo}
-}
-
-% TODO: Erörtern was Vorstellung, warum Hypothese relevant
-Diese Hypothesen sollen durch die erhobenen Daten adressiert werden.
-
-% TODO: style w/ label
-
-\begin{hypo}{Die CLI hat im Durchschnitt eine ähnliche Performance wie die GUI.}\end{hypo}
-\begin{hypo}{Die Performance der CLI verbessert sich im Verlaufe des Tests.}\end{hypo}
-\begin{hypo}{Die CLI wird der GUI subjektiv vorgezogen.}\end{hypo}
-
-% TODO: rework
-Hypothese \ref{hypo:1} bewertet die Performance Unterschiede zwischen den beiden
-Applikationen.
-
-Hypothese \ref{hypo:2} soll Erlernbarkeit bewerten. Den Teilnehmer wurde ja
-durch die Anzahl der Aufgaben genug Zeit gegeben sich mit der App vertraut zu machen.
-
-Die \ref{hypo:3}. Hypothese bezieht sich auf das Gefühl der Teilnehmer  % TODO: finish
 
 \subsection{Durchführung}
 
@@ -1915,21 +1920,215 @@ Applikation. 50\% der Teilnehmer begannen mit der einen, die andere Hälfte mit
 der anderen. Vor der Verwendung der CLI App gab es eine Einführung, welche
 dazu diente den Teilnehmer mit dem System und dessen Möglichkeiten vertraut
 zu machen. Als Ausgleich dafür das die Teilnehmer alle schon mit der GUI
-Variante vertraut waren. Mit dem Hinweis darauf, dass der Versuchsleiter keine
+Anwendung vertraut waren. Mit dem Hinweis darauf, dass der Versuchsleiter keine
 Hilfestellung leisten würde, ging es mit der Bearbeitung der Aufgaben los.
 Die Checkliste der Aufgaben waren eine nach der anderen zu bewältigen. Nach
-Erledigung der Aufgaben folgte die Attraktivitätsumfrage, gefolgt von der
-Bearbeitung derselben Aufgaben im anderen System, sowie erneuter Umfrage.
+Erledigung der Aufgaben für ein Interface folgte die Attraktivitätsumfrage,
+gefolgt von der Bearbeitung derselben Aufgaben für das anderen Interface, sowie
+erneuter Umfrage.
+
+\section{Hypothesen}
+
+\newcounter{hypo}
+\newcommand{\hypodef}[1]{
+  \medskip
+  \fbox{\parbox{\linewidth}{
+    \refstepcounter{hypo}
+    Hypothese~\thehypo: #1
+    \label{hypo:\thehypo}
+  }}
+}
+\newcommand{\hyporef}[2]{
+  \medskip
+  \fbox{\parbox{\linewidth}{
+    \hyperref[hypo:#1]{Hypothese~#1}: #2
+  }}
+}
+
+Mit den erhobenen Daten sollte auf folgende Hypothesen eingegangen werden:
+
+\hypodef{Das CLI hat im Durchschnitt eine ähnliche Performance wie das GUI.}
+
+Die \hyperref[sec:cli-problems]{Probleme der Kommandozeile} werden dazu führen
+das Performance eingebüßt wird. Diese Probleme zu mitigieren und minimieren war
+aber Zweck der Methoden. Weshalb unter Anwendung der Methoden zumindest eine
+ähnliche Performance wie die einer grafischen Anwendung erwartet wurde.
+
+\medskip
+
+Nun waren die Nutzer schon mehr mit der GUI App vertraut. Gleiche Performance
+bei ungleichen Startbedingungen würde sogar auf einen Performanceüberschuss bei
+gleichen Bedingungen hindeuten (i.e. wenn die Teilnehmer mit beiden Anwendungen
+gleich vertraut sind.)
+
+\hypodef{Die Performance des CLI verbessert sich im Verlaufe der Aufgaben.}
+
+Von einer erlernbaren Anwendung wäre zu erwarten das sich deren Performance
+steigert wenn man den Teilnehmer genug Zeit gibt diese zu erlernen.
+
+\medskip
+
+Zu betrachten wäre die Performance ähnlicher Aufgabestellungen.
+
+\hypodef{Das CLI wird dem GUI subjektiv vorgezogen.}
+
+Bei \cite{Westerman_1997} wurde das CLI bei Wahl des Interface deutlich weniger
+gewählt. Die Bevorzugung des CLI gegenüber dem GUI unter den Teilnehmern würde
+also den Effekt der Methoden auf die Usability aufzeigen.
 
 \section{Auswertung}
 
-Bei keinem einzigen Teilnehmer wurde weder GUI noch CLI durchgehend optimal
-verwendet. Manche Heransgehensweisen waren besser als andere. Es war jedoch
-zu beobachten das suboptimale Lösungswege in der GUI tendenziell beibehalten
-wurden. Während bei der CLI tendenziell mit dem durchlaufen der Aufgaben bessere
-Lösungswege gefunden wurden.
+\subsection{Diskussion der Ergebnisse}
 
-%%% Finish
+Über alle Diagramme hinweg ist Blau auf die Farbe der CLI App bzw. Orange die
+der GUI App.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.36]{performance.png}
+  \caption{Performance beider Interfaces bei der Erfüllung gleicher Aufgaben.}
+  \label{fig:performance}
+\end{figure}
+
+Die Performance der verschiedenen Aufgaben schwanken stark zwischen den Aufgaben
+bei gleichem Interface (vgl. Abbildung \ref{fig:performance}.) Das begründet
+sich darin das die Aufgaben innerhalb der gleichen Anwendung unterschiedlich
+schwer zu lösen waren.
+
+\medskip
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.36]{performance-diff.png}
+  \caption{Performance Unterschiede zwischen den Anwendungen.}
+  \label{fig:performance-diff}
+\end{figure}
+
+Auch die Performance Differenz zwischen zwischen den beiden Anwendungen (vgl.
+Abbildung \ref{fig:performance-diff}) schwankt. Was seine Gründe darin hat das
+ein Interface die Aufgabe effizienter erledigen kann. Für das Kommandozeilen
+Interface spielt noch mit hinein das bei neuen Aufgabenstellungen (solche die
+ein neues Subkommando oder eine neue Flagge erfordern) dem Nutzer nicht klar
+ist wie vorzugehen ist. Und dort Zeit für das Lesen von Hilfsmenüs aufgewendet
+werden muss. Was aber in der Natur des CLI liegt.
+
+\medskip
+
+Das Nachschauen im Hilfsmenü beispielsweise auch wie das CLI bei der zweiten
+Aufgabe die dreifache Zeit zur Erfüllung brauchte. Es stellte die erste
+Verwendung von \codeinline{note add} dar. Hinzu kommt, dass da Hinzufügen von
+Notizen im GUI relativ unkompliziert ist. Verglichen mit der zweiten Verwendung
+in Aufgabe 8 bleibt die Performance des GUI fast gleich während das CLI zulegt
+(etwa $30\%$\footnote{Im Vergleich zur GUI Performance. Von $225\%$ schneller
+Erledigung zu $160\%$.} schneller als zuvor.)
+
+\medskip
+
+Ebenso sind auch die Ergebnisse von Aufgabe 19 und 20 zu erklären. Das erste
+bzw. zweite Mal das \codeinline{hour list} verwendet wurde. Von $355\%$
+schnellerer GUI Performance zum gleichauf sein in der nächsten Aufgabe.
+
+\medskip
+
+Die extremste Differenz ist bei Aufgabe 12 entstanden. Bei den Aufgaben 11
+und 12 werden vier Stunden für dasselbe Projekt auf verschieden Task Details
+festgehalten. Im GUI bleibt der Aufwand fast gleich während er sich für
+das CLI halbiert und im Vergleich zum GUI zu $500\%$ schneller Performance
+führt. Bei optimaler Verwendendung kann im Kommandozeilen Interface der
+gleiche Befehl\footnote{Der optimale Befehl ist: \codeinlinefn{hour add -H 4 -d
+today -p INTDS999DXD} und es wird nur das richtige Task Detail aus der Liste
+ausgewählt. Alternativ wäre auch das Spezifizieren von \codeinlinefn{-t 08} bzw.
+\codeinlinefn{-t 12} ähnlich schnell.} für beide Aufgaben wiederverwendet werden.
+
+\medskip
+
+Aufgabe 16 stellt den letzten der Extremfälle dar und ist das einzige Auftritt
+des \codeinline{edit} Subkommandos\footnote{Wie in Kap. \ref{text:noun-verb}
+erläutert hat \codeinlinefn{orcalett} eine `noun verb' Struktur. Sowohl
+die Substantive \codeinlinefn{project}, \codeinlinefn{hour} und
+\codeinlinefn{note} bieten jeweils ein \codeinlinefn{edit} Subkommando an.}.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.36]{performance-cli.png}
+  \caption{Isolierte Performance der CLI App.}
+  \label{fig:performance-cli}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.35]{attrak-wortpaare.png}
+  \caption{Ergebnisse der Attraktivitätsumfrage darüber wo die Anwendungen für die einzelnen Adjektivepaare landeten.}
+  \label{fig:attrak-wortpaare}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \begin{minipage}[b]{0.4\textwidth}
+    \centering
+    \includegraphics[scale=0.28]{attrak-mittelwerte.png}
+    \caption{Mittelwerte über die von \cite{attrakdiff} definierten Kategorien.}
+    \label{fig:attrak-mittelwerte}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[b]{0.4\textwidth}
+    \centering
+    \includegraphics[scale=0.26]{attrak-portfolio.png}
+    \caption{Einordnung der Ergebnisse in die Matrix nach hedonischer und pragmatischer Qualität.}
+    \label{fig:attrak-portfolio}
+  \end{minipage}
+\end{figure}
+
+Wie in Abbildung \ref{fig:attrak-mittelwerte} zu sehen sind die Anwendungen in
+allen Kategorien über $3.5$ Punkte auseinander. Auf einer Skala die nur $7$
+Punkte breit ist, ist das eine Menge.
+
+\medskip
+
+In Abbildung \ref{fig:attrak-portfolio} ``spiegelt das Konfidenz-Rechteck
+[..] wieder, wie ``einig'' sich die Nutzer bei der Beurteilung
+des Produkts sind. Je größer das Konfidenz-Rechteck ist, desto
+unterschiedlicher wird das Produkt bewertet.'' - \cite{attrakdiff} via
+\href{https://esurvey.uid.com/}{esurvey.uid.com}.
+
+\subsection{Auswertung der Hypothesen}
+
+\subsubsection{Hypothese 1}
+\hyporef{1}{Das CLI hat im Durchschnitt eine ähnliche Performance wie das GUI.}
+
+Der Performance Durchschnitt über alle Aufgaben aufsummiert liegt bei
+$-2.76$, das CLI ist also um \~3 Sekunden schneller. Wie in Abbildung
+\ref{fig:performance-diff} zu sehen ähnelt sich die Performance beider
+Anwendungen. Nur bei sechs Aufgaben war ein Interface mehr als $100\%$
+schneller, also mehr als doppelt so schnell als das andere. Auf diese
+Extremfälle wurde aber bereits einleitend eingegangen.
+
+\subsubsection{Hypothese 2}
+\hyporef{2}{Die Performance des CLI verbessert sich im Verlaufe der Aufgaben.}
+
+Bei Betrachtung der Performance des CLI (Abbildung \ref{fig:performance-cli})
+hinsichtlich der Erlernbarkeit ist zu beachten sind die Aufgabenstellungen zu
+beachten. So werden die Aufgaben mit der Zeit schwieriger: Es werden Projekte
+mit mehr als einem Task Detail verwendet (ab 7.), das Datum wandert zu anderen
+Wochentagen (ab 6.) und in die nächste Woche (ab 14.). Es werden zuvor einzelne
+Aufgaben gebündelt (ab 13.), etwa das hinzufügen mehrerer Stunden an verschieden
+Tagen als Teil einer Aufgabe. Auch werden kontinuierlich neue Subkommando
+Kombinationen gefordert\footnote{Siehe die Auflistung der Anzahl von Aufgaben
+pro Subkommando in Kapitel \ref{text:anzahl-aufgaben}.}.
+
+\medskip
+
+Trotz all dieser erschwerenden Faktoren ist trotzdem ein fallender Trend zu
+erkennen.
+
+\subsubsection{Hypothese 3}
+\hyporef{3}{Das CLI wird dem GUI subjektiv vorgezogen.}
+
+Der subjektive Vergleich ist ziemlich eindeutig. Die Abbildung
+\ref{fig:attrak-portfolio} beschreibt die CLI App als begehrt und Oracle als
+überflüssig. Auch auf Abbildung \ref{fig:attrak-wortpaare} liegt das CLI in
+allen Punkten signifikant vorne.
+
 \chapter{Zusammenfassung}
 \label{sec:zusammenfassung}
 

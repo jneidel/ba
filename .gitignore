@@ -11,4 +11,5 @@
 *.blg
 *.run.xml
 *.sum
+*.pyg
 _minted*

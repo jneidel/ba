@@ -21,7 +21,7 @@ check_sum_matches() {
 }
 
 if ! check_sum_matches; then
-  kill $(ps aux | grep "make compile" | head -n1 | cut -d\  -f6)
+  kill $(pgrep -f "make compile" -o)
 
   create_sum
   make compile
