@@ -19,12 +19,13 @@ autocite=footnote
 
 \usepackage{graphicx}
 \graphicspath{ {images/} }
+\usepackage{float}
 
 \usepackage[newfloat]{minted}
 \usepackage[hang, small,labelfont=bf,up,textfont=it,up]{caption}
 
 \newenvironment{code}{\captionsetup{type=listing, skip=0pt}}{}
-\SetupFloatingEnvironment{listing}{name=Code}
+\SetupFloatingEnvironment{listing}{name=Listing}
 
 \newminted{shell}{
   linenos,
@@ -50,6 +51,7 @@ autocite=footnote
 \usepackage{csquotes}
 \usepackage{hyperref}
 \usepackage{microtype} % Slightly tweak font spacing for aesthetics
+\usepackage{nameref}
 
 \usepackage[hmarginratio=1:1,top=32mm,columnsep=20pt]{geometry} % Document margins
 \usepackage{booktabs} % Horizontal rules in tables
@@ -79,7 +81,7 @@ autocite=footnote
 \begin{document}
 
 % Titelseite
-% \pagestyle{empty}       % keine Seitennummer
+% \pagestyle{empty} % keine Seitennummer
 \begin{titlepage}
 \begin{center}
 \includegraphics{htw-logo.jpg}
@@ -136,12 +138,13 @@ Datum
 
 % Kopfzeilen (automatisch erzeugt)
 %\pagestyle{headings}
+
 [Text der Danksagung]
-- Endava für die Möglichkeit die Arbeit im Betrieb zu schreiben.
-- Moritz für das Engagement
-- Herr Israel der mir bei Fragen zur Seite stand.
-- Francis und Mama für moralischen Support
-- Sven Proofreading
+% - Endava für die Möglichkeit die Arbeit im Betrieb zu schreiben.
+% - Moritz für das Engagement
+% - Herr Israel der mir bei Fragen zur Seite stand.
+% - Francis und Mama für moralischen Support
+% - Sven Proofreading
 
 % Seite mit Abstracts
 \newpage
@@ -163,133 +166,144 @@ Datum
 \newpage
 
 \pagenumbering{arabic}
-% \setcounter{page}{1}   % setzt Seitenzaehlung auf 1
-
-% \fbox{\parbox{\linewidth}{
-% }}
-
-% \\
-% \linebreak[4]
+% \setcounter{page}{1} % setzt Seitenzaehlung auf 1
 
 % \footnote{Erg\"anzende Informationen k\"onnen Sie auch in eine Fu"snote auslagern. Hier wird die Fu"snote dazu genutzt, um Ihnen bei Interesse am Thema Zitation vertiefende Quellen (z.B. \autocite{balzert2011} oder \autocite{franck2013}) anzubieten.}
 
-% \begin{table}
-% \caption{\"Ubersicht: Untersuchte Steinl\"ause}
-% \centering
-% \begin{tabular}{llr}
-% \toprule
-% \multicolumn{2}{c}{Untersuchte Objekte mit Lokation des Habitats} \\
-% \cmidrule(r){1-2}
-% ID (nickname) & Ort & Gr\"o"se/L\"ange (in mm) \\
-% \midrule
-% 1 (Rosalinde) & Berlin, Mauerpark & $1.4$ \\
-% 2 (Devil in disguise) & Brandenburg, BER-Airport & $2.8$ \\
-% 3 (Hannes) & Berlin, Olympia-Stadion & $2.1$ \\
-% 4 (Her Majesty) & Berlin, Humboldt-Forum & $2.0$ \\
-% \bottomrule
-% \end{tabular}
-% \end{table}
-
 \chapter{Einleitung}
+\label{sec:einleitung}
+
 \section{Hintergrund der Arbeit}
-% [Beschreibung des groben Kontextes der Arbeit; im Detail sollten Sie dies im Grundlagenteil darstellen]
+[Beschreibung des groben Kontextes der Arbeit; im Detail sollten Sie dies im Grundlagenteil darstellen]
 
 % TODO: rewrite everything
-
-Die Kommandozeile und darauf basierende Applikationen bergen das Potential für Produktivitätssteigerungen im Vergleich zu GUI Applikationen, vorausgesetzt der Nutzer weiß mit dieser umzugehen. % TODO: Citation needed
+% Die Kommandozeile und darauf basierende Applikationen bergen das Potential für Produktivitätssteigerungen im Vergleich zu GUI Applikationen, vorausgesetzt der Nutzer weiß mit dieser umzugehen. % TODO: Citation needed
 
 \section{Problem- und Zielstellung (Scope)}
-% [Beschreibung der Problemstellung sowie der sich daraus ergebenden Teilprobleme,-ziele und Forschungsfrage(n), welche Sie mit Ihrer Arbeit addressieren]
+[Beschreibung der Problemstellung sowie der sich daraus ergebenden Teilprobleme,-ziele und Forschungsfrage(n), welche Sie mit Ihrer Arbeit addressieren]
 
 % TODO: rewrite everything, Forschungsfrage was adjusted
 
-Die Kommandozeile und seine Applikationen sind für Personen welche mit dieser Umgebung nicht vertraut sind schwer benutzbar. % TODO: Citation needed
-Einflussfaktoren dafür sind:
+% Die Kommandozeile und seine Applikationen sind für Personen welche mit dieser Umgebung nicht vertraut sind schwer benutzbar. % TODO: Citation needed
+% Einflussfaktoren dafür sind:
 
-\begin{enumerate}
-  \item Fehlendes Wissen über das Ökosystem (wie werden Applikationen gestartet, wie findet man Hilfe, Verständnis grundsätzlicher Werkzeuge fehlt)
-  \item Applikationen sind nicht für Neulinge konzipiert
-\end{enumerate}
+% \begin{enumerate}
+%   \item Fehlendes Wissen über das Ökosystem (wie werden Applikationen gestartet, wie findet man Hilfe, Verständnis grundsätzlicher Werkzeuge fehlt)
+%   \item Applikationen sind nicht für Neulinge konzipiert
+% \end{enumerate}
 
-Problemstellung dieser Arbeit soll das zweite der gelisteten Probleme sein: Das Zusammentragen und Evaluieren der Faktoren welche Kommandozeilen Applikation für Neulinge zugänglich machen. Oder konkreter als Forschungsfrage definiert:
-
-\bigbreak
+% Problemstellung dieser Arbeit soll das zweite der gelisteten Probleme sein: Das Zusammentragen und Evaluieren der Faktoren welche Kommandozeilen Applikation für Neulinge zugänglich machen. Oder konkreter als Forschungsfrage definiert:
 
 \fbox{\parbox{\linewidth}{
-Welche Methoden existieren um eine App mit Kommandozeilen Interface zugänglicher und leichter nutzbar zu machen?
+Welche Methoden existieren um die Usability einer CLI App zu erhöhen?
 }}
 
 \section{Aufbau der Arbeit}
-% [Beschreibung des Aufbaus der Arbeit]
-
-Die Arbeit gliedert sich in folgende drei Hauptteile:
 
 \begin{enumerate}
-  \item \textbf{Erarbeitung von Methoden zur Absenkung der Nutzungsschwelle von Kommandozeilen Interfaces}:
+  \item \textbf{\nameref{sec:einleitung}}
     \smallbreak
-    In Literaturrecherche werden Methoden zusammengetragen und formuliert.
-    Diese sind - wie im Sinne des Wortes Methode (``Weg zu etwas hin'' laut \cite{duden_methode}) - deskriptiv und beschreiben wie ein gewünschter Effekt zu erzielen sein soll.
-    \begin{enumerate}
-      \item \textbf{Probleme mit Kommandozeilen Interfaces}:
-        \smallbreak
-        Es werden zuerst Probleme, welche die Nutzung von Kommandozeilen Interfaces erschweren erläutert.
-      \item \textbf{Methoden zur Absenkung der Nutzungsschwelle von Kommandozeilen Interfaces}:
-        \smallbreak
-        Methoden werden formuliert und wie diese zuvor geschilderte Probleme adressieren.
-    \end{enumerate}
-
-  \item \textbf{Implementation einer Anwendung auf Basis der erarbeiteten Methoden}:
+    Definieren der Ziele und Struktur.
+  \item \textbf{\nameref{sec:grundlagen}}
     \smallbreak
-    Gesammelte Methoden werden in der Implementation einer App demonstriert.
-    Die App ist überschaubar komplex und adressiert das manuelle Festhalten von Arbeitsstunden.
-    \begin{enumerate}
-      \item \textbf{Anforderungsanalyse}:
-        \smallbreak
-        Zuerst werden die von der App zu erfüllenden Anforderungen erörtert.
-      \item \textbf{Implementation der App unter Berücksichtigung gesammelter Methoden}:
-        \smallbreak
-        Es werden die Anforderungen unter Beachtung ermittelter Methoden implementiert.
-    \end{enumerate}
-
-  \item \textbf{Evaluation der implementierten Anwendung}:
+    Beschreiben grundlegenden Wissens.
+  \item \textbf{\nameref{sec:cli-problems}}
     \smallbreak
-    Die App wird von mit dem Anwendungsfall vertrauten Kommandozeilen Einsteigern getestet.
-    Und Anhand einer Umfrage evaluiert.
-    \begin{enumerate}
-      \item \textbf{Umfragengestaltung}:
-        \smallbreak
-        Es wird die Umfrage gestaltet.
-      \item \textbf{Auswertung}:
-        \smallbreak
-        Ergebnisse der Umfrage werden ausgewertet.
-    \end{enumerate}
+    Zusammenfassen von Problemen die das Nutzen von Kommandozeilen Interfaces erschweren.
+  \item \textbf{\nameref{sec:methods}}
+    \smallbreak
+    Formulieren von Methoden die zuvor geschilderte Probleme adressieren.
+  \item \textbf{\nameref{sec:beispiel-anwendung}}
+    \smallbreak
+    Definieren und bauen einer beispielhaften App zum Darstellen der Methoden.
+  \item \textbf{\nameref{sec:implementation}}
+    \smallbreak
+    Beschreiben von Details und Schwierigkeiten zur Implementierung der Methoden.
+  \item \textbf{\nameref{sec:evaluation}}
+    \smallbreak
+    Bewerten der Anwendung mittels vergleichender Studie.
+  \item \textbf{\nameref{sec:zusammenfassung}}
+    \smallbreak
+    Ziehen einer Schlußfolgerung.
 \end{enumerate}
 
 \chapter{Grundlagen}
+\label{sec:grundlagen}
 
 \section{Historischer Kontext}
 \label{sec:historic-context}
 
 Die Kommandozeile ist ein Produkt der Evolution von Computern. Die ersten Formen
 der Interaktion in Echtzeit kamen zusammen mit dem `teletypewriter' (TTY),
-einem Schreibmaschinen-ähnlichem Gerät. Erstmal konnten Menschen ihre Befehle
+einem Schreibmaschinen-ähnlichem Gerät. Erstmals konnten Menschen ihre Befehle
 eingeben und die direkt die Resultate sehen. Das Papier und die mechanischen
-TTY's wurden schließlich durch Text-darstellende Displays und elektronisch
+TTY's wurden schließlich durch Text-darstellende Displays und elektronische
 Tastaturen ersetzt. Diese Interaktionsform mit Tastatur und Textausgabe ist als
-\textbf{Kommandozeilen Interface (CLI)} bekannt \parencite[35f]{nagarajan2018}.
+\textbf{Kommandozeilen Interface (CLI)} bekannt geworden \parencite[35f]{nagarajan2018}.
 Und funktioniert wie folgt:
 
 \begin{enumerate}
-  \item Das System fordert den Nutzer auf einen Programmaufruf zu schreiben.
-  \item Das System führt den Befehl aus und zeigt das Resultat.
-  \item Diese Sequenz wiederholt sich nun unendlich.
+  \item Das System fordert den Nutzer auf einen Programmaufruf zu schreiben. (`Read')
+  \item Das System führt den Befehl aus und zeigt das Resultat. (`Eval' und `Print')
+  \item Diese Sequenz wiederholt sich nun unendlich. (`Loop')
 \end{enumerate}
 
-Um die Limitation der Kommandozeile  - auf welche im Kapitel % TODO: ref problem
-noch tiefer eingegangen wird - zu adressieren wurde das grafische User
-Interface (\textbf{GUI}) entwickelt \parencite{nielson1993}. Welches von dem
-Text-basierten CLI zu dem heute allgegenwärtigen Fenster, `Icons', Menüs und die
-Maus mit sich brachte.
+Ein System was dieses Vorgehen implementiert wird auch als REPL (`Read-eval-print
+loop`) Umgebung bezeichnet.
+
+\smallskip
+
+Um die Limitation der Kommandozeile\footnote{Im Kapitel \ref{sec:cli-problems}
+wird noch tiefer auf die Probleme eingegangen.} zu adressieren wurde
+unter anderem das grafische User Interface (\textbf{GUI}) entwickelt
+\parencite{nielson1993}. Welches von dem Text-basierten CLI zu dem
+heute allgegenwärtigen Fenster, `Icons', Menüs und die Maus mit sich
+brachte\footnote{Mehr zu den Weiterentwicklung des CLI in Kapitel
+\ref{sec:weiterentwicklungen}.}
+
+% TODO: move into problem after menu and all explainations
+% \section{Nutzen der Kommandozeile}
+
+% Wenn die Kommandozeile als historisches Artefakt gilt warum sollte sie heute
+% noch verwendet werden?
+%
+% Das CLI bietet Experten viel Flexibilität konstruieren eines (komplexen)
+% Operation \parencite{Norman_1983}. Ein Beispiel für diese Flexibilität wäre
+% folgendes. Es sollen alle PDF Dateien aus dem Jahr 2021 gelöscht werden, diese
+% haben etwa Namen wie: \codeinline{20210819-Rechnung.pdf}. In der Kommandozeile
+% kann dies mit \codeinline{rm 2021*.pdf} erreicht werden. Im grafischen Interface
+% müssten die Dateien markiert und gelöscht werden. Mit einer steigender Anzahl
+% von Dateien steigt auch der Aufwand und die Chance einen Fehler zu machen.
+% In der Shell funktioniert \codeinline{rm} auch problemlos bei einer Million
+% Dateien.
+% \\
+% Ein weiter Vorteil für Experten liegt in dem Erstellen von Skripten. Mit Hilfe
+% dieser können Operationen automatisiert werden. Wenn z.B. eine der Rechnungen
+% aus dem letzten Paragraphen heruntergeladen wurde, kann diese mittels Skript
+% umbenannt, in den richtigen Ordner verschoben und der Todoliste ein Eintrag à la
+% `Rechnung xy begleichen' hinzugefügt werden. In einer graphischen Umgebung ist
+% diese Art von präziser Automatisierung nicht so einfach möglich.
+%
+% Experten mit viel Wissen und Erfahrung mit dem System wissen meist exakt welche
+% Operation angewandt werden muss. In der Kommandozeile kann dies einfach und
+% direkt eingetippt werden. Während selbst Experten in grafischen und Menü UI's
+% sich immer durch die gleichen Menüs und Untermenüs klicken müssen.
+
+% Westerman_1997:
+%
+% Command line interfaces provide a comparatively more powerful and more
+% cognitively demanding means of command generation (Meister, 1989)
+%
+% In comparison with menu interfaces, they provide increased flexibility with
+% respect to combinations of commands and parameters that may be Linked together
+% (Norman, 1983), and a potentially more efficient means of generat- ing complex
+% commands,
+
+% Als Text-basiertes Interface kommt diesem die Klarheit von Worten zugute.
+% Abstrakte Konzepte wie Marxismus lassen sich nur schwer bis gar nicht in Bildern
+% beschreiben \parencite{Raskin_2008}, sind aber als Wort sehr umgänglich.
+
+% TODO: graph much hard in the beginning but more performance later
 
 \section{Die Terminal Umgebung}
 
@@ -297,206 +311,206 @@ Die moderne Kommandozeile existiert nicht mehr in Isolation. Um auf diese in
 einem grafischen Fenstersystem zugreifen zu können wird ein \textbf{Terminal
 Emulator} benötigt. Wie der Name schon preisgibt: es soll ein traditionelles
 text-basiertes Terminal nachgebildet werden. Als grafische Anwendung besteht
-aber der Vorteil die Maus zum klicken oder markieren verwenden zu können. In
-diesem Terminal läuft eine Shell. Das ist das Programm welches die Befehle
+aber der Vorteil die Maus zum Klicken oder Markieren verwenden zu können. In
+diesem Terminal läuft eine Shell. So nennt man das Programm welches die Befehle
 entgegennimmt und deren Resultate ermittelt und ausgibt. Am weitesten Verbreitet
-sind Unix Shells wie \codeinline{bash} oder \codeinline{zsh}. Die Sprache mit
-welcher mit der Shell gesprochen wird ist Shell Script und variiert mit dem
-Shell Dialekt. Die meisten Shells implementieren aber den POSIX Standard und
-teilen deshalb eine gewisse Grundfunktionalität. DOS und andere Windows Shells
-sind hier außen vor. Diese teilen weder Funktionalität noch Core Utilities mit
-den Unix Shells. Die \codeinline{coreutils} sind Grundlegende Werkzeuge zur
-Datei- und Textmanipulation \parencite{coreutils}, wie z.B. \codeinline{ls},
-\codeinline{cat} oder \codeinline{rm}.
+sind Unix Shells wie \codeinline{bash} oder \codeinline{zsh}.
+% TODO: Unix?
+Die Sprache der Shell gesprochen ist Shell Script. Dessen Funktionsumfang
+variiert je nach Shell Dialekt. Die meisten Unix Shells implementieren aber den POSIX
+Standard und teilen deshalb eine gewisse Grundfunktionalität. DOS und andere
+Windows Shells sind hier außen vor. Diese teilen weder Funktionalität noch Core
+Utilities mit den Unix Shells. Die \codeinline{coreutils} sind Grundlegende
+Werkzeuge zur Datei- und Textmanipulation \parencite{coreutils}, wie z.B.
+\codeinline{ls}, \codeinline{cat} oder \codeinline{rm}.
+
 % TODO: more citations
 % TODO: unix philsophy here
 
+\medskip
+
 Neben der Shell gibt es noch andere Kommandozeilen Umgebungen. So gibt es
 für viele Programmiersprachen eine Kommandozeile (z.B. für Node.js, Python
-oder Scala). In dieser können dann nach gleichem Schema Befehle in der
+oder Scala). In diesen können dann nach gleichem REPL Schema Befehle in der
 Programmiersprache interaktiv geschrieben und ausgeführt werden.
 
 \section{Begrifflichkeiten der Kommandozeile}
 
-Um mit dem CLI arbeiten sind ein paar Begriffe zu definieren. Wenn ein Shell
-Befehl betrachtet wird kann dieser auf seine Einzelteile heruntergebrochen
-werden:
+Für ein Verständnis des CLI sind ein paar Begriffe zu definieren. Ein Shell
+Befehl kann auf seine Einzelteile herunter gebrochen werden:
 
 \begin{code}
   \begin{shellcode}
-\$ cd Downloads
-\$ git commit -m "My commit"
+$ cd Downloads
+$ git commit -m "Inital commit"
   \end{shellcode}
 \end{code}
 
-Das \codeinline{\$} zu Beginn bezeichnet das nachfolgend Shell Code kommt.
-In der ersten Zeile ist \codeinline{cd} das Kommando was verwendet werden
-soll. Gefolgt von einem Argument, etwas das dem Kommando übergeben wird. In
-diesem Falle der Name eines Ordners. Die Reihenfolge ist bei mehreren Argument
-entscheidend. In der zweiten Zeil wird dem \codeinline{git} Kommando das
-Subkommando \codeinline{commit} übergeben (\cite{nagarajan2018}, \cite{clig}.)
-\\
-\cite{12factor} definiert zwei verschiedene Arten von CLI Apps: ``single and
-multi-command''. Also klassische `UNIX-Style' Werkzeuge wie \codeinline{cp},
-\codeinline{grep} oder \codeinline{cd}. Und jene Apps mit Unterkommandos wie
-\codeinline{npm} oder \codeinline{git}, die meist moderner und komplexer sind.
-\\
-Dem \codeinline{commit} Subkommando wird mit der \codeinline{-m} Flagge ein
-Parameter übergeben. Die \codeinline{-m} Flagge ist die Kurzversion der langen
-\codeinline{--message} Flagge. Kurze Flaggen bestehen immer aus Bindestrich und
-einem Buchstaben. Lange Flaggen starten mit zwei Bindestrichen gefolgt von einem
-oder mehr Wörtern (meist sind mehrere Wörter auch durch Bindestriche verbunden,
-z.B. \codeinline{--non-interactive}.) Funktionell sind beide Flaggenvarianten
-identisch. Flaggen die keinen Parameter entgegen nehmen werden als Boolean
-Flagge bezeichnet, deren An- oder Abwesenheit meist etwas an- oder abschaltet.
-Die Reihenfolge der Flaggen untereinander ist dabei irrelevant (\cite{nagarajan2018}, \cite{clig}.)
-
-\chapter{Probleme des Kommandozeilen Interface}
-
-Es folgen, in nicht priorisierter Reihenfolge, Probleme welche die
-Nutzungsschwelle von Kommandozeilen Interfaces erhöhen, d.h. diese weniger
-zugänglich.
-\\
-Diese bestmöglich zu adressieren sollte zu einer Absenkung der Nutzungsschwelle
-und damit besser zugänglichen Applikationen führen.
-
-\section{Erinnern von Kommandos}
-
-Das Problem des Erinnern von Kommandos (engl. Command recall) beschreibt das
-Nutzer sich bei Verwendung eines Programmes an dessen Namen, Kommandos und
-Parameter erinnern müssen \parencite{Raskin_2008}.
-
-\fbox{\parbox{\linewidth}{
-  \label{prob:command-recall}
-  \textbf{Problem~\ref{prob:command-recall}}: Es muss sich an Programmname, Kommandos und Parameter erinnert werden.
-}}
-
-Um dieses allgemeine Problem zu adressieren wurde es sind kleinere Teilprobleme
-aufgespalten.
-
-\medskip
-
-\begin{figure}
-  \centering
-  \includegraphics[scale=0.5]{empty-prompt.png}
-  \caption{Die Shell bietet nichts an, ohne ein Programm zu kennen passiert nichts.}
-\end{figure}
-
-\cite{Gentner_1996} beschreibt auch den Fakt das es keinen einfachen Weg zum
-Auffinden von Programmen gibt.
-\\
-Der Nutzer muss also den Namen des Programmes kennen um dieses zu nutzen.
+Das \codeinline{\$} zu Beginn bezeichnet das nachfolgend Shell Code kommt. In
+der ersten Zeile ist \codeinline{cd} das Kommando was verwendet werden soll.
+Gefolgt von einem Argument, etwas das dem Kommando übergeben wird. In diesem
+Falle der Name eines Ordners (names \codeinline{Downloads}.) Die Reihenfolge
+ist dabei bei mehreren Argumenten entscheidend. In der zweiten Zeile wird
+dem \codeinline{git} Kommando das Subkommando \codeinline{commit} übergeben
+(\cite{nagarajan2018}, \cite{clig}.)
 
 \smallskip
 
-Unter der Annahme den Names des Programmes zu kennen, geht es nun darum einen
-Programmaufruf mit Kommandos und Parametern zusammen zu bauen.
-Hierzu können verschiedene Szenarien betrachtet werden.
-Der Nutzer:
+Nicht alle CLIs haben Subkommandos. \cite{12factor} definiert zwei verschiedene
+Arten von CLI Apps: ``single and multi-command''. Also klassische `UNIX-Style'
+Werkzeuge wie \codeinline{cd}, \codeinline{cp} oder \codeinline{grep}. Und jene
+Apps mit Subkommandos wie \codeinline{npm} oder \codeinline{git}, die meist
+moderner und komplexer sind.
 
-\begin{enumerate}
-  \item hat Kommandos und Parameter auswendig gelernt
-  \item baut den Programmaufruf mit Hilfe der Dokumentation zusammen
-  \item fügt den Programmaufruf (mit copy-paste) ein
-  \item ruft das das Programm indirekt auf (über ein Script oder Alias)
-\end{enumerate}
+\smallskip
 
-Diese Szenarien sind aber alle nicht ideal:
+Zurück zu obigen \codeinline{git} Befehl: Dem \codeinline{commit} Subkommando
+wird die \codeinline{-m} Flagge und mit Ihr ein Parameter (die Nachricht
+\codeinline{Inital commit}) übergeben. Die \codeinline{-m} Flagge ist die
+Kurzversion der langen \codeinline{--message} Flagge. Kurze Flaggen bestehen
+immer aus Bindestrich und einem Buchstaben. Lange Flaggen starten mit zwei
+Bindestrichen gefolgt von einem oder mehr Wörtern (meist sind mehrere Wörter
+auch durch Bindestriche verbunden, z.B. \codeinline{--non-interactive}.)
+Funktionell sind beide Flaggenvarianten identisch. Flaggen die keinen Parameter
+erfordern werden als Boolean Flagge bezeichnet, deren An- oder Abwesenheit
+meist etwas an- oder abschaltet. Die Reihenfolge der Flaggen untereinander ist
+irrelevant (\cite{nagarajan2018}, \cite{clig}.)
 
-\medskip
+\chapter{Probleme des Kommandozeilen Interface}
+\label{sec:cli-problems}
+\newcounter{prob}
 
-Das 1. Szenario gilt nur mit dem Programm vertraute Nutzer. Und selbst diese
-vergessen mit der Zeit. % TODO: citation needed, vergessen
+Die Usability Schwierigkeiten des Kommandozeilen Interfaces lassen sich auf zwei
+fundamentale Probleme zurückführen.
 
-\medskip
+\section{Erinnern von Kommandos}
 
-Szenario Nummer 2. ist zeitintensiv für den Nutzer. Auch gilt die Annahme das
-Dokumentation existiert und das der Nutzer mit dieser umgehen kann.
+`Command recall' beschreibt die Problematik das ein Nutzer zum Verwenden eines
+Programmes in der Kommandozeile immer dessen Namen kennen muss. Dies gilt für
+Kommandos, deren Subkommandos und Flaggen aber auch für die Reihenfolge von
+Argumenten \parencite{Raskin_2008}.
 
-\medskip
+\bigskip
 
-Für Szenario Nummer 3. muss der Nutzer von irgendwo kopieren, die Quelle ist
-hier entweder auch die Dokumentation oder externe Portale wie Foren oder
-Stack Overflow. In der Dokumentation musst der Programmaufruf auch erstmal
-gefunden werden. Und die externen Portale sind für den Bau des Interfaces nicht
-verlässlich.
+\newcommand{\refcr}[1]{\hyperref[prob:cr]{#1}}
+\newcommand{\refcrr}{\hyperref[prob:cr]{`Command Recall'}}
+\fbox{\parbox{\linewidth}{
+  \refstepcounter{prob}
+  \label{prob:cr}
+  \textbf{Problem~\ref{prob:cr}}: Erinnern von Kommandos, Subkommandos, Flaggen und Argumenten.
+}}
 
-\medskip
+\bigskip
 
-Szenario Nummer 4. gilt nur für erfahrene Nutzer die schon mit der Shell
-vertraut sind.
+Dieses fundamentale Problem bedeutet das sich die Nutzer immer erst mit einem
+Kommando auseinander setzten müssen bevor sie dieses verwenden können. Auch
+spielt das Vergessen mit der Zeit eine große Rolle. \cite{Raskin_2008} weißt
+auch auf teilweise geringe Einprägsamheit von Befehle wie \codeinline{tar -xzf
+FILE}\footnote{Entpacken einer `gzipped tar' Datei (\codeinline{tar.gz}).} hin.
 
-\medskip
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.5]{empty-prompt.png}
+  \caption{Die Shell bietet nichts an. Ohne ein Kommando zu kennen passiert nichts.}
+\end{figure}
 
-Es gibt auch Mischformen, wie das der Nutzer Kommando aber nicht Parameter kennt
-und dieses nachschaut, diese sind aber in der Betrachtung zu vernachlässigen, da
-die Kritiken an den Reinformen auch für sie gelten.
+\cite{Gentner_1996} beschreiben auch den Fakt das es keinen einfachen Weg zum
+Auffinden von Kommandos gibt. Der Nutzer muss also den Namen des Programmes
+kennen um dieses zu nutzen oder auf dessen Hilfsseite oder `man page' zugreifen
+zu können.
 
 \section{Syntax und Semantik}
 
 ``Commands and associated parameters must be typed, maintaining the correct
 semantic content and syntactic form.'' \parencite[184]{Westerman_1997}
 
-\cite{Gentner_1996} beschreiben die Kommandozeile auch als sehr starr und wenig
-Tolerant gegenüber imperfekter Syntax.
+\bigskip
 
+\newcommand{\refss}[1]{\hyperref[prob:ss]{#1}}
 \fbox{\parbox{\linewidth}{
-  \label{prob:syntax-semantik}
-  \textbf{Problem \ref{prob:syntax-semantik}}: Die richtige Syntax and Semantik muss gewährleistet werden.
+  \refstepcounter{prob}
+  \label{prob:ss}
+  \textbf{Problem \ref{prob:ss}}: Einhalten der richtigen Syntax and Semantik.
 }}
 
 \bigskip
 
-% TODO: actually semantic error, replace this with syntax mistake, i.e typo or non existant subcommand
-Ein Beispiel für fehlerintolerante Syntax am Beispiel von \codeinline{grep}.
-Die man page beschreibt die Syntax: \codeinline{grep [OPTION...] PATTERNS [FILE...]}.
-Beim schnell-geschehenen Vertauschen von \codeinline{FILE} und \codeinline{PATTERNS}:
+Die Kommandozeile gilt als sehr starr und wenig Tolerant gegenüber imperfekter
+Syntax \parencite{Gentner_1996}.
+Diese Syntaxfehler können vielerorts und sehr einfach auftreten. Probleme entstehen etwa bei:
+
+\begin{itemize}
+  \item Rechtschreibfehlern in Kommando, Subkommando, Flaggen oder übergebenen Dateien
+  \item Durch das Weglassen benötigter Argumente bei Flaggen oder (Sub-) Kommandos
+  \item Missachtung der Reihenfolge (von Argumenten oder Subkommandos, Flagge in Beziehung zu Subkommando oder Argument)
+  \item Missachtung der Shell Regeln (etwa durch Weglassen von Anführungszeichen bei Argument mit Leerzeichen)
+\end{itemize}
+
+Vor allem wenn das Wissen um die impliziten Regeln der Shell fehlen, können
+schnell komplizierte Fehler auftreten. Je nach Qualität der Fehlermeldung und
+Erfahrung reißen die Syntaxfehler den Nutzer mehr oder weniger aus dem Flow.
 
 \begin{code}
   \begin{shellcode}
-grep ./file "[a-z]{3}"
-/bin/grep: [a-z]{3}: No such file or directory
+$ git comit -m "Add commit"
+git: 'comit' is not a git command. See 'git --help'.
+
+The most similar command is
+        commit
   \end{shellcode}
-  \captionof{listing}{Fehlerhafte Kommando Syntax bei grep}
+  \captionof{listing}{Fehlerhafter Subkommando Name bei \codeinline{git}. Mit hilfreicher Fehlermeldung.}
   \medskip
 \end{code}
 
-Der Bedeutungsgehalt von Kommandos kann an diesem Beispiel dargestellt werden:
+\bigskip
+
+Semantische Probleme können auch auftreten. Meist sind diese Folge eines
+Logikfehlers oder dem Durcheinanderbringen der Reihenfolge.
 
 \begin{code}
   \begin{shellcode}
-git remote add
-git add remote
+$ git add remote origin git@github.com:jneidel/oraclett.git
   \end{shellcode}
-  \captionof{listing}{Kommando Semantik am Beispiel von git}
+  \captionof{listing}{Ein syntaktisch valider \codeinline{git} Befehl der aber nicht tut was gemeint war.}
+  \label{lst:add-remote}
   \medskip
 \end{code}
 
-Das Kommando \codeinline{git remote} ist zum verwalten von `tracked repositories'.
-\codeinline{git add} markiert eine Datei für den nächsten `commit'.
-Je nach Kontext haben \codeinline{add} und \codeinline{remote} eine andere Bedeutung.
-\codeinline{git remote add} fügt eine neue `repository' hinzu, \codeinline{git
-add remote} markiert aber eine Datei mit dem Namen \codeinline{./remote} für den
-nächsten `commit'.
+Der Semantische Fehler im obigen Listing \ref{lst:add-remote} liegt im
+durcheinanderbringen der \codeinline{add} und \codeinline{remote} Subkommandos.
+\codeinline{git remote} ist zum Verwalten von `tracked repositories'.
+\codeinline{git add} markiert eine Datei für den nächsten `commit'. Je nach
+Kontext haben \codeinline{add} und \codeinline{remote} eine andere Bedeutung.
+\codeinline{git remote add} fügt eine neue `repository' hinzu während
+\codeinline{git add remote} aber eine Datei mit dem Namen \codeinline{./remote}
+für den nächsten `commit' markiert.
+
+\smallskip
+
+Durch eine kleine Veränderung der Reihenfolge entsteht eine völlig andere
+Bedeutung.
 
 \section{Adressierung der Probleme durch Weiterentwicklungen}
+\label{sec:weiterentwicklungen}
 
-Die Lösungen zu den Probleme der Kommandozeile wurden vielfach der Schöpfung
-neuer Interfaces gesucht. Ob innerhalb des Terminals oder außerhalb der
+Die Lösungen zu den Probleme der Kommandozeile wurden vielfach in der Schöpfung
+neuer Interface Typen gesucht. Ob innerhalb des Terminals oder außerhalb der
 Text-basierten Welt.
 
 \subsection{Innerhalb des Terminals}
 
 Obwohl diese Evolutionen in der Kommandozeilenumgebung blieben, brachen sie
-trotzdem mit der klassischen CLI Tradition. Die Unterscheidungen zwischen
-CLI und `menu-driven' bzw. interaktiven interfaces sind dabei trotzdem nicht
-glasklar, sondern eher verschwommen \parencite{Paap_1988}. Auch weil Aspekte
-des CLI (wie Hilfsseiten/man pages, Flaggen, etc.) weiterhin Teil dieser z.B.
-Menü-Applikationen sind. Auch weil sich die verschiedenen Interfaces ergänzen
-und zusammen besser seinen können als in ihrer Reinform.
-\\
-\cite{bland2007design} beispielsweise implementiert neben dem reinen
-nicht-interaktiven CLI Workflow noch einen interaktiven Modus in welcher der
+trotzdem mit der klassischen CLI Tradition. Die Unterscheidungen zwischen CLI
+und `menu-driven'/dem interaktivem Interface sind dabei trotzdem nicht glasklar,
+sondern eher verschwommen \parencite{Paap_1988}. Auch weil Aspekte des CLI (wie
+Hilfsseiten/man pages, Flaggen, etc.) weiterhin Teil dieser Applikationen sind.
+Auch weil sich die verschiedenen Interfaces ergänzen und zusammen besser seinen
+können als in ihrer Reinform.
+
+\smallskip
+
+\cite{bland2007design} beispielsweise implementieren neben dem reinen
+nicht-interaktiven CLI Workflow noch einen menü-basierten Modus in welchem der
 Nutzer mit ``menus similar to those of the GUI'' durch den Prozess geführt wird.
 
 \subsubsection{Menü-basiertes Interface}
@@ -510,30 +524,36 @@ verwendet wurde ist es auch als `curses' Interface bekannt.
 
 \medskip
 
-\begin{figure}
+\begin{figure}[H]
   \centering
-  \includegraphics[scale=0.5]{menu-example.png}
+  \includegraphics[scale=.47]{menu-example.png}
   \caption{Beispiel eines TUI: Emails im Terminal mit \codeinline{neomutt}.}
   \label{fig:menu-example}
 \end{figure}
 
-Laut \cite{Paap_1988} wandelt das Menü das Problem des Command Recall % TODO: ref command recall
-in `Command Recognition', ein Wiedererkennen, um. Auch werden die Anfälligkeit
-für Syntaxfehler reduziert, weil der Nutzer vor illegalen Optionen abgeschirmt
-wird \parencite{Kantorowitz_1989}.
-\\
+Laut \cite{Paap_1988} wandelt das Menü das Problem des
+\hyperref[prob:cr]{`Command Recall'} in `Command
+Recognition', ein Wiedererkennen, um. Auch werden die Anfälligkeit für
+\hyperref[prob:ss]{Syntaxfehler} reduziert, weil der Nutzer vor
+illegalen Optionen abgeschirmt wird \parencite{Kantorowitz_1989}.
+
+\smallskip
+
 Im einem vergleichenden Experiment mit der Kommandozeile stellte
 \cite{Westerman_1997} für manche Nutzergruppen unsignifikant bessere Performance
 fest. Auch wurde bei freier Wahl das Menü über alle Nutzergruppen hinweg doppelt
 so häufig zur Nutzung ausgewählt.
 
-Als Alternative zur GUI gedacht, sind TUI's trotzdem für Anfänger schlechter.
-Bei Experten liegen beide Gleichauf \parencite{tuivsgui}.
+\smallskip
+
+Verglichen mit der GUI sind TUI's trotzdem für Anfänger trotzdem schlechter
+(in Performance und Meinung). Bei Experten liegen beide gleichauf
+\parencite{tuivsgui}.
 
 \subsubsection{Interaktive CLI}
 \label{sec:def-interactive}
 
-\begin{figure}
+\begin{figure}[H]
   \centering
   \includegraphics[scale=0.5]{interactive-example.png}
   \caption{Ein Interaktive CLI leitet durch eine Pizza Bestellung.}
@@ -543,14 +563,16 @@ Bei Experten liegen beide Gleichauf \parencite{tuivsgui}.
 Die Interaktive CLI basiert auf einem ``question and answer model''
 \parencite[42]{Spolsky_2001}. Dem Nutzer werden kontinuierlich Fragen gestellt
 auf dieser er antwortet (siehe Abbildung \ref{fig:interactive-example}.) Durch
-die hilfreichen Fragen entfällt der Bedarf sich
-an Kommandos erinnern zu müssen % TODO: vgl. command recall
+die hilfreichen Fragen entfällt der Bedarf sich an Kommandos erinnern zu müssen
+(vgl. \hyperref[prob:cr]{`Command Recall'}.)
+
+\smallskip
 
 Je nach Bedarf kann der Nutzer nach einfachem Text-Input oder Zahlen
 gefragt werden. Auch komplexeres wie dem Auswählen aus einer Liste oder
 `multiple-choice` Fragen sind möglich (vgl. Abbildung \ref{fig:interactive-example2}.)
 
-\begin{figure}
+\begin{figure}[H]
   \centering
   \includegraphics[scale=0.5]{interactive-example2.png}
   \caption{Der Belag einer Pizza wird interaktiv zusammenstellt.}
@@ -558,43 +580,49 @@ gefragt werden. Auch komplexeres wie dem Auswählen aus einer Liste oder
 \end{figure}
 
 \subsection{Außerhalb des Terminals}
-\label{sec:weiterentwicklungen}
+\label{sec:weiterentwicklung-ausser}
 
 Historisch wurde die grafische Benutzeroberfläche als Lösung für die Probleme
 der CLI gesehen (vgl. Kap. \ref{sec:historic-context}.) So wurden dem Nutzer die
 möglichen Optionen grafisch präsentiert, anstatt diese nachschauen zu müssen.
-% TODO: vgl. command recall
-\\
+(vgl. \hyperref[prob:cr]{`Command Recall'}.)
+
+\smallskip
+
 Es vollzog sich damit ein Wechsel von der Funktions-orientierten
 Kommandozeile hin zum Objekt-orientierten GUI \parencite{nielson1993}. Die
 Funktions-orientiertheit drückt sich etwa durch die in `single-command' CLI's
 häufig vertretene Verb-Nomen Struktur aus. Beispielsweise in \codeinline{rm
-file} oder \codeinline{cat file}. In der Objekt-orientierten Welt gehen alle
+FILE} oder \codeinline{cat FILE}. In der Objekt-orientierten Welt gehen alle
 Aktionen vom Objekt aus. So wird eine Datei in den Papierkorb gezogen (vgl.
-\codeinline{rm file}) oder per Doppelklick angezeigt (vgl. \codeinline{cat
-file}). Semantische Probleme (wie mit \codeinline{mv} die Reihenfolge
+\codeinline{rm FILE}) oder per Doppelklick angezeigt (vgl. \codeinline{cat
+FILE}). Semantische Probleme (wie mit \codeinline{mv} die Reihenfolge
 durcheinander zu bringen) sind damit passé. Und von der Textform befreit sind es
-auch die in der CLI prävalenten Syntaxfehler. % TODO: vgl. syntax problem
-\\
+auch die in der CLI prävalenten \hyperref[prob:ss]{Syntaxfehler}.
+
+\smallskip
+
 Aber auch das grafische User Interface hat seine Schwächen. Und diese werden vor
 allem `at scale' sichtbar. Die Massen des Internets lassen sich nicht grafisch
 darstellen und auch ein volles Email Postfach ist mit nur grafischen Werkzeugen
 wenig durchsichtig. \cite{Norman_2007} beschreibt wie Suchmaschinen hier einen
-Ausweg bieten. Norman beschreibt die Suchmaschine als `answer engine'. Eine
-flexiblere, robustere, getarnte Kommandozeile die mit Rechtschreibfehlern und
-Synonymen umgehen kann.
+Ausweg bieten. Und nennt sie `answer engine'. Eine flexiblere, robustere und
+getarnte Kommandozeile die mit Rechtschreibfehlern und Synonymen umgehen kann.
 
 \chapter{Entwicklung von Methoden}
+\label{sec:methods}
 % TODO: intro here
 % Methoden beziehen sich direkt auf ein Problem welches adressiert werden soll.
 
 \section{Methodologie}
 % [Beschreibung des geplanten Vorgehens(-modells) zur Lösung der Problemstellung; umfasst u.a.:
 
-Nach Betrachtung der Probleme sollten in Literaturrecherche Lösungsansätze
-erarbeitet werden. Welche zusammen mit einer Erklärung als Methode formuliert
-wurden.
-\\
+Nach Betrachtung der \hyperref[sec:cli-problems]{Probleme} sollten in
+Literaturrecherche Lösungsansätze erarbeitet werden. Welche zusammen mit einer
+Erklärung als Methoden formuliert wurden.
+
+\smallskip
+
 Auf der Abstraktionsskala von Softwarekonzepten befindet sich die Methode in der
 Mitte zwischen abstrakt und konkret.
 
@@ -608,9 +636,9 @@ abstrakt <-----------------------> konkret
 \end{code}
 
 Das abstrakte und allgemeine Prinzip \parencite{Balzert_2009} wäre zu
-philosophischer Natur gewesen um im nächsten Schritt der Arbeit angewandt zu
-werden. Werkzeuge nach \cite{Balzert_2009} sind zu konkret und real. Es nicht
-Ziel ist für jeden Lösungsansatz ein direkt anwendbares Werkzeug zu kreieren.
+philosophischer Natur gewesen um im nächsten Schritt angewandt zu werden.
+Werkzeuge nach \cite{Balzert_2009} sind zu konkret und real. Es nicht Ziel ist
+für jeden Lösungsansatz ein direkt anwendbares Werkzeug zu kreieren.
 
 \medskip
 
@@ -622,305 +650,135 @@ dem Entwickler Spielraum in der Implementierung lässt.
 \medskip
 
 Die zu formulierenden Methoden sollten sich daher: auf Probleme die durch sie
-gelöst/gemindert werden beziehen und begründet darstellen warum dieser Effekt
-eintreten sollte.
+gelöst/gemindert werden beziehen. Und begründet darstellen warum dieser Effekt
+eintreten wird.
+
+\medskip
+
+Nachfolgend nun die erarbeiteten Methoden.
 
 % TODO: unterliegende philosophie/prinzipien hier
 
 \newcounter{meth}
 \newcommand{\methbox}[2]{
+  \medskip
   \fbox{\parbox{\linewidth}{
     \refstepcounter{meth}
     \textbf{Methode~\themeth}: #2
     \label{meth:#1}
   }}
+  \medskip
 }
 \newcommand{\methref}[1]{
   Methode~\ref{meth:#1}
 }
 
-\section{Natürliche Sprache}
-\label{sec:natural-lang}
-
-\cite{Raskin_2008} beschreibt die Kapazitäten linguistischer
-Kommandozeilen, welche Normans Konzept der `answer engines' (vgl. Kapitel
-\ref{sec:weiterentwicklungen}) ähneln. Diese haben wie der Name schon hergibt
-einen Fokus auf menschlicher Sprache.
-Ein schönes, genanntes Beispiel von Google Calendar für die Stärke solcher auf
-natürlicher Sprache-basierender Interfaces: ``Sunday dinner at 7:30 p.m. with
-Asa Jasa.'' Es sind keine Kommandos erforderlich. Das gewünschte wird einfach
-in natürlicher Sprache beschrieben. Syntax ist nur insofern relevant, als das
-menschliche Sprache ihre eigene Syntax hat.
-
-\medskip
-
-``Recently, there has been a growing movement that sees today's command line
-as a human-first text-based UI, rather than a machine-first scripting platform
-\parencite{clig}'' \parencite{Schr_der_2021}
-
-\medskip
-
-Die Syntax- und Semantikeinschränkungen des Kommandozeilen Interfaces lassen
-eine alleinig `human language' gestützte Anwendung nicht zu. Zumindest nicht
-der Reinform des CLI. Als `human-first` User Interface sollte trotzdem
-zumindest eine eingschränkte Form natürlicher Spracheingabe unterstützt werden
-\parencite{seneviratne2008new}.
-
-\methbox{human_language}{Unterstütze Eingaben in natürlicher Sprache.}
-
-\section{Fehlerkorrektur}
-
-Diese Methode zeigt eine gewisse Nähe zur Unterstützung der natürlichen
-Sprache (Kapitel \ref{sec:natural-lang}). So hob \cite{Raskin_2008} für die
-Linguistische Kommandozeile die Verträglichkeit von Rechtschreibfehlern hervor.
-
-Fehlertoleranz im Bezug auf Rechtschreibung würde auch das Problem der zu strikten Syntax % TODO: ref syntax
-
-zum Teil adressieren. Fehlermeldungen und die damit einhergehende Frustration minimieren.
-\cite{clig} empfiehlt ganz konkret: ``If the user did something wrong and you can
-guess what they meant, suggest it.'' Im Kontrast dazu soll nach der `Do what I
-mean' Philosophie der Fehler direkt und ohne Nutzerfeedback ausgebessert werden
-\parencite{DWIM}. Was natürlich schneller ist und den Nutzungsflow nicht unnötig
-unterbricht. \cite{clig} weißt aber auch darauf hin das eine fehlerhafte Eingabe
-neben Rechtschreibfehlern eben auch aus logischen Fehler resultieren kann. Dann
-kann das `Do what I mean' zu sehr unerwartetem, gefährlichem Verhalten führen.
-
-\begin{code}
-  \begin{shellcode}
-heroku pss
- ›   Warning: pss is not a heroku command.
-Did you mean ps? [Y/n]:
-  \end{shellcode}
-  \captionof{listing}{Korrekturvorschlag eines Rechtschreibfehlers nach \cite{clig}.}
-  \medskip
-\end{code}
-
-\methbox{typos}{Es sollte (suggestive) Fehlerkorrektur geben.}
-
-\section{Interaktives Nachfragen bei fehlendem Parameter}
-
-Das interaktive Nachfragen bezieht sich auf die Interaktive CLI (siehe Kap.
-\ref{sec:def-interactive}.)
-
-Man stelle sich folgendes Szenario vor. Eine CLI hat ein Kommando welches einen Parameter erfordert.
-Normalerweise erfolgt beim Weglassen der Übergabe dieses Parameters eine Fehlermeldung welche einen Hinweis darauf gibt.
-% TODO: vgl. Command recall
-
-\begin{code}
-  \begin{shellcode}
-\$ mullvad relay set location
-error: The following required arguments were not provided:
-    <country>
-
-USAGE:
-    mullvad relay set location <country> [ARGS]
-
-For more information try --help
-  \end{shellcode}
-  \captionof{listing}{Fehlermeldung bei fehlendem Parameter in \codeinline{mullvad}'s CLI.}
-  \medskip
-\end{code}
-
-Die CLI weiß aber bereits was der Nutzer tun möchte und könnte anstatt der
-Fehlermeldung dem Nutzer mit einer Eingabeaufforderung nach dem fehlenden
-Parametern fragen \parencite{12factor}. Oder, je nach Kontext, diesem sogar eine
-Liste von Vorschlägen geben, um daraus auswählen. Dem Nutzer wird erspart sich
-mit der richtigen Syntax und den Vokabeln auseinander zu setzen.
-
-\methbox{interactive_missing_param}{Bei fehlendem Parameter soll interaktiv nachgefragt werden.}
-
-\begin{code}
-  \begin{shellcode}
-mullvad relay set location
-Enter location country code:
-  \end{shellcode}
-  \captionof{listing}{Eingabeaufforderung welche nach nicht übergebenem Parameter fragt.}
-  \medskip
-\end{code}
-
-Fairerweise ist zu bemerken das die mullvad CLI dies auch an anderer Stelle
-genau so handhabt. Bei \codeinline{mullvad account login} wird nach der
-fehlenden Accountnummer gefragt.
-\\
-Negativ an dieser Methode wäre das der Nutzer nicht im gleichen Maße auf die
-Möglichkeit einer komplexeren Verwendung des Kommandos hingewiesen wird (so
-nimmt das mullvad Kommando aus obigem Beispiel nicht nur Landes- sondern auch
-Stadt- und Hostkennungen). Außerdem wird der Programmaufruf ohne den Parameter
-in der Shell History gespeichert. Wenn dieser wiederverwendet wird fehlt der Parameter immer noch und kann entweder ergänzt oder erneut interaktiv übergeben werden.
- % TODO: shorten
-
-Beide Punkte sind aber für Einsteiger eher zu vernachlässigen.
-
-\section{Menü-basiertes Interface}
-
-Im Kapitel \ref{sec:def-menu} wurde schon darauf eingegangen wie ein TUI die
-Probleme der Kommandozeile adressieren würde. Auch wurde eine klare Präferenz
-für ein solches Interface festgestellt \parencite{Westerman_1997}. Auch
-\cite{Spolsky_2001} nennt das Menü-basierte Interface als einen Weg Usability zu
-erhöhen.
-
-\methbox{menu}{Biete ein Menü-Interface an.}
-
-\section{Autovervollständigung}
-
-Auto-completion in der Kommandozeile beschreibt das bei drücken der `TAB' Taste
-etwas ergänzt/vervollständigt wird.
-
-In der Shell funktioniert dies etwa für Kommando sowie Dateipfade:
-\begin{code}
-  \begin{shellcode}
-wg # Nutzer drueckt TAB
-wget
-
-cat ./note # Nutzer drueckt TAB
-cat ./notes.md
-  \end{shellcode}
-  \captionof{listing}{Autovervollständigung in der Shell.}
-  \medskip
-\end{code}
-
-Innerhalb einer CLI App kann die Vervollständigung, neben Dateipfaden, auch
-Subkommandos und Flaggen umfassen.
-
-\begin{figure}
-  \centering
-  \includegraphics[scale=0.5]{mullvad-autocomplete.png}
-  \caption{Autocomplete Beispiel: \codeinline{mullvad}'s CLI listet nach dem drücken von `TAB' mögliche Subkommandos.}
-  \label{fig:autocomplete}
-\end{figure}
-
-\methbox{autocomplete}{Nutze Autovervollständigung zum Vorschlagen von Flaggen und Kommandos \parencite{seneviratne2008new}.}
-
-Auto-completion adressierte beide Probleme welche das CLI mit sich bringt, durch
-das Vorschlagen und Vervollständigen erleichtert das Erinnern des gesuchten
-Kommandos. Und dadurch das nur valide Kommandos vorgeschlagen werden ist das
-einhalten von Syntax- und Semantikregeln erleichtert. Auch profitiert der Nutzer
-von Kontext-bezogenen Beschreibungen.
-\\
-In \cite{dutta} geht der Author sogar noch einen Schritt weiter und empfehlen
-das automatische Vorschlagen aller Flaggen und Argumente für ein Kommando,
-sodass der Nutzer sich nicht mal anschauen muss was für das Kommando benötigt
-wird. So wie vom Author beschrieben ist dies aber nicht in der Shell möglich,
-sondern müsste meiner Einschätzung nach eine eigene Kommandozeilen Umgebung
-gebaut werden, was nicht im Sinne der Zielstellung dieser Arbeit liegt.
-
-\section{Relevante Standardwerte}
-
-Relevante Defaults sind nicht Kommandozeilen spezifisch, können dort aber
-wichtiger sein als in grafischen Anwendungen.
-\\
-Dem Nutzer werden die Möglichkeiten eben nicht zur Auswahl gestellt und dieser
-klickt die gewünschte Option an. Sondern ist das Auflisten der Möglichkeiten
-i.d.R. ein separater Schritt, losgelöst von der eigentlich beabsichtigten Aktion
-(z.B. siehe Abbildung \ref{fig:defaults-demo} oder das mit \codeinline{ls -d}
-zuerst die verfügbaren Ordner aufgelistet, um sich dann mit \codeinline{cd
-ORDNER} in einen von diesen hineinzubewegen,auch .)
-\\
-Es greift wieder das fundamentale Problem des `Command Recall' (vgl. Problem
-\ref{prob:command-recall}). Den Schritt des Auflistens der Möglichkeiten
-(ähnlich wie das Auflisten von möglichen Kommandos) ist ein extra Schritt, außer
-der Nutzer kann sich an die gewünschte Option erinnern.
-
-\begin{figure}
-  \centering
-  \includegraphics[scale=0.5]{defaults-demo.png}
-  \caption{Der erforderte Parameter in dieser Literaturverwaltung ist einer Liste zu entnehmen.}
-  \label{fig:defaults-demo}
-\end{figure}
-
-\bigskip
-
-\methbox{relevant_defaults}{Falls möglich haben Argumente relevante Defaultwerte.}
-
-Dem Nutzer relevante Standardwerte zu geben erlaubt es diesem weniger
-Argumente an die CLI App übergeben zu müssen. Es gibt weniger Fehlermeldungen
-die den Nutzer zurückweisen, weil dieser etwas vergessen hat.
-
-Es ist aber auch elementar die Nutzung dieser Standardwerte zu kommunizieren.
-Damit der Nutzer von ihnen nicht überrascht wird.
-
-% TODO: describe 12 Factor methods
-% https://medium.com/@jdxcode/12-factor-cli-apps-dd3c227a0e46
 \section{Flaggen anstatt Argumenten}
-% 2. Prefer flags to args
 
-Sobald ein Kommando mehr als ein Argument annimmt, biete sich die Gelegenheit
-die für Argumente relevante Reihenfolge durcheinander zu bringen (vgl. Command
-Recall und Syntax % TODO: fix formating
+Sobald ein (Sub-) Kommando mehr als ein Argument annimmt, biete sich die
+Gelegenheit die für Argumente relevante Reihenfolge durcheinander zu bringen
+(vgl. \refss{Syntax/Semantik}.) \cite{12factor} empfiehlt deshalb bei zwei
+oder mehr Argumenten anstatt dieser Flaggen zu verwenden. Das ist etwas mehr
+Aufwand zum Schreiben, eliminiert aber die Reihenfolge als Fehlerfaktor.
+Außerdem können Flaggen auch mittels Autovervollständigung vorgeschlagen werden
+(vgl.~\methref{autocomplete}).
 
-). \cite{12factor} empfiehlt deshalb bei zwei oder mehr Argumenten Flaggen zu
-verwenden. Das ist etwas mehr Aufwand zum Schreiben aber die Reihenfolge als
-Fehlerfaktor (vgl. Syntax
+\methbox{flags_over_arguments}{Verwende Flaggen wenn mehr als ein Argument benötigt wird.}
 
-) und Flaggen können nun auch mittels Autovervollständigung vorgeschlagen werden
-(vgl. \methref{autocomplete}).
-
-\methbox{flags_over_arguments}{Wenn zwei oder mehr Argumenten erforderlich sind nutze stattdessen Flaggen.}
-
-Dies trifft vorallem zu wenn wenn bei dem Kommando schon andere Werte über
-Flaggen übergeben werden.
+Dies trifft vor allem zu wenn ein (Sub-) Kommando gleichzeitig Parameter über
+Flaggen und Argumente entgegennimmt.
 
 \begin{code}
   \begin{shellcode}
-oraclett project add INTPD999DXD --taskDetail "01 - Career development"
-oraclett project add --project INTPD999DXD --taskDetail "01 - Career development"
+# Argument und Flaggen Kombination
+$ oraclett project add INTPD999DXD --taskDetail "01 - Career development"
+
+# Nur Flaggen
+$ oraclett project add --project INTPD999DXD --taskDetail "01 - Career development"
   \end{shellcode}
   \captionof{listing}{Argument ersetzt durch Flaggen: vorher und nachher}
   \medskip
 \end{code}
 
-Außen vor sind auch Kommandos welche eine variable Anzahl an Argumenten nehmen,
-Beispielsweise \codeinline{rm file1 file2 file3}, weil es sich bei diesen nicht
-um verschiedene Typen von Argument handelt \parencite{12factor}.
+Außen vor sind Kommandos welche eine variable Anzahl von Argumenten annehmen.
+Beispielsweise \codeinline{rm} dem mehrere Dateien zum Löschen übergeben
+werden können. Hier handelt es sich aber nicht um Argumente mit verschiedenen
+Bedeutungen (\cite{12factor}.)
 
-Ein weiter Vorteil das Erstellen von Aliasen to vereinfachen. Man stelle sich
-vor ein App nimmt ein Datum und eine Anzahl von Stunden. Der Nutzer möchte nun
-einen Alias der den Tag immer auf heute stellt. Gewünschte Nutzung des Alias sieht so aus:
+\medskip
+
+Ein weiter Vorteil ist das Erstellen von Aliasen to vereinfachen. Das sind
+Abkürzungen die ein Nutzer sich innerhalb seiner Shell definieren kann. Etwa um
+ein Kommando abzukürzen: \codeinline{alias v="nvim"} macht \codeinline{nvim} mit
+dem Kommando \codeinline{v} nutzbar.
+
+\smallskip
+
+Man stelle sich vor ein CLI App nimmt ein eine Anzahl von Stunden und ein Datum:
 
 \begin{code}
   \begin{shellcode}
-\$ apptoday 8
+$ app HOURS DATE
   \end{shellcode}
 \end{code}
 
-Wenn die App Argumenten nimmt sähe ein Aufruf sowie die Definition des Aliases so aus:
+Und der Nutzer möchte einen Alias mit dem für den heutigen Tag eine Anzahl von Stunden übergeben wird.
+Gewünschte Nutzung des Alias sieht so aus:
 
 \begin{code}
   \begin{shellcode}
-\$ app HOURS DATE
+$ apptoday 8
+  \end{shellcode}
+\end{code}
 
+Um diesen Alias zu ermögliche muss aber eine kompliziertere\footnote{Neulinge
+kommen mit der Alias Syntax meist früher in Kontakt. Neben unvertrauter Syntax
+spielt mit hinein das Shell Argumente (\codeinline{\$1}) verwendet werden müssen und das die
+Möglichkeit entfällt dynamisch weitere Flaggen zu übergeben.} Shell Funktion
+definiert werden, weil das Argument an die richtige Stelle übergeben werden
+muss:
+
+\begin{code}
+  \begin{shellcode}
 apptoday() {
-  app \$1 today
+  app $1 today
 }
   \end{shellcode}
 \end{code}
 
-Im Vergleich zu dem Aufruf und Alias mit Flaggen:
+Wäre die App dagegen mit Flaggen anstatt Argumenten konzipiert und würde folgenden
+Nutzung haben:
 
 \begin{code}
   \begin{shellcode}
-\$ app --hour HOURS --date DATE
-
-alias apptoday="app --date today --hour"
+$ app --hour HOURS --date DATE
   \end{shellcode}
 \end{code}
 
-In der Verwendung sind beide equivalent. Beim Schreiben des Alias ist die zweite
-Syntax Kommandozeilen Neulingen aber vertrauter, weil man mit dieser zuerst
-in Kontakt kommt. Auch ist kein Verständnis von Shell notwendig (hier das
-\codeinline{\$1} dem ersten übergebenen Parameter entspricht.)
-
-\section{Unterstützung aller Versions- und Helpflaggen}
-
-Der Großteil aller Apps bietet eine Hilfs- und eine Versionsseite. Hilfsseiten
-beschreiben ähnlich wie eine `man page' die Subkommandos, Flaggen und Syntax.
-Meist sind diese auch relativ und beziehen sich auf das aktuelle Subkommando.
-Versionsseiten geben die Version der App sowie ggf. eine Liste von Features die
-mit einkompiliert wurden.
+Dann wäre der Alias viel leichter und flexibler zu definieren:
 
 \begin{code}
   \begin{shellcode}
-\$ mullvad status --help
+$ alias apptoday="app --date today --hour"
+  \end{shellcode}
+\end{code}
+
+Wenn die Stunde anstatt des Tages durch den Alias festgeschrieben werden soll,
+ist das mit der Flaggen-basierten Struktur auch kein Problem. Der Nutzer ist
+unabhängig von der durch den Entwickler definierten Reihenfolge.
+
+\section{Unterstützung aller Hilfs- und Versionsflaggen}
+
+Der Großteil aller Apps bietet eine Hilfs- und eine Versionsseite. Hilfsseiten
+beschreiben ähnlich wie eine `man page'\footnote{Einer über das \codeinline{man}
+Kommando verfügbaren Hilfsseite.} die Subkommandos, Flaggen und Syntax. Meist
+sind diese auch relativ und beziehen sich auf das aktuelle Subkommando.
+Versionsseiten geben die Version der App\footnote{Sowie ggf. eine Liste von
+optionalen Features die mit einkompiliert wurden.} wieder.
+
+\begin{code}
+  \begin{shellcode}
+$ mullvad status --help
 mullvad-status
 View the state of the VPN tunnel
 
@@ -936,7 +794,7 @@ OPTIONS:
 SUBCOMMANDS:
     listen    Listen for VPN tunnel state changes
   \end{shellcode}
-  \captionof{listing}{Gekürzte relative Hilfsseite von \codeinline{mullvad}.}
+  \captionof{listing}{Als Beispiel: Die gekürzte, relative Hilfsseite von \codeinline{mullvad status}.}
   \medskip
 \end{code}
 
@@ -945,37 +803,34 @@ welche Flagge sie verwenden um diese angezeigt zu bekommen.
 
 \begin{code}
   \begin{shellcode}
-app -h
-app --help
-app help
+$ app -h
+$ app --help
+$ app help
 
-app -v
-app -V
-app --version
-app -version
-app version
+$ app -v
+$ app -V
+$ app --version
+$ app -version
+\$ app version
   \end{shellcode}
   \captionof{listing}{Gängige Varianten der Hilfs- und Versionsflaggen.}
   \medskip
 \end{code}
 
-Laut \cite{12factor} sollten möglichst alle in die App eingebaut sein. So kann
-vermieden werden das ein Nutzer nicht das angezeigt bekommt wonach er sucht.
+Laut \cite{12factor} sollten möglichst alle Varianten in von einer Anwendung
+unterstützt werden. So kann vermieden werden das der Nutzer nicht das angezeigt
+bekommt wonach er sucht. Das Problem des \refcrr wird vermieden weil der Nutzer
+durch Probieren seiner präferierten Variante direkt zur Lösung kommt.
 
-\medskip
-
-\methbox{support_all_help_version}{Unterstütze alle gängigen Formen der Versions- und Helpflaggen.}
-
-\bigskip
+\methbox{support_all_help_version}{Unterstütze alle gängigen Formen der Hilfs- und Versionsflaggen.}
 
 \newcommand\checkmark{\ttfamily{\char"2611}}
 \newcommand\cross{\ttfamily{\char"2610}}
 \begin{table}[h!]
   \begin{center}
-    \caption{Unterstützte Varianten von Hilfs- und Versionsflaggen bei einer Stichprobe von 15 Programmen.}
     \label{tab:help_version}
     \begin{tabular}{l | c c c | c c c c c}
-      Programm & \codeinline{-h} & \codeinline{--help} & \codeinline{help} & \codeinline{-v} & \codeinline{-V} & \codeinline{--version} & \codeinline{-version} & \codeinline{version} \\
+      Kommando & \codeinline{-h} & \codeinline{--help} & \codeinline{help} & \codeinline{-v} & \codeinline{-V} & \codeinline{--version} & \codeinline{-version} & \codeinline{version} \\
       \hline
 git & \checkmark & \checkmark & \checkmark & \checkmark & \cross & \checkmark & \cross & \checkmark\\
 node & \checkmark & \checkmark & \cross & \checkmark & \cross & \checkmark & \cross & \cross\\
@@ -995,41 +850,252 @@ nvim & \checkmark & \checkmark & \cross & \checkmark & \cross & \checkmark & \ch
       \hline
       Summe & 14 & 14 & 3 & 7 & 5 & 12 & 4 & 3 \\
     \end{tabular}
+    \caption{Unterstützte Varianten von Hilfs- und Versionsflaggen bei einer Stichprobe von 15 Kommandos.}
   \end{center}
 \end{table}
 
-In meiner unrepresentativen Stichprobe stellte sich heraus das
-\codeinline{-h} und \codeinline{--help} praktisch überall funktionieren. Mit
-\codeinline{--version} wird in den meisten Fällen auch das gewünschte angezeigt.
-Aber wenn \codeinline{--version} nicht zum Ziel führt ist durchprobieren
-angesagt.
-\\
-Am wenigsten verbreitet sind \codeinline{help} und \codeinline{version}, welche
-aber auch etwas außen vor sind, weil das erste Argument bei vielen Programmen
-eine Input Datei bezeichnet. Aber bei `multi-command' Apps sollten auch diese
-Varianten unterstützt werden.
+In einer unrepresentativen Stichprobe (siehe Tabelle) wurde
+zusammengestellt welche Flaggen in 15 Anwendungen funktionieren bzw.
+nicht funktionieren. Dabei stellte sich heraus das \codeinline{-h} und
+\codeinline{--help} praktisch überall funktionieren. Mit \codeinline{--version}
+wird in den meisten Fällen auch das gewünschte Ergebnis angezeigt. Aber wenn
+\codeinline{--version} nicht zum Ziel führt ist durchprobieren angesagt.
+
+\smallskip
+
+Am wenigsten verbreitet sind \codeinline{help} und \codeinline{version},
+welche aber auch etwas außen vor sind, weil das erste Argument bei vielen
+`single-command' Kommandos eine `Input' Datei bezeichnet. Aber bei
+`multi-command' Apps sollten auch diese Varianten unterstützt werden.
+
+\section{Relevante Standardwerte}
+
+Relevante `Defaults' sind nicht Kommandozeilen-spezifisch, können dort aber
+wichtiger sein als in grafischen Anwendungen.
+
+\smallskip
+
+Dem Nutzer werden die Möglichkeiten eben nicht zur Auswahl gestellt und dieser
+klickt die gewünschte Option an. Sondern ist das Auflisten der Möglichkeiten
+i.d.R. ein separater Schritt, losgelöst von der eigentlich beabsichtigten
+Aktion. Beispielsweise muss um sich mit \codeinline{cd} in einen Ordner
+hineinzubewegen der Name dessen zuerst in Erfahrung gebracht werden (etwa mit
+\codeinline{ls -d}.)
+
+\smallskip
+
+Es greift wieder das fundamentale Problem des \refcrr. Den Schritt des
+Auflistens der Möglichkeiten (ähnlich wie das Auflisten von möglichen Kommandos)
+ist ein extra Schritt der nur nötig ist weil der Nutzer sich nicht an die Option
+erinnern kann die er verwenden möchte.
+
+\bigskip
+
+\methbox{relevant_defaults}{Biete relevante Standardwerte an.}
+
+Dem Nutzer relevante Defaults anzubieten erlaubt es diesem weniger Argumente an
+die CLI App übergeben zu müssen. Es gibt weniger Fehlermeldungen die den Nutzer
+zurückweisen, weil dieser etwas vergessen hat.
+
+\smallskip
+
+Es ist aber auch elementar die Nutzung dieser Standardwerte zu kommunizieren.
+Damit der Nutzer von ihnen nicht überrascht wird.
+
+\section{Interaktives Nachfragen bei fehlendem Parameter}
+
+Man stelle sich folgendes Szenario vor. Eine CLI hat ein Kommando welches einen
+Parameter erfordert. Normalerweise erfolgt bei nicht-Übergabe dieses Parameters
+eine Fehlermeldung welche darauf hinweist.
+
+\begin{code}
+  \begin{shellcode}
+$ mullvad relay set location
+error: The following required arguments were not provided:
+    <country>
+
+USAGE:
+    mullvad relay set location <country> [ARGS]
+
+For more information try --help
+  \end{shellcode}
+  \captionof{listing}{Fehlermeldung bei fehlendem Parameter in \codeinline{mullvad}'s CLI.}
+  \label{lst:missing-param}
+  \medskip
+\end{code}
+
+Die CLI weiß aber bereits was der Nutzer tun möchte und könnte anstatt
+der Fehlermeldung dem Nutzer mit einer Eingabeaufforderung (interaktivem
+Nachfragen, vgl. Kapitel \ref{sec:def-interactive}) nach dem fehlenden
+Parameter fragen \parencite{12factor}. Oder, je nach Kontext, diesem sogar
+eine Liste von Vorschlägen geben, um daraus auswählen. Dem Nutzer wird erspart
+sich damit auseinander zu setzen welche Parameter erfordert sind (vgl.
+\hyperref[prob:cr]{`Command Recall'})
+
+\methbox{interactive_missing_param}{Frage bei fehlendem Parameter interaktiv nach.}
+
+\begin{code}
+  \begin{shellcode}
+$ mullvad relay set location
+Enter location country code:
+  \end{shellcode}
+  \captionof{listing}{Beispiel der Eingabeaufforderung zur Verbesserung von Listing \ref{lst:missing-param}.}
+  \medskip
+\end{code}
+
+Fairerweise ist zu bemerken das die mullvad CLI dies auch, an anderer Stelle,
+genau so handhabt. Bei \codeinline{mullvad account login} wird nach der
+fehlenden Accountnummer gefragt.
+
+\medskip
+
+Mit einer Fehlermeldung anstatt des interaktivem Nachfragens könnte der
+Nutzer leichter auf die ggf. komplexere Verwendung des Kommandos hingewiesen
+werden. So nimmt das mullvad Kommando aus dem ersten Beispiel neben der
+Landeskennung auch noch optional die ein Stadt- und `Hostkennung'. Was aber
+aus der Fehlermeldung auch nicht klar hervorgeht. Wenn unter Berücksichtigung
+dieser Methode implementiert wird kann dieser Einwand aber auch mitigiert
+werden. Entweder durch das Vereinfachen oder Umgestalten der Kommandos. Oder mit
+Hinweisen auf die Hilfsseite, welche die Parameter vollumfänglich erklärt.
+
+\section{Natürliche Sprache}
+\label{sec:natural-lang}
+
+\cite{Raskin_2008} beschreibt die Kapazitäten linguistischer
+Kommandozeilen, welche Normans Konzept der `answer engines' (vgl. Kapitel
+\ref{sec:weiterentwicklung-ausser}) ähneln. Diese haben wie der Name schon
+hergibt einen Fokus auf menschlicher Sprache\footnote{Die Linguistik ist das
+Studium der menschlichen Sprache.}. Ein schönes, genanntes Beispiel von Google
+Calendar für die Stärke solcher, auf natürlicher Sprache basierender Interfaces:
+``Sunday dinner at 7:30 p.m. with Asa Jasa.'' Es werden keine Kommandos
+verwendet. Das gewünschte wird einfach in natürlicher Sprache beschrieben.
+Syntax ist nur insofern relevant, als das die menschliche Sprache ihre eigene
+Syntax hat.
+
+\medskip
+
+``Recently, there has been a growing movement that sees today's command line
+as a human-first text-based UI, rather than a machine-first scripting platform
+\parencite{clig}'' - \parencite{Schr_der_2021}
+
+\medskip
+
+Die Syntax- und Semantikeinschränkungen des Kommandozeilen Interfaces lassen
+eine alleinig `human language'-gestützte Anwendung nicht zu. Zumindest nicht
+der Reinform des CLI. Als `human-first` User Interface sollte trotzdem
+zumindest eine eingschränkte Form natürlicher Spracheingabe unterstützt werden
+\parencite{seneviratne2008new}.
+
+\methbox{human_language}{Unterstütze Eingaben in natürlicher Sprache.}
+
+\section{Fehlerkorrektur}
+
+Diese Methode zeigt eine gewisse Nähe zur Unterstützung der natürlichen
+Sprache (Kapitel \ref{sec:natural-lang}). So hob \cite{Raskin_2008} für die
+linguistische Kommandozeile die Verträglichkeit von Rechtschreibfehlern hervor.
+
+\smallskip
+
+Fehlertoleranz im Bezug auf Rechtschreibung würde auch das Problem der zu
+\refss{strikten Syntax} zum Teil adressieren. Fehlermeldungen und die damit
+einhergehende Frustration minimieren. \cite{clig} empfehlen ganz konkret: ``If
+the user did something wrong and you can guess what they meant, suggest it.''
+Im Kontrast dazu soll nach der `Do what I mean' Philosophie der Fehler direkt
+und ohne Nutzerfeedback ausgebessert werden \parencite{DWIM}. Was natürlich
+schneller ist und den Nutzungsflow nicht unnötig unterbricht. \cite{clig} weisen
+aber auch darauf hin das eine fehlerhafte Eingabe neben Rechtschreibfehlern eben
+auch aus logischen Fehler resultieren kann. Dann kann `Do what I mean' zu sehr
+unerwartetem, gefährlichem Verhalten führen.
+
+\methbox{typos}{Unterstütze (suggestive) Fehlerkorrektur.}
+
+\begin{code}
+  \begin{shellcode}
+heroku pss
+ ›   Warning: pss is not a heroku command.
+Did you mean ps? [Y/n]:
+  \end{shellcode}
+  \captionof{listing}{Korrekturvorschlag eines Rechtschreibfehlers nach \cite{clig}.}
+  \medskip
+\end{code}
+
+\section{Autovervollständigung}
+
+`Auto-completion' in der Kommandozeile beschreibt das beim Drücken der `TAB' Taste
+etwas ergänzt/vervollständigt wird.
+
+\smallskip
+
+In der Shell funktioniert dies etwa für Kommandos und Dateipfade:
+\begin{code}
+  \begin{shellcode}
+$ wg # Nutzer drückt TAB
+$ wget
+
+$ cat ./note # Nutzer drückt TAB
+$ cat ./notes.md
+  \end{shellcode}
+  \captionof{listing}{Autovervollständigung in der Shell.}
+  \medskip
+\end{code}
+
+Innerhalb einer CLI App kann die Vervollständigung, neben Dateipfaden, auch
+Subkommandos und Flaggen umfassen.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.5]{mullvad-autocomplete.png}
+  \caption{\codeinline{mullvad}'s CLI listet nach dem drücken von `TAB' mögliche Subkommandos.}
+  \label{fig:autocomplete}
+\end{figure}
+
+`Auto-completion' adressierte beide Probleme welche das CLI mit sich bringt.
+Durch das Vorschlagen und Vervollständigen wird das \refcr{Erinnern}
+erleichtert. Und dadurch das nur valide Kommandos vorgeschlagen werden ist das
+einhalten von \refss{Syntax- und Semantikregeln} erleichtert. Auch profitiert
+der Nutzer von Kontext-bezogenen Beschreibungen.
+
+\methbox{autocomplete}{Nutze Autovervollständigung zum Vorschlagen von Flaggen
+und Subkommandos \parencite{seneviratne2008new}.}
+
+In \cite{dutta} geht der Author sogar noch einen Schritt weiter und empfiehlt
+das automatische Vorschlagen aller Flaggen und Argumente für ein Kommando,
+sodass der Nutzer sich nicht mal anschauen muss was für das Kommando benötigt
+wird. So wie vom Author beschrieben ist dies aber nicht in der Shell möglich,
+sondern müsste in einer eigenen Kommandozeilen Umgebung umgesetzt werden.
+
+\section{Menü-basiertes Interface}
+
+Im Kapitel \ref{sec:def-menu} wurde schon darauf eingegangen wie ein
+TUI die Probleme der Kommandozeile adressieren würde. Auch wurde eine
+klare Präferenz für ein solches Interface unter den Nutzern festgestellt
+\parencite{Westerman_1997}. Auch \cite{Spolsky_2001} nennt das Menü-basierte
+Interface als einen Weg Usability zu erhöhen.
+
+\methbox{menu}{Biete ein Menü-Interface an.}
 
 \section{Relevante Kommandovorschläge}
 
-Die Essenz von % TODO: command recall ref
-
-ist das Nutzer nicht wissen welche Kommando oder Subkommando ihnen zur Verfügung
-stehen. Kommandos existieren aber nicht im Vakuum. Im Zusammenspiel unterliegen
-sie meist einer gewissen Reihenfolge/einem `Nutzungsflow'. Bevor in einen
-Ordner gewechselt werden kann (\codeinline{cd}) muss dieser erst existieren
-(\codeinline{mkdir}) oder der Nutzer muss von diesem Wissen (\codeinline{ls}).
-\cite{dutta} schlägt nun vor sich diesen `flow' zu nutze zu machen um den Nutzer
-über mögliche nächste Schritte (in Form anderer Kommandos) zu informieren. In
-dem gegebenen Beispiel könnten also \codeinline{mkdir} mit einer Nachricht a là
-\codeinline{Also look at - cd, ls} versehen werden. Diese Vorschläge können als
-Erinnerung dienen oder den Nutzer dazu Auffordern sich die Vorschläge einmal
-näher anzuschauen. Bei `multi-command' CLI's mit vielen Subkommandos, wo der
-Nutzer nicht weiß wo er anfangen soll, sind diese Vorschläge besonders wertvoll.
+Die Essenz von \refcrr ist das Nutzer nicht wissen welche (Sub-) Kommandos
+ihnen zur Verfügung stehen. Kommandos existieren aber nicht im Vakuum. Im
+Zusammenspiel unterliegen sie meist einer gewissen Reihenfolge bzw. einem
+`Nutzungsflow'. Bevor in einen Ordner gewechselt werden kann (\codeinline{cd})
+muss dieser erst existieren (\codeinline{mkdir}) oder der Nutzer muss um diesem
+wissen (\codeinline{ls}). \cite{dutta} schlägt nun vor sich diesen `Flow'
+zu nutze zu machen um den Nutzer über mögliche nächste Schritte (in Form
+anderer (Sub-) Kommandos) zu informieren. Für den gegebenen `Flow' könnte
+also \codeinline{mkdir} mit einer Nachricht à la \codeinline{Also look at -
+cd, ls} versehen werden. Diese Vorschläge können als Erinnerung dienen oder
+den Nutzer dazu Auffordern sich die Vorschläge einmal näher anzuschauen. Bei
+`multi-command' CLI's mit vielen Subkommandos, wo der Nutzer nicht weiß wo er
+anfangen soll, sind diese Vorschläge besonders wertvoll.
 
 \methbox{command_recommendations}{Schlage dem Nutzer andere relevante
 Subkommandos vor \parencite{seneviratne2008new}.}
 
 \chapter{Beispiel Anwendung}
+\label{sec:beispiel-anwendung}
+
 \section{Anforderungsanalyse}
 % [Beschreibung der Erhebung, Granularisierung und Priorisierung der zu Grunde liegenden Anforderungen]
 
@@ -1196,9 +1262,9 @@ auch noch auf die Auswirkung der Wahl des Frameworks eingegangen.
 Inquirer ist eine Ansammlung von interaktiven Fragetypen (vgl. Kapitel
 \ref{sec:def-interactive}).
 
-Neben einfachen Fragen, wie Text einzugeben oder einen Eintrag aus einer Liste
-auswählen, gibt es auch die angesprochenen `multiple-choice' (siehe Abb.
-\ref{fig:fig:interactive-example2}) Fragen oder das bearbeiten von Text im
+Neben einfachen Fragen, wie Text einzugeben oder einen Eintrag aus einer
+Liste auswählen, gibt es auch die angesprochenen `multiple-choice' (siehe
+Abb. \ref{fig:interactive-example2}) Fragen oder das bearbeiten von Text im
 präferierten Texteditor einträgt.
 
 \begin{figure}
@@ -1384,11 +1450,82 @@ Magenta hervorgehoben, wie zu sehen in Abbildungen \ref{fig:hours-list} und
 \end{figure}
 
 \chapter{Implementation der Methoden}
+\label{sec:implementation}
 
 Dieses Kapitel dient dazu zu dokumentieren wie die zuvor formulierten Methoden
 angewandt wurden. Die Anwendung dient als ein Beispiel dafür wie die Methoden
 implementiert werden könnten. Es wird ein besonderer Augenmerk auf Probleme
 gelegt welche das anwenden der Methoden erschwerten.
+
+\section{Flaggen anstatt Argumenten}
+
+\methref{flags_over_arguments} wurde implementiert. Die Kommandos zum Hinzufügen
+von Objekten haben zwischen 2-4 Werten die übergeben werden sollen.
+
+\begin{code}
+  \begin{shellcode}
+\$ oraclett hour add --help
+
+Log working hours.
+
+USAGE
+  \$ oraclett hour add [-t <value>] [-p <value>] [-d <value>] [-H <value>]
+
+FLAGS
+  -H, --hour=<value>        The number of hours to log. (1h: 1, 30min: 0.5, etc.)
+  -d, --date=<value>        [default: today] The date for which to log (can be human-readable)
+  -p, --project=<value>     A project code (it it's short version)
+  -t, --taskDetail=<value>  The task details (in it's short version, e.g. 01)
+
+DESCRIPTION
+  Log working hours.
+
+  Passing no arguments will start an interactive session.
+
+  This will add to existing hours, if this command is run twice the hours logged will be doubly.
+
+EXAMPLES
+  \$ oraclett hour add
+  \$ oraclett hour add -H 3
+  \$ oraclett hour add -H 3 -p INTPD999DXD -t 01
+  \$ oraclett hour add -H 3 -p INTPD999DXD -t 01 --date yesterday
+  \$ oraclett hour add -H 10 -p INTPD999DXD -t 01 -d today --force
+  \end{shellcode}
+  \captionof{listing}{Hilfsmenü von \codeinline{hour add}}
+  \medskip
+\end{code}
+
+Neben dem Wegfallen der Reihenfolge sind die Flaggen auch elementar für das
+Zusammenspiel mit anderen Methoden. Wenn der Nutzer von Defaultwerten Gebrauch
+machen oder fehlende Werte interaktiv ergänzen will, kann die spezifische Flagge
+einfach weg gelassen werden. Mit Argumenten wäre dies nicht so möglich gewesen.
+
+
+
+\section{Unterstützung aller Hilfs- und Versionsflaggen}
+
+Im Bezug auf \methref{support_all_help_version} ist zu sagen das natürlich alle
+gängigen Varianten verwendbar sind.
+
+Mit oclif war dies sogar sehr einfach:
+\begin{code}
+  \begin{javascriptcode}
+...
+"oclif": {
+  "additionalHelpFlags": [
+    "-h",
+    "help"
+  ],
+  "additionalVersionFlags": [
+    "-v",
+    "-V",
+    "version"
+  ],
+  ...
+  \end{javascriptcode}
+  \captionof{listing}{Konfiguration von Hilfs- und Versionsflaggen für oclif in der \codeinline{package.json}.}
+  \medskip
+\end{code}
 
 \section{Relevante Standardwerte}
 \label{sec:impl_defaults}
@@ -1441,116 +1578,10 @@ zu sehen, das Auswählen eines Wochentages für etwas im System vorliegt.
 Außerdem wurden eine Auswahl an häufigen geteilten Projekten eingebettet. Der
 Nutzer hat immer noch die Möglichkeit diese zu entfernen, aber wahrscheinlich
 werden diese von allen Anwendern früher oder später einmal benötigt. Darunter
-sind u.a. Projekt Codes zum absolvieren von Tranings, internen Events und der
+sind u.a. Projekt Codes zum absolvieren von Trainings, internen Events und der
 Bank (keinem kommerziellen Projekt zugeordnet).
 
-\section{Unterstützung aller Versions- und Helpflaggen}
-
-Im Bezug auf \methref{support_all_help_version} ist zu sagen das natürlich alle
-gängigen Varianten verwendbar sind.
-
-Mit oclif war dies sogar sehr einfach:
-\begin{code}
-  \begin{javascriptcode}
-...
-"oclif": {
-  "additionalHelpFlags": [
-    "-h",
-    "help"
-  ],
-  "additionalVersionFlags": [
-    "-v",
-    "-V",
-    "version"
-  ],
-  ...
-  \end{javascriptcode}
-  \captionof{listing}{Konfiguration von Hilfs- und Versionsflaggen für oclif in der \codeinline{package.json}.}
-  \medskip
-\end{code}
-
-\section{Flaggen anstatt Argumenten}
-
-\methref{flags_over_arguments} wurde implementiert. Die Kommandos zum Hinzufügen
-von Objekten haben zwischen 2-4 Werten die übergeben werden sollen.
-
-\begin{code}
-  \begin{shellcode}
-\$ oraclett hour add --help
-
-Log working hours.
-
-USAGE
-  \$ oraclett hour add [-t <value>] [-p <value>] [-d <value>] [-H <value>]
-
-FLAGS
-  -H, --hour=<value>        The number of hours to log. (1h: 1, 30min: 0.5, etc.)
-  -d, --date=<value>        [default: today] The date for which to log (can be human-readable)
-  -p, --project=<value>     A project code (it it's short version)
-  -t, --taskDetail=<value>  The task details (in it's short version, e.g. 01)
-
-DESCRIPTION
-  Log working hours.
-
-  Passing no arguments will start an interactive session.
-
-  This will add to existing hours, if this command is run twice the hours logged will be doubly.
-
-EXAMPLES
-  \$ oraclett hour add
-  \$ oraclett hour add -H 3
-  \$ oraclett hour add -H 3 -p INTPD999DXD -t 01
-  \$ oraclett hour add -H 3 -p INTPD999DXD -t 01 --date yesterday
-  \$ oraclett hour add -H 10 -p INTPD999DXD -t 01 -d today --force
-  \end{shellcode}
-  \captionof{listing}{Hilfsmenü von \codeinline{hour add}}
-  \medskip
-\end{code}
-
-Neben dem Wegfallen der Reihenfolge sind die Flaggen auch elementar für das
-Zusammenspiel mit anderen Methoden. Wenn der Nutzer von Defaultwerten Gebrauch
-machen oder fehlende Werte interaktiv ergänzen will, kann die spezifische Flagge
-einfach weg gelassen werden. Mit Argumenten wäre dies nicht so möglich gewesen.
-
-\section{Autovervollständigung}
-\label{sec:impl-autocomplete}
-
-Die \methref{autocomplete} und die damit verbundene Autovervollständigung ist
-technisch gesehen implementiert, praktisch ist diese aber nicht nutzbar.
-
-\begin{figure}
-  \centering
-  \includegraphics[scale=0.5]{apps-autocomplete.png}
-  \caption{Problematisches Autovervollständigungsmenü der App}
-  \label{fig:apps-autocomplete}
-\end{figure}
-
-Wie auf der Abbildung \ref{fig:apps-autocomplete} zu sehen ist bestehen einige
-Probleme. Am offensichtlichsten sind die Doppelpunkte (`:`) zum Trennen
-der Kommandos anstatt von Leerzeichen. Dies ist eine Konvention welche
-so durch oclif vorgegeben wir (obwohl Leerzeichen viel weiter verbreitet
-sind.) In der letzten Zeile wird als Beschreibung etwas von ``If a day is
-specified [..]'' geschrieben. Es wurde nicht die Zusammenfassung verwendet
-sondern ein Schnipsel aus dem Hilfsmenü. Welcher an dieser Stelle nur
-verwirrend für den Nutzer ist. Und zu letzt wird in der Beschreibung der
-ersten Zeile der Beginn des Satzes nicht großgeschrieben und in der zweiten
-Zeile wird der Template String nicht evaluiert. Alle dieser Dinge sind nicht
-konfigurierbar. Für eine ordentliche Vervollständigung müsste diese also
-selbst gebaut werden. oclif erschwert dies aber für andere Libraries wie
-\href{https://github.com/f/omelette/issues/52}{omelette}. Und die Completion
-Dateien selbst in Shell zu schreiben, ohne den Zugriff auf die Quelldateien
-welche die Struktur und Inhalte vorgeben, wäre sehr fehleranfällig.
-\\
-Die geringe Qualität dieser Autovervollständigung war beim initialen Testen
-des Frameworks und dem Lesen der Dokumentation nicht ersichtlich. Und nach
-der Implementation war es zu spät zu einem anderen Framework zu wechseln, bei
-welchem möglicherweise eine bessere Autocompletion möglich gewesen wäre.
-\\
-Um Verwirrung bei den Endnutzer zu Vermeiden wurde die Funktionalität wieder aus
-der App entfernt. Es ist leider enttäuschend von dieser Methode keinen Gebrauch
-machen zu können.
-
-\section{Fehlende Parameter durch interaktives Fragen ermitteln}
+\section{Interaktives Nachfragen bei fehlendem Parameter}
 
 Wie schon in Abbildung \ref{fig:hours-add} zu sehen wurde die
 \methref{interactive_missing_param} konsequent implementiert. So ist in der
@@ -1620,7 +1651,7 @@ der Unterschied ist. Es gibt aber von oclif keinen Wege diese zu verstecken.
 Wessenwegen sich gegen diese potenziell Frustrationssparenden Aliase entschieden
 wurde.
 
-\section{Umgang mit Rechtschreibfehlern}
+\section{Fehlerkorrektur}
 
 \begin{figure}
   \centering
@@ -1643,6 +1674,55 @@ durch auch die Fehlerkorrektur verbessert werden (siehe Abbildung
 $\leftrightarrow$ \codeinline{delete} funktionieren leider nicht. Da dem System
 wahrscheinlich auch keine Synonymdatenbank unterliegt.
 
+\section{Autovervollständigung}
+\label{sec:impl-autocomplete}
+
+Die \methref{autocomplete} und die damit verbundene Autovervollständigung ist
+technisch gesehen implementiert, praktisch ist diese aber nicht nutzbar.
+
+\begin{figure}
+  \centering
+  \includegraphics[scale=0.5]{apps-autocomplete.png}
+  \caption{Problematisches Autovervollständigungsmenü der App}
+  \label{fig:apps-autocomplete}
+\end{figure}
+
+Wie auf der Abbildung \ref{fig:apps-autocomplete} zu sehen ist bestehen einige
+Probleme. Am offensichtlichsten sind die Doppelpunkte (`:`) zum Trennen
+der Kommandos anstatt von Leerzeichen. Dies ist eine Konvention welche
+so durch oclif vorgegeben wir (obwohl Leerzeichen viel weiter verbreitet
+sind.) In der letzten Zeile wird als Beschreibung etwas von ``If a day is
+specified [..]'' geschrieben. Es wurde nicht die Zusammenfassung verwendet
+sondern ein Schnipsel aus dem Hilfsmenü. Welcher an dieser Stelle nur
+verwirrend für den Nutzer ist. Und zu letzt wird in der Beschreibung der
+ersten Zeile der Beginn des Satzes nicht großgeschrieben und in der zweiten
+Zeile wird der Template String nicht evaluiert. Alle dieser Dinge sind nicht
+konfigurierbar. Für eine ordentliche Vervollständigung müsste diese also
+selbst gebaut werden. oclif erschwert dies aber für andere Libraries wie
+\href{https://github.com/f/omelette/issues/52}{omelette}. Und die Completion
+Dateien selbst in Shell zu schreiben, ohne den Zugriff auf die Quelldateien
+welche die Struktur und Inhalte vorgeben, wäre sehr fehleranfällig.
+\\
+Die geringe Qualität dieser Autovervollständigung war beim initialen Testen
+des Frameworks und dem Lesen der Dokumentation nicht ersichtlich. Und nach
+der Implementation war es zu spät zu einem anderen Framework zu wechseln, bei
+welchem möglicherweise eine bessere Autocompletion möglich gewesen wäre.
+\\
+Um Verwirrung bei den Endnutzer zu Vermeiden wurde die Funktionalität wieder aus
+der App entfernt. Es ist leider enttäuschend von dieser Methode keinen Gebrauch
+machen zu können.
+
+\section{Menü-basiertes Interface}
+\label{sec:impl-menu}
+
+Bei der \methref{menu} zum Menü wurde sich gegen eine Implementierung
+entschieden. Die Anforderungen hätten aber durchaus als Menü abgebildet werden
+können. Das Interface wäre aber von dem Kommandozeilen Interface gänzlich
+abgetrennt. Die Implementation und eine über beide Interfaces hinweg eine
+konsistente Nutzungserfahrung zu gewährleisten würde einen, im Vergleich zum
+Rest der App, unverhältnismäßigen Programmieraufwand mit sich bringen. Weshalb
+sich aufgrund des zeitlichen Rahmens dagegen entschieden wurde.
+
 \section{Relevante Kommandovorschläge}
 
 \methref{command_recommendations} hat in der App keine Anwendung gefunden. Wie
@@ -1663,18 +1743,11 @@ In Fehlermeldungen wurde der Geiste der Methode aber angewandt. So verweist ein 
   \label{fig:recommendation-invalid-project}
 \end{figure}
 
-\section{Menü-basiertes Interface}
-\label{sec:impl-menu}
 
-Bei der \methref{menu} zum Menü wurde sich gegen eine Implementierung
-entschieden. Die Anforderungen hätten aber durchaus als Menü abgebildet werden
-können. Das Interface wäre aber von dem Kommandozeilen Interface gänzlich
-abgetrennt. Die Implementation und eine über beide Interfaces hinweg eine
-konsistente Nutzungserfahrung zu gewährleisten würde einen, im Vergleich zum
-Rest der App, unverhältnismäßigen Programmieraufwand mit sich bringen. Weshalb
-sich aufgrund des zeitlichen Rahmens dagegen entschieden wurde.
 
 \chapter{Evaluation}
+\label{sec:evaluation}
+
 \section{Design der Studie}
 
 Es wurde ein Usability-Test durchgeführt. Laut \cite[36]{hegner2003} werden
@@ -1858,6 +1931,8 @@ Lösungswege gefunden wurden.
 
 %%% Finish
 \chapter{Zusammenfassung}
+\label{sec:zusammenfassung}
+
 % [Aggregierte retrograde Kurzbeschreibung der Arbeit]
 \section{Schlussfolgerungen}
 % [Beschreibung der insgesamt zu konstatierenden Schlussfolgerungen im Zusammenhang mit der Arbeit]

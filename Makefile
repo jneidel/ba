@@ -6,14 +6,15 @@ once:
 
 # latex
 compile_tex: thesis.tex
-	xelatex -shell-escape thesis
+	xelatex -shell-escape thesis || \
+		$(MAKE) clean
 compile_short: thesis.tex
 	$(MAKE) compile_tex && \
-	$(MAKE) copy_pdf
+		$(MAKE) copy_pdf
 compile: thesis.tex
 	$(MAKE) compile_tex && \
-	$(MAKE) compute_bib && \
-	$(MAKE) compile_short
+		$(MAKE) compute_bib && \
+		$(MAKE) compile_short
 
 # pdf
 copy_pdf: thesis.pdf
@@ -22,6 +23,14 @@ render:
 	make copy_pdf
 	zathura /tmp/thesis.pdf
 pdf: render
+
+# upload
+upload:
+	sscp thesis.pdf u:html/
+up:
+	$(MAKE) compile && \
+		$(MAKE) copy_pdf && \
+		$(MAKE) upload
 
 # bibliography
 compute_bib:
@@ -34,7 +43,7 @@ bib: import_bib
 # watch
 watch: recompile rerender
 recompile: thesis.tex
-	ls thesis.tex 2>/dev/null | entr -rp ./make-if-changed
+	ls thesis.tex 2>/dev/null | entr -p ./make-if-changed
 rerender: thesis.pdf
 	$(MAKE) copy_pdf
 	ls /tmp/thesis.pdf | entr -r zathura /tmp/thesis.pdf
