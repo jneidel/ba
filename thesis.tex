@@ -355,11 +355,11 @@ Gefolgt von einem Argument, etwas das dem Kommando übergeben wird. In diesem
 Falle der Name eines Ordners (names \codeinline{Downloads}.) Die Reihenfolge
 ist dabei bei mehreren Argumenten entscheidend. In der zweiten Zeile wird
 dem \codeinline{git} Kommando das Subkommando \codeinline{commit} übergeben
-(\cite{nagarajan2018}, \cite{clig}.)
+(\textcite{nagarajan2018}, \textcite{clig}.)
 
 \smallskip
 
-Nicht alle CLIs haben Subkommandos. \cite{12factor} definiert zwei verschiedene
+Nicht alle CLIs haben Subkommandos. \textcite{12factor} definiert zwei verschiedene
 Arten von CLI Apps: ``single and multi-command''. Also klassische `UNIX-Style'
 Werkzeuge wie \codeinline{cd}, \codeinline{cp} oder \codeinline{grep}. Und jene
 Apps mit Subkommandos wie \codeinline{npm} oder \codeinline{git}, die meist
@@ -377,7 +377,7 @@ auch durch Bindestriche verbunden, z.B. \codeinline{--non-interactive}.)
 Funktionell sind beide Flaggenvarianten identisch. Flaggen die keinen Parameter
 erfordern werden als Boolean Flagge bezeichnet, deren An- oder Abwesenheit
 meist etwas an- oder abschaltet. Die Reihenfolge der Flaggen untereinander ist
-irrelevant (\cite{nagarajan2018}, \cite{clig}.)
+irrelevant (\textcite{nagarajan2018}, \textcite{clig}.)
 
 \chapter{Probleme des Kommandozeilen Interface}
 \label{sec:cli-problems}
@@ -407,7 +407,7 @@ Argumenten \parencite{Raskin_2008}.
 
 Dieses fundamentale Problem bedeutet das sich die Nutzer immer erst mit einem
 Kommando auseinander setzten müssen bevor sie dieses verwenden können. Auch
-spielt das Vergessen mit der Zeit eine große Rolle. \cite{Raskin_2008} weißt
+spielt das Vergessen mit der Zeit eine große Rolle. \textcite{Raskin_2008} weißt
 auch auf teilweise geringe Einprägsamheit von Befehle wie \codeinline{tar -xzf
 FILE}\footnote{Entpacken einer `gzipped tar' Datei (\codeinlinefn{tar.gz}).} hin.
 
@@ -417,7 +417,7 @@ FILE}\footnote{Entpacken einer `gzipped tar' Datei (\codeinlinefn{tar.gz}).} hin
   \caption{Die Shell bietet nichts an. Ohne ein Kommando zu kennen passiert nichts.}
 \end{figure}
 
-\cite{Gentner_1996} beschreiben auch den Fakt das es keinen einfachen Weg zum
+\textcite{Gentner_1996} beschreiben auch den Fakt das es keinen einfachen Weg zum
 Auffinden von Kommandos gibt. Der Nutzer muss also den Namen des Programmes
 kennen um dieses zu nutzen oder auf dessen Hilfsseite oder `man page' zugreifen
 zu können.
@@ -512,7 +512,7 @@ können als in ihrer Reinform.
 
 \smallskip
 
-\cite{bland2007design} beispielsweise implementieren neben dem reinen
+\textcite{bland2007design} beispielsweise implementieren neben dem reinen
 nicht-interaktiven CLI Workflow noch einen menü-basierten Modus in welchem der
 Nutzer mit ``menus similar to those of the GUI'' durch den Prozess geführt wird.
 
@@ -534,7 +534,7 @@ verwendet wurde ist es auch als `curses' Interface bekannt.
   \label{fig:menu-example}
 \end{figure}
 
-Laut \cite{Paap_1988} wandelt das Menü das Problem des
+Laut \textcite{Paap_1988} wandelt das Menü das Problem des
 \hyperref[prob:cr]{`Command Recall'} in `Command
 Recognition', ein Wiedererkennen, um. Auch werden die Anfälligkeit für
 \hyperref[prob:ss]{Syntaxfehler} reduziert, weil der Nutzer vor
@@ -543,7 +543,7 @@ illegalen Optionen abgeschirmt wird \parencite{Kantorowitz_1989}.
 \smallskip
 
 Im einem vergleichenden Experiment mit der Kommandozeile stellte
-\cite{Westerman_1997} für manche Nutzergruppen unsignifikant bessere Performance
+\textcite{Westerman_1997} für manche Nutzergruppen unsignifikant bessere Performance
 fest. Auch wurde bei freier Wahl das Menü über alle Nutzergruppen hinweg doppelt
 so häufig zur Nutzung ausgewählt.
 
@@ -608,7 +608,7 @@ auch die in der CLI prävalenten \hyperref[prob:ss]{Syntaxfehler}.
 Aber auch das grafische User Interface hat seine Schwächen. Und diese werden vor
 allem `at scale' sichtbar. Die Massen des Internets lassen sich nicht grafisch
 darstellen und auch ein volles Email Postfach ist mit nur grafischen Werkzeugen
-wenig durchsichtig. \cite{Norman_2007} beschreibt wie Suchmaschinen hier einen
+wenig durchsichtig. \textcite{Norman_2007} beschreibt wie Suchmaschinen hier einen
 Ausweg bieten. Und nennt sie `answer engine'. Eine flexiblere, robustere und
 getarnte Kommandozeile die mit Rechtschreibfehlern und Synonymen umgehen kann.
 
@@ -640,12 +640,12 @@ abstrakt <-----------------------> konkret
 
 Das abstrakte und allgemeine Prinzip \parencite{Balzert_2009} wäre zu
 philosophischer Natur gewesen um im nächsten Schritt angewandt zu werden.
-Werkzeuge nach \cite{Balzert_2009} sind zu konkret und real. Es nicht Ziel ist
+Werkzeuge nach \textcite{Balzert_2009} sind zu konkret und real. Es nicht Ziel ist
 für jeden Lösungsansatz ein direkt anwendbares Werkzeug zu kreieren.
 
 \medskip
 
-Eine Methode nach \cite{Balzert_2009} ist eine begründete Vorgehensweise zur
+Eine Methode nach \textcite{Balzert_2009} ist eine begründete Vorgehensweise zur
 Erreichung festgelegter Ziele. Sie ist nicht deskriptiv wie ein Werkzeug, und
 nicht philosophisch wie ein Prinzip, sondern gibt eine Handlungsanweisung die
 dem Entwickler Spielraum in der Implementierung lässt.
@@ -680,7 +680,7 @@ Nachfolgend nun die erarbeiteten Methoden.
 
 Sobald ein (Sub-) Kommando mehr als ein Argument annimmt, biete sich die
 Gelegenheit die für Argumente relevante Reihenfolge durcheinander zu bringen
-(vgl. \refss{Syntax/Semantik}.) \cite{12factor} empfiehlt deshalb bei zwei
+(vgl. \refss{Syntax/Semantik}.) \textcite{12factor} empfiehlt deshalb bei zwei
 oder mehr Argumenten anstatt dieser Flaggen zu verwenden. Das ist etwas mehr
 Aufwand zum Schreiben, eliminiert aber die Reihenfolge als Fehlerfaktor.
 Außerdem können Flaggen auch mittels Autovervollständigung vorgeschlagen werden
@@ -706,7 +706,7 @@ $ oraclett project add --project INTPD999DXD --taskDetail "01 - Career developme
 Außen vor sind Kommandos welche eine variable Anzahl von Argumenten annehmen.
 Beispielsweise \codeinline{rm} dem mehrere Dateien zum Löschen übergeben
 werden können. Hier handelt es sich aber nicht um Argumente mit verschiedenen
-Bedeutungen (\cite{12factor}.)
+Bedeutungen (\textcite{12factor}.)
 
 \medskip
 
@@ -820,7 +820,7 @@ $ app -version
   \medskip
 \end{code}
 
-Laut \cite{12factor} sollten möglichst alle Varianten in von einer Anwendung
+Laut \textcite{12factor} sollten möglichst alle Varianten in von einer Anwendung
 unterstützt werden. So kann vermieden werden das der Nutzer nicht das angezeigt
 bekommt wonach er sucht. Das Problem des \refcrr wird vermieden weil der Nutzer
 durch Probieren seiner präferierten Variante direkt zur Lösung kommt.
@@ -964,7 +964,7 @@ Hinweisen auf die Hilfsseite, welche die Parameter vollumfänglich erklärt.
 \section{Natürliche Sprache}
 \label{sec:natural-lang}
 
-\cite{Raskin_2008} beschreibt die Kapazitäten linguistischer
+\textcite{Raskin_2008} beschreibt die Kapazitäten linguistischer
 Kommandozeilen, welche Normans Konzept der `answer engines' (vgl. Kapitel
 \ref{sec:weiterentwicklung-ausser}) ähneln. Diese haben wie der Name schon
 hergibt einen Fokus auf menschlicher Sprache\footnote{Die Linguistik ist das
@@ -994,18 +994,18 @@ zumindest eine eingschränkte Form natürlicher Spracheingabe unterstützt werde
 \section{Fehlerkorrektur}
 
 Diese Methode zeigt eine gewisse Nähe zur Unterstützung der natürlichen
-Sprache (Kapitel \ref{sec:natural-lang}). So hob \cite{Raskin_2008} für die
+Sprache (Kapitel \ref{sec:natural-lang}). So hob \textcite{Raskin_2008} für die
 linguistische Kommandozeile die Verträglichkeit von Rechtschreibfehlern hervor.
 
 \smallskip
 
 Fehlertoleranz im Bezug auf Rechtschreibung würde auch das Problem der zu
 \refss{strikten Syntax} zum Teil adressieren. Fehlermeldungen und die damit
-einhergehende Frustration minimieren. \cite{clig} empfehlen ganz konkret: ``If
+einhergehende Frustration minimieren. \textcite{clig} empfehlen ganz konkret: ``If
 the user did something wrong and you can guess what they meant, suggest it.''
 Im Kontrast dazu soll nach der `Do what I mean' Philosophie der Fehler direkt
 und ohne Nutzerfeedback ausgebessert werden \parencite{DWIM}. Was natürlich
-schneller ist und den Nutzungsflow nicht unnötig unterbricht. \cite{clig} weisen
+schneller ist und den Nutzungsflow nicht unnötig unterbricht. \textcite{clig} weisen
 aber auch darauf hin das eine fehlerhafte Eingabe neben Rechtschreibfehlern eben
 auch aus logischen Fehler resultieren kann. Dann kann `Do what I mean' zu sehr
 unerwartetem, gefährlichem Verhalten führen.
@@ -1018,7 +1018,7 @@ heroku pss
  ›   Warning: pss is not a heroku command.
 Did you mean ps? [Y/n]:
   \end{shellcode}
-  \captionof{listing}{Korrekturvorschlag eines Rechtschreibfehlers nach \cite{clig}.}
+  \captionof{listing}{Korrekturvorschlag eines Rechtschreibfehlers nach \textcite{clig}.}
   \medskip
 \end{code}
 
@@ -1061,7 +1061,7 @@ der Nutzer von Kontext-bezogenen Beschreibungen.
 \methbox{autocomplete}{Nutze Autovervollständigung zum Vorschlagen von Flaggen
 und Subkommandos \parencite{seneviratne2008new}.}
 
-In \cite{dutta} geht der Author sogar noch einen Schritt weiter und empfiehlt
+In \textcite{dutta} geht der Author sogar noch einen Schritt weiter und empfiehlt
 das automatische Vorschlagen aller Flaggen und Argumente für ein Kommando,
 sodass der Nutzer sich nicht mal anschauen muss was für das Kommando benötigt
 wird. So wie vom Author beschrieben ist dies aber nicht in der Shell möglich,
@@ -1072,7 +1072,7 @@ sondern müsste in einer eigenen Kommandozeilen Umgebung umgesetzt werden.
 Im Kapitel \ref{sec:def-menu} wurde schon darauf eingegangen wie ein
 TUI die Probleme der Kommandozeile adressieren würde. Auch wurde eine
 klare Präferenz für ein solches Interface unter den Nutzern festgestellt
-\parencite{Westerman_1997}. Auch \cite{Spolsky_2001} nennt das Menü-basierte
+\parencite{Westerman_1997}. Auch \textcite{Spolsky_2001} nennt das Menü-basierte
 Interface als einen Weg Usability zu erhöhen.
 
 \methbox{menu}{Biete ein Menü-Interface an.}
@@ -1084,7 +1084,7 @@ ihnen zur Verfügung stehen. Kommandos existieren aber nicht im Vakuum. Im
 Zusammenspiel unterliegen sie meist einer gewissen Reihenfolge bzw. einem
 `Nutzungsflow'. Bevor in einen Ordner gewechselt werden kann (\codeinline{cd})
 muss dieser erst existieren (\codeinline{mkdir}) oder der Nutzer muss um diesem
-wissen (\codeinline{ls}). \cite{dutta} schlägt nun vor sich diesen `Flow'
+wissen (\codeinline{ls}). \textcite{dutta} schlägt nun vor sich diesen `Flow'
 zu nutze zu machen um den Nutzer über mögliche nächste Schritte (in Form
 anderer (Sub-) Kommandos) zu informieren. Für den gegebenen `Flow' könnte
 also \codeinline{mkdir} mit einer Nachricht à la \codeinline{Also look at -
@@ -1109,11 +1109,13 @@ Umsetzbarkeit innerhalb des Zeitrahmens zu gewährleisten.
 \subsection{Konzept}
 \subsubsection{Problem}
 
-Bei Endava\footnote{Der Firma in welcher diese Arbeit geschrieben wurde.} werden
-die Arbeitsstunden über eine interne Webapp (ein Oracle System) festgehalten.
-Dieses glänzt nicht in Usability, es führt aber kein Weg dran vorbei. Weiterhin
-wird diese Webapp als \textbf{Oracle} bezeichnet\footnote{Unter diesem Namen ist
-es firmenintern bekannt.}.
+Bei Endava\footnote{Der Firma in welcher diese Bachelorarbeit geschrieben
+wurde.} werden die Arbeitsstunden über eine interne Webapp (ein Oracle
+System) festgehalten. Dieses glänzt nicht in Usability\footnote{Wie die
+Attraktivitätsumfrage in der Auswertung (Kap. \ref{sec:auswertung}) auch
+untermauert.}, es führt aber kein Weg dran vorbei. Diese Webapp wird im Laufe
+der Arbeit als \textbf{Oracle} bezeichnet\footnote{Unter diesem Namen ist das
+System auch firmenintern bekannt.}.
 
 \begin{figure}[H]
   \centering
@@ -1122,13 +1124,13 @@ es firmenintern bekannt.}.
 \end{figure}
 
 Idealerweise werden am Ende der Arbeitswoche die Arbeitsstunden der vergangen
-Woche festgehalten. Dabei wird angegeben an welchen Wochtage wieviele Stunden
-an welchen Projekten gearbeitet wurde. Wenn man eine 40 Stundenwoche an einem
-einzigen Projekt arbeitet ist das trivial. Wenn man aber als Werkstudent an
-mehreren Projekten mit schwankenden Stundenzahlen arbeitet wird es schnell
-komplizierter. Und wenn dazu noch dokumentiert werden soll woran gearbeitet
-wurde noch umso mehr. In der Praxis heißt das: die ‘Timecard’ in Oracle muss
-täglich aktualisiert werden.
+Woche in einer sogenannten `Timecard' festgehalten. Dabei wird angegeben an
+welchen Wochtage wieviele Stunden an welchen Projekten gearbeitet wurde.
+Wenn man eine 40 Stundenwoche an einem einzigen Projekt arbeitet ist das
+trivial. Wenn man aber als Werkstudent an mehreren Projekten mit schwankenden
+Stundenzahlen arbeitet wird es schnell komplizierter. Und wenn dazu noch
+dokumentiert werden soll woran gearbeitet wurde noch umso mehr. In der Praxis
+heißt das: die ‘Timecard’ muss täglich in Oracle aktualisiert werden.
 
 \begin{figure}[H]
   \centering
@@ -1174,9 +1176,9 @@ abgeglichen in Rücksprache mit anderen Mitarbeitern.
       \item Als Nutzer möchte ich meine Notizen sehen können.
       \item Als Nutzer möchte ich meine Notizen bearbeiten oder löschen können.
     \end{enumerate}
-  \item \textbf{Report Generierung}:
+  \item \textbf{Timecard}:
     \begin{enumerate}
-      \item Als Nutzer möchte ich einen Report für eine gegebene Arbeitswoche generieren, um die Daten in Oracle zu übertragen.
+      \item Als Nutzer möchte ich die Daten für die Timecard zu einer gegebene Arbeitswoche sehen, um diese nach Oracle zu übertragen.
     \end{enumerate}
 \end{enumerate}
 
@@ -1186,7 +1188,8 @@ Vordergrund, weshalb hier u.a. die Akzeptanzkriterien der User Stories,
 Implementationsdetails wie Datenpersistierung, etc. nicht weiter beschrieben
 werden.
 
-\section{Fundament}
+\section{Technisches}
+\subsection{Fundament}
 
 Das Fundament der App stellen die zugrundelegenden technologischen Aspekte dar,
 welche nicht oder nur indirekt die Nutzbarkeit, und damit den Fokus der Arbeit
@@ -1200,32 +1203,22 @@ Paketveröffentlichungsprozess mit npm relativ simpel ist. Weiterhin wurden noch
 Typescript - für Typisierung - und Eslint - für gleichmäßigen Code Style -
 verwendet.
 
-\section{Libraries}
+\subsection{Libraries}
 
 Ein Überblick über die Libraries welche für das Bauen des Interfaces und die
 Umsetzung der Methoden relevant waren.
 
-\subsection{oclif}
+\subsubsection{oclif}
+\label{sec:oclif}
 
 ``oclif is an open source framework for building a command line interface
 (CLI) in Node.js. Create CLIs with a few flags or advanced CLIs that have
-subcommands.'' - \cite{oclif}
+subcommands.'' - \textcite{oclif}
 
-\smallskip
+\medskip
 
-oclif bietet ein System um ohne viel Boilerplate Kommandos zu bauen,
-dessen Flaggen und Argumente zu beschreiben und dann eigene Businesslogik
-auszuführen (siehe Abbildung \ref{fig:oclif-list}.) Während oclif Kommando- und
-Flaggenparsing, das generieren der Hilfsseite uvm. übernimmt.
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[scale=0.5]{oclif-list.png}
-  \caption{Beschreiben eines Kommandos in oclif am Beispiel des implementierten \codeinline{project list} Kommandos}
-  \label{fig:oclif-list}
-\end{figure}
-
-Die Hierarchie von Kommandos wird über eine Strukurierung der Dateien erreicht (siehe nachstehendes Listing) und der Feinschliff wird noch per Konfiguration in der \codeinline{package.json} erreicht.
+Mit oclif können problemlos `multi-command' App gebaut werden. Die Hierarchie
+der Subkommandos wird über die Dateistruktur angegeben:
 
 \begin{code}
   \begin{shellcode}
@@ -1236,16 +1229,31 @@ Die Hierarchie von Kommandos wird über eine Strukurierung der Dateien erreicht 
      ├── list.ts
      └── remove.ts
   \end{shellcode}
-  \captionof{listing}{Kommandohierarchie wird duch Dateistruktur angegeben: Am Beispiel von des \codeinline{project} Kommandos und dessen Subkommandos}
+  \captionof{listing}{Subkommandohierarchie am Beispiel des \codeinline{project} Subkommandos.}
   \medskip
 \end{code}
 
-oclif kümmert sich auch um Kleinigkeiten. Zum Beispiel sicherzustellen das der
-Text der Hilfsseiten richtig formatiert wird. Im unterstehenden Listing wird
-demonstriert wie oclif bei eingeschränkter Breite des Terminals so einrückt
-das immer noch klar zu erkennen ist was Beschreibung und was Flagge ist. Das
-Gegenbeispiel dazu entsteht wenn einfach nur der Text geschrieben wird, ohne die
-Terminalbreite zu berücksichtigen.
+In einer dieser Dateien können nun ohne viel Boilerplate die Flaggen,
+Argumente und Beschreibung und spezfiziert werden. Danach wird nur noch die
+eigene Businesslogik angeschlossen (siehe Abbildung \ref{fig:oclif-list} für
+ein Implementationsbeispiel.) oclif übernimmt dabei das Subkommando- und
+Flaggenparsing, generiert die Hilfseite, uvm.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.62]{oclif-list.png}
+  \caption{Implementation des \codeinline{project list} Subkommandos.}
+  \label{fig:oclif-list}
+\end{figure}
+
+Der Feinschliff wird noch per Konfiguration in der \codeinline{package.json}
+erreicht. oclif kümmert sich dabei um die Kleinigkeiten. Zum Beispiel wird
+sichergestellt das der Text der Hilfsseiten richtig formatiert wird. Im
+unterstehenden Listing wird demonstriert wie oclif bei eingeschränkter Breite
+des Terminals den Text so einrückt, dass immer noch klar zu erkennen ist was
+Beschreibung und was Flagge ist. Das Gegenbeispiel dazu entsteht wenn einfach
+nur der Text auf den Bildschirm geschrieben wird, ohne die Terminalbreite zu
+berücksichtigen.
 
 \begin{code}
   \begin{shellcode}
@@ -1271,30 +1279,23 @@ Neben oclif wurde noch andere Frameworks/Libraries in Erwägung gezogen. U.a.
 \href{https://github.com/yargs/yargs}{yargs},
 \href{https://github.com/dthree/vorpal}{vorpal} und
 \href{https://github.com/sindresorhus/meow}{meow}.
-\\
-In der Sektion \ref{sec:impl-autocomplete} zur Implementation der Autocompletion wird
-auch noch auf die Auswirkung der Wahl des Frameworks eingegangen.
 
-\subsection{Inquirer.js}
+\subsubsection{Inquirer.js}
 
 Inquirer ist eine Ansammlung von interaktiven Fragetypen (vgl. Kapitel
-\ref{sec:def-interactive}).
+\ref{sec:def-interactive}). Neben einfachen Fragen, wie Text einzugeben oder
+einen Eintrag aus einer Liste auswählen, gibt es auch `multiple-choice' (siehe
+Abb. \ref{fig:interactive-example2}) Fragen, das Bearbeiten von Text im
+präferierten Texteditor, uvm.
 
-Neben einfachen Fragen, wie Text einzugeben oder einen Eintrag aus einer
-Liste auswählen, gibt es auch die angesprochenen `multiple-choice' (siehe
-Abb. \ref{fig:interactive-example2}) Fragen oder das bearbeiten von Text im
-präferierten Texteditor einträgt.
-
-\begin{figure}
+\begin{figure}[H]
   \centering
   \includegraphics[scale=0.5]{inquirer-example.png}
-  \caption{Ein Frage und Antwort Flow zum herausfinden was der Nutzer bearbeiten möchte.}
+  \caption{Ein Reihe von Fragen zum Herausfinden was der Nutzer bearbeiten möchte.}
   \label{fig:inquirer-example}
 \end{figure}
 
 \begin{code}
-  \medskip
-  \captionof{listing}{Beispielcode für das Auswählen aus einer Liste.}
   \begin{javascriptcode}
 const { whatToEdit } = await inquirer.prompt( [ {
   type   : "list",
@@ -1318,17 +1319,17 @@ const { whatToEdit } = await inquirer.prompt( [ {
 > Project Name
   Task Details (of a project)
   \end{javascriptcode}
+  \captionof{listing}{Implementation für das Auswählen zwischen zwei Optionen.}
+  \medskip
 \end{code}
 
-\section{Vorstellung der Anwendung}
+\section{Implementierte Anwendung}
 
-% TODO: how does this chapter look?
-% TODO: texts to disjointed?
-% TODO: describe npm package
+% TODO: texts look to disjointed?
 
-Es folgt eine grobe Vorstellung der Implementierten App. Nachgehend wird
-noch einmal seperat auf die Implementation der Methoden zur Absenkung der
-Nutzungsschwelle eingegangen.
+Es folgt eine grobe Vorstellung der implementierten App. Es geht darum ein
+Verständnis für den Kontext schaffen in welchem die Methoden implementiert
+wurden. Diese werden dann im nächsten Schritt (im nächsten Kapitel) vorgestellt.
 
 \medskip
 
@@ -1345,51 +1346,48 @@ vervollständigt wird. Andere in Erwägung gezogene Varianten waren
   \captionof{listing}{Das Hilfsmenu der CLI App}
   \label{code:oraclett-help}
   \begin{shellcode}
-  \$ oraclett --help
+$ oraclett --help
+Oracle time tracker
 
-  Oracle time tracker
+VERSION
+  oraclett/0.1.1 linux-x64 node-v19.5.0
 
-  VERSION
-    oraclett/0.0.0 linux-x64 node-v19.2.0
+USAGE
+  $ oraclett [COMMAND]
 
-  USAGE
-    \$ oraclett [COMMAND]
+TOPICS
+  hour      Log and manage hours.
+  note      Write down and manage notes.
+  project   Manage projects.
+  timecard  Generate a report for filling out timecards.
 
-  TOPICS
-    hour      Log working hours.
-    note      Note down what you worked on.
-    project   Add a project code.
-    timecard  Generate a report for filling out timecards.
-
-  COMMANDS
-    autocomplete  display autocomplete installation instructions
-    help          Display help for oraclett.
-    timecard      Generate a report for filling out timecards.
+COMMANDS
+  help      Display help for oraclett.
+  timecard  Generate a report for filling out timecards.
   \end{shellcode}
 \end{code}
 
-\label{text:noun-verb}
-Die Kommandos sind nach dem `noun verb' Prinzip \parencite{clig} strukturiert.
-Auf das Nomen, in unserem Fall etwa die Stunde (\codeinline{hour}), folgt
-ein Verb wie hinzufügen, bearbeiten, entfernen oder auflisten. Diese Verben
-sind bei allen Kommandos einheitlich. Zu bearbeiten eines Projekt wird ebenso
-\codeinline{edit} verwendet wie beim bearbeiten einer Notiz.
+\label{text:noun-verb} Die Subkommandos sind nach dem `noun verb' Prinzip
+\parencite{clig} strukturiert. Auf das Nomen, in unserem Fall etwa die Stunde
+(\codeinline{hour}), folgt ein Verb wie hinzufügen, bearbeiten, entfernen oder
+auflisten. Diese Verben sind bei allen Kommandos einheitlich. Zu bearbeiten
+eines Projekt wird ebenso \codeinline{edit} verwendet wie beim bearbeiten einer
+Notiz.
 
 \begin{code}
   \label{code:hours-help}
   \begin{shellcode}
-  \$ oraclett hour --help
+$ oraclett hour --help
+Log and manage hours.
 
-  Log working hours.
+USAGE
+  $ oraclett hour COMMAND
 
-  USAGE
-    \$ oraclett hour COMMAND
-
-  COMMANDS
-    hour add     Log working hours.
-    hour edit    Edit the logged hours interactively.
-    hour list    List all projects.
-    hour remove  Remove logged hours interactively.
+COMMANDS
+  hour add     Log working hours.
+  hour edit    Edit the logged hours interactively.
+  hour list    List all logged hours.
+  hour remove  Remove logged hours interactively.
   \end{shellcode}
   \captionof{listing}{Hilfsseite des `hour' Kommandos}
   \medskip
@@ -1411,14 +1409,14 @@ Zum Verwalten oder Ausbessern der Daten im System gibt es jetzt noch die
 \codeinline{edit} und \codeinline{remove} Subkommandos. Diese stehen falls
 benötigt zur Verfügung, sind aber nicht teil des normalen Workflows.
 
-\begin{figure}
+\begin{figure}[H]
   \centering
   \includegraphics[scale=0.5]{project-add.png}
   \caption{Interaktives hinzufügen eines Projektes.}
   \label{fig:project-add}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[H]
   \centering
   \includegraphics[scale=0.5]{project-list.png}
   \caption{Auflisten der im System vorhandenen Projekte.}
@@ -1433,35 +1431,38 @@ Abbildung \ref{fig:note-list}. Und Stundenanzahl sowie Wochentage werden mit
 Magenta hervorgehoben, wie zu sehen in Abbildungen \ref{fig:hours-list} und
 \ref{fig:timecard}.
 
-\begin{figure}
+\begin{figure}[H]
   \centering
   \includegraphics[scale=0.5]{note-add.png}
   \caption{Hinzufügen von Notizen auf interaktivem und normalem Wege.}
   \label{fig:note-add}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[H]
   \centering
   \includegraphics[scale=0.5]{note-list.png}
   \caption{Die Auflistung der Notizen einer gewählten Woche.}
   \label{fig:note-list}
 \end{figure}
 
-\begin{figure}
+Die Anwendung ist über npm\footnote{Den `Node Package Manager'.} verfügbar: `npm
+install -g oraclett'. Und funktioniert auch problemlos unter Windows.
+
+\begin{figure}[H]
   \centering
   \includegraphics[scale=0.5]{hours-add.png}
   \caption{Loggen von Stunden. Beim Weglassen von Flaggen werden diese interaktiv erfragt.}
   \label{fig:hours-add}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[H]
   \centering
   \includegraphics[scale=0.5]{hours-list-real.png}
   \caption{Auflistung der festgehaltenen Stunden.}
   \label{fig:hours-list}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[H]
   \centering
   \includegraphics[scale=0.5]{timecard-real.png}
   \caption{Ein die ganze Woche zusammenfassender Report, welcher in seiner Struktur dafür ausgelegt ist in die Web-Oberfläche des internen Tools übertragen zu werden.}
@@ -1721,12 +1722,18 @@ selbst gebaut werden. oclif erschwert dies aber für andere Libraries wie
 \href{https://github.com/f/omelette/issues/52}{omelette}. Und die Completion
 Dateien selbst in Shell zu schreiben, ohne den Zugriff auf die Quelldateien
 welche die Struktur und Inhalte vorgeben, wäre sehr fehleranfällig.
-\\
+
+\medskip
+
 Die geringe Qualität dieser Autovervollständigung war beim initialen Testen
-des Frameworks und dem Lesen der Dokumentation nicht ersichtlich. Und nach
-der Implementation war es zu spät zu einem anderen Framework zu wechseln, bei
-welchem möglicherweise eine bessere Autocompletion möglich gewesen wäre.
-\\
+des Frameworks und dem Lesen der Dokumentation noch nicht ersichtlich.
+Und nach der Implementation war es zu spät zu einem anderen Framework zu
+wechseln\footnote{Mögliche Alternativen wurden im Kapitel zu oclif aufgeführt
+(\ref{sec:oclif}.)}, bei welchem möglicherweise eine bessere Autocompletion
+möglich gewesen wäre.
+
+\medskip
+
 Um Verwirrung bei den Endnutzer zu Vermeiden wurde die Funktionalität wieder aus
 der App entfernt. Es ist leider enttäuschend von dieser Methode keinen Gebrauch
 machen zu können.
@@ -1745,7 +1752,7 @@ sich aufgrund des zeitlichen Rahmens dagegen entschieden wurde.
 \section{Relevante Kommandovorschläge}
 
 \methref{command_recommendations} hat in der App keine Anwendung gefunden. Wie
-auch in der Erklärung wiedergegeben spricht \cite{dutta} diese Empfehlung in
+auch in der Erklärung wiedergegeben spricht \textcite{dutta} diese Empfehlung in
 Hinsicht auf CLI's mit sehr vielen (Sub-) Kommandos aus. Die implementierte
 Anwendung umfasst nur eine sehr limitierte Anzahl von Subkommandos. Aufgrund
 dieser bereits gegebenen Übersichtlichkeit wurde sich gegen direkte Vorschläge
@@ -1899,7 +1906,7 @@ Zeitstempel zum Ende nach Erfüllung der Aufgabe.
 \subsubsection{Attraktivität}
 
 Um eine subjektive Bewertung der Interfaces zu erhalten wurde eine
-Attraktivitätsumfrage nach \cite{attrakdiff} durchgeführt. Es wurde nach
+Attraktivitätsumfrage nach \textcite{attrakdiff} durchgeführt. Es wurde nach
 dem Durcharbeiten der Aufgaben für ein Interface eine Einschätzung über
 dessen Attraktivität erfragt. Wie auf Abbildung \ref{fig:survey-values}
 zu sehen bewerteten die Teilnehmer dabei das Interface bezüglich mehrerer
@@ -1972,11 +1979,12 @@ Zu betrachten wäre die Performance ähnlicher Aufgabestellungen.
 
 \hypodef{Das CLI wird dem GUI subjektiv vorgezogen.}
 
-Bei \cite{Westerman_1997} wurde das CLI bei Wahl des Interface deutlich weniger
+Bei \textcite{Westerman_1997} wurde das CLI bei Wahl des Interface deutlich weniger
 gewählt. Die Bevorzugung des CLI gegenüber dem GUI unter den Teilnehmern würde
 also den Effekt der Methoden auf die Usability aufzeigen.
 
 \section{Auswertung}
+\label{sec:auswertung}
 
 \subsection{Diskussion der Ergebnisse}
 
@@ -2067,7 +2075,7 @@ die Substantive \codeinlinefn{project}, \codeinlinefn{hour} und
   \begin{minipage}[b]{0.4\textwidth}
     \centering
     \includegraphics[scale=0.28]{attrak-mittelwerte.png}
-    \caption{Mittelwerte über die von \cite{attrakdiff} definierten Kategorien.}
+    \caption{Mittelwerte über die von \textcite{attrakdiff} definierten Kategorien.}
     \label{fig:attrak-mittelwerte}
   \end{minipage}
   \hfill
@@ -2088,7 +2096,7 @@ Punkte breit ist, ist das eine Menge.
 In Abbildung \ref{fig:attrak-portfolio} ``spiegelt das Konfidenz-Rechteck
 [..] wieder, wie ``einig'' sich die Nutzer bei der Beurteilung
 des Produkts sind. Je größer das Konfidenz-Rechteck ist, desto
-unterschiedlicher wird das Produkt bewertet.'' - \cite{attrakdiff} via
+unterschiedlicher wird das Produkt bewertet.'' - \textcite{attrakdiff} via
 \href{https://esurvey.uid.com/}{esurvey.uid.com}.
 
 \subsection{Auswertung der Hypothesen}
