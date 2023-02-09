@@ -48,8 +48,6 @@ autocite=footnote
   fontsize=\scriptsize
 }
 
-%%%%%% other packages %%%%%%
-
 \usepackage{marvosym}
 \usepackage{csquotes}
 \usepackage{hyperref}
@@ -177,29 +175,33 @@ Datum
 \label{sec:einleitung}
 
 \section{Hintergrund der Arbeit}
-[Beschreibung des groben Kontextes der Arbeit; im Detail sollten Sie dies im Grundlagenteil darstellen]
 
-% TODO: rewrite everything
-% Die Kommandozeile und darauf basierende Applikationen bergen das Potential für Produktivitätssteigerungen im Vergleich zu GUI Applikationen, vorausgesetzt der Nutzer weiß mit dieser umzugehen. % TODO: Citation needed
+Diese Arbeit setzt sich mit dem Kommandozeilen-Interface auseinander. Laut
+\cite{Raskin_2008} ist es ``still one of the most powerful interface paradigms
+we have for controlling our computers.''. Gleichzeitig ist es aber auch als
+traditionelles Interface Teil der Computergeschichte \parencite{nielson1993}.
+Damit einher gehen Probleme und Schwächen.
 
 \section{Problem- und Zielstellung (Scope)}
-[Beschreibung der Problemstellung sowie der sich daraus ergebenden Teilprobleme,-ziele und Forschungsfrage(n), welche Sie mit Ihrer Arbeit addressieren]
+% [Beschreibung der Problemstellung sowie der sich daraus ergebenden Teilprobleme,-ziele und Forschungsfrage(n), welche Sie mit Ihrer Arbeit addressieren]
 
-% TODO: rewrite everything, Forschungsfrage was adjusted
+Das Kommandozeilen-Interface ist heutzutage ein wenig verbreitetes
+Anwendungs-Interface. Besonders in der allgemeinen Bevölkerung, aber selbst
+unter Entwicklern werden für die meisten Anwendungsfälle grafische Apps
+bevorzugt.
 
-% Die Kommandozeile und seine Applikationen sind für Personen welche mit dieser Umgebung nicht vertraut sind schwer benutzbar. % TODO: Citation needed
-% Einflussfaktoren dafür sind:
+Das sich daraus ergebende Problem ist: Wie kann das Kommandozeilen-Interface
+Entwicklern oder der Allgemeinheit näher gebracht werden? Das Teilproblem
+im Fokus dieser Arbeit sind die Probleme in der Nutzbarkeit die ein
+Kommandozeilen-Interface mit sich bringen kann.
 
-% \begin{enumerate}
-%   \item Fehlendes Wissen über das Ökosystem (wie werden Applikationen gestartet, wie findet man Hilfe, Verständnis grundsätzlicher Werkzeuge fehlt)
-%   \item Applikationen sind nicht für Neulinge konzipiert
-% \end{enumerate}
-
-% Problemstellung dieser Arbeit soll das zweite der gelisteten Probleme sein: Das Zusammentragen und Evaluieren der Faktoren welche Kommandozeilen Applikation für Neulinge zugänglich machen. Oder konkreter als Forschungsfrage definiert:
-
-\fbox{\parbox{\linewidth}{
-Welche Methoden existieren um die Usability einer CLI App zu erhöhen?
-}}
+Ziel ist es implementierbare Methoden zum Verbessern der Usability von
+Anwendungen mit Kommandozeilen-Interface zu entwickeln. Die Anwendung dieser
+sollte die Nutzungsschwelle von Kommandozeilen Apps abzusenken und an die
+Usability von alternativen, meist grafischen Anwendungen angleichen. Um dies
+zu demonstrieren sollen die entwickelten Methoden in einem Anwendungsbeispiel
+implementiert und in einer Evaluation mit einer grafischen Alternative
+verglichen werden.
 
 \section{Aufbau der Arbeit}
 
@@ -212,19 +214,22 @@ Welche Methoden existieren um die Usability einer CLI App zu erhöhen?
     Beschreiben grundlegenden Wissens.
   \item \textbf{\nameref{sec:cli-problems}}
     \smallbreak
-    Zusammenfassen von Problemen die das Nutzen von Kommandozeilen Interfaces erschweren.
+    Zusammenfassen von Problemen, welche das Nutzen von Kommandozeilen Interfaces erschweren.
   \item \textbf{\nameref{sec:methods}}
     \smallbreak
-    Formulieren von Methoden die zuvor geschilderte Probleme adressieren.
+    Formulieren von Methoden um die zuvor geschilderten Probleme adressieren.
   \item \textbf{\nameref{sec:beispiel-anwendung}}
     \smallbreak
-    Definieren und bauen einer beispielhaften App zum Darstellen der Methoden.
+    Definieren und Bauen einer CLI App als Beispiel zur Anwendung der Methoden.
   \item \textbf{\nameref{sec:implementation}}
     \smallbreak
-    Beschreiben von Details und Schwierigkeiten zur Implementierung der Methoden.
+    Beschreiben von Details und Schwierigkeiten bei der Implementierung der Methoden.
   \item \textbf{\nameref{sec:evaluation}}
     \smallbreak
-    Bewerten der Anwendung mittels vergleichender Studie.
+    Durchführen einer vergleichenden Studie zwischen der implementierten CLI App
+und einer funktionell gleichen\footnote{Im Kontext der Studie wird nur die von
+beiden Anwendungen überlappende Funktionalität getestet und verglichen.} GUI
+Webapp.
   \item \textbf{\nameref{sec:zusammenfassung}}
     \smallbreak
     Ziehen einer Schlußfolgerung.
@@ -253,8 +258,6 @@ Und funktioniert wie folgt:
 
 Ein System was dieses Vorgehen implementiert wird auch als REPL (`Read-eval-print
 loop`) Umgebung bezeichnet.
-
-\smallskip
 
 Um die Limitation der Kommandozeile\footnote{Im Kapitel \ref{sec:cli-problems}
 wird noch tiefer auf die Probleme eingegangen.} zu adressieren wurde
@@ -357,15 +360,11 @@ ist dabei bei mehreren Argumenten entscheidend. In der zweiten Zeile wird
 dem \codeinline{git} Kommando das Subkommando \codeinline{commit} übergeben
 (\textcite{nagarajan2018}, \textcite{clig}.)
 
-\smallskip
-
 Nicht alle CLIs haben Subkommandos. \textcite{12factor} definiert zwei verschiedene
 Arten von CLI Apps: ``single and multi-command''. Also klassische `UNIX-Style'
 Werkzeuge wie \codeinline{cd}, \codeinline{cp} oder \codeinline{grep}. Und jene
 Apps mit Subkommandos wie \codeinline{npm} oder \codeinline{git}, die meist
 moderner und komplexer sind.
-
-\smallskip
 
 Zurück zu obigen \codeinline{git} Befehl: Dem \codeinline{commit} Subkommando
 wird die \codeinline{-m} Flagge und mit Ihr ein Parameter (die Nachricht
@@ -664,6 +663,7 @@ Nachfolgend nun die erarbeiteten Methoden.
 
 \newcounter{meth}
 \newcommand{\methbox}[2]{
+  \medskip
   \medskip
   \fbox{\parbox{\linewidth}{
     \refstepcounter{meth}
@@ -2210,8 +2210,9 @@ title={Quellenverzeichnis}
 
 \newpage
 \chapter{Glossar}
+
+\pagenumbering{roman}
 \begin{appendix}
-\pagenumbering{Roman}
 \chapter{Appendix}
 
 % \section{Quell-Code}
