@@ -267,49 +267,34 @@ heute allgegenwärtigen Fenster, `Icons', Menüs und die Maus mit sich
 brachte\footnote{Mehr zu den Weiterentwicklung des CLI in Kapitel
 \ref{sec:weiterentwicklungen}.}
 
-% TODO: move into problem after menu and all explainations
-% \section{Nutzen der Kommandozeile}
+\section{Vorteile der Kommandozeile}
 
-% Wenn die Kommandozeile als historisches Artefakt gilt warum sollte sie heute
-% noch verwendet werden?
-%
-% Das CLI bietet Experten viel Flexibilität konstruieren eines (komplexen)
-% Operation \parencite{Norman_1983}. Ein Beispiel für diese Flexibilität wäre
-% folgendes. Es sollen alle PDF Dateien aus dem Jahr 2021 gelöscht werden, diese
-% haben etwa Namen wie: \codeinline{20210819-Rechnung.pdf}. In der Kommandozeile
-% kann dies mit \codeinline{rm 2021*.pdf} erreicht werden. Im grafischen Interface
-% müssten die Dateien markiert und gelöscht werden. Mit einer steigender Anzahl
-% von Dateien steigt auch der Aufwand und die Chance einen Fehler zu machen.
-% In der Shell funktioniert \codeinline{rm} auch problemlos bei einer Million
-% Dateien.
-% \\
-% Ein weiter Vorteil für Experten liegt in dem Erstellen von Skripten. Mit Hilfe
-% dieser können Operationen automatisiert werden. Wenn z.B. eine der Rechnungen
-% aus dem letzten Paragraphen heruntergeladen wurde, kann diese mittels Skript
-% umbenannt, in den richtigen Ordner verschoben und der Todoliste ein Eintrag à la
-% `Rechnung xy begleichen' hinzugefügt werden. In einer graphischen Umgebung ist
-% diese Art von präziser Automatisierung nicht so einfach möglich.
-%
-% Experten mit viel Wissen und Erfahrung mit dem System wissen meist exakt welche
-% Operation angewandt werden muss. In der Kommandozeile kann dies einfach und
-% direkt eingetippt werden. Während selbst Experten in grafischen und Menü UI's
-% sich immer durch die gleichen Menüs und Untermenüs klicken müssen.
+Das CLI bietet Experten viel Flexibilität konstruieren eines (komplexen)
+Operation \parencite{Norman_1983}. Ein Beispiel für diese Flexibilität wäre
+folgendes. Es sollen alle PDF Dateien aus dem Jahr 2021 gelöscht werden, diese
+haben etwa Namen wie: \codeinline{20210819-Rechnung.pdf}. In der Kommandozeile
+kann dies mit \codeinline{rm 2021*.pdf} erreicht werden. Im grafischen Interface
+müssten die Dateien markiert und gelöscht werden. Mit einer steigender Anzahl
+von Dateien steigt auch der Aufwand und die Chance einen Fehler zu machen.
+In der Shell funktioniert \codeinline{rm} auch problemlos bei einer Million
+Dateien.
 
-% Westerman_1997:
-%
-% Command line interfaces provide a comparatively more powerful and more
-% cognitively demanding means of command generation (Meister, 1989)
-%
-% In comparison with menu interfaces, they provide increased flexibility with
-% respect to combinations of commands and parameters that may be Linked together
-% (Norman, 1983), and a potentially more efficient means of generat- ing complex
-% commands,
+Ein weiter Vorteil für Experten liegt in dem Erstellen von Skripten. Mit Hilfe
+dieser können Operationen automatisiert werden. Wenn z.B. eine der Rechnungen
+aus dem letzten Paragraphen heruntergeladen wurde, kann diese mittels Skript
+umbenannt, in den richtigen Ordner verschoben und der Todoliste ein Eintrag à la
+`Rechnung xy begleichen' hinzugefügt werden. In einer graphischen Umgebung ist
+diese Art von präziser Automatisierung nicht so einfach möglich.
 
-% Als Text-basiertes Interface kommt diesem die Klarheit von Worten zugute.
-% Abstrakte Konzepte wie Marxismus lassen sich nur schwer bis gar nicht in Bildern
-% beschreiben \parencite{Raskin_2008}, sind aber als Wort sehr umgänglich.
+Experten mit viel Wissen und Erfahrung mit dem System wissen meist exakt
+welche Operation angewandt werden muss. In der Kommandozeile kann dies einfach
+und direkt eingetippt werden. Während selbst Experten in grafischen und
+Menü-basierten Interfaces sich immer durch die gleichen Menüs und Untermenüs
+klicken müssen.
 
-% TODO: graph much hard in the beginning but more performance later
+Als Text-basiertes Interface kommt der Kommandozeile die Klarheit von Worten
+zugute. Abstrakte Konzepte wie Marxismus lassen sich nur schwer bis gar nicht in
+Bildern beschreiben \parencite{Raskin_2008}, sind aber als Wort sehr umgänglich.
 
 \section{Die Terminal Umgebung}
 
@@ -360,11 +345,11 @@ ist dabei bei mehreren Argumenten entscheidend. In der zweiten Zeile wird
 dem \codeinline{git} Kommando das Subkommando \codeinline{commit} übergeben
 (\textcite{nagarajan2018}, \textcite{clig}.)
 
-Nicht alle CLIs haben Subkommandos. \textcite{12factor} definiert zwei verschiedene
-Arten von CLI Apps: ``single and multi-command''. Also klassische `UNIX-Style'
-Werkzeuge wie \codeinline{cd}, \codeinline{cp} oder \codeinline{grep}. Und jene
-Apps mit Subkommandos wie \codeinline{npm} oder \codeinline{git}, die meist
-moderner und komplexer sind.
+Nicht alle Kommandozeilen Apps haben Subkommandos. \textcite{12factor} definiert
+zwei verschiedene Arten von CLI Anwendungen: ``single and multi-command''. Also
+klassische `UNIX-Style' Werkzeuge wie \codeinline{cd}, \codeinline{cp} oder
+\codeinline{grep}. Und jene Apps mit Subkommandos wie \codeinline{npm} oder
+\codeinline{git}, die meist moderner und komplexer sind.
 
 Zurück zu obigen \codeinline{git} Befehl: Dem \codeinline{commit} Subkommando
 wird die \codeinline{-m} Flagge und mit Ihr ein Parameter (die Nachricht
@@ -519,7 +504,7 @@ Nutzer mit ``menus similar to those of the GUI'' durch den Prozess geführt wird
 \label{sec:def-menu}
 
 Das Menü oder auch `Text-based user interface' (TUI) ähnelt dem GUI insofern als
-das dem Nutzer die Optionen visuell präsentiert werden. Anders als im GUI werden
+das dem Nutzer die Optionen visuell präsentiert werden. Anders als beim GUI werden
 dafür aber nur Textelemente verwendet. Mausinteraktion wird von modernen TUI's
 aber unterstützt. Da zur Implementation historisch oft die `curses' Bibliothek
 verwendet wurde ist es auch als `curses' Interface bekannt.
@@ -548,7 +533,7 @@ so häufig zur Nutzung ausgewählt.
 
 \smallskip
 
-Verglichen mit der GUI sind TUI's trotzdem für Anfänger trotzdem schlechter
+Verglichen mit dem GUI sind TUI's trotzdem für Anfänger trotzdem schlechter
 (in Performance und Meinung). Bei Experten liegen beide gleichauf
 \parencite{tuivsgui}.
 
@@ -558,11 +543,11 @@ Verglichen mit der GUI sind TUI's trotzdem für Anfänger trotzdem schlechter
 \begin{figure}[H]
   \centering
   \includegraphics[scale=0.5]{interactive-example.png}
-  \caption{Ein Interaktive CLI leitet durch eine Pizza Bestellung.}
+  \caption{Ein Interaktives CLI leitet durch eine Pizza Bestellung.}
   \label{fig:interactive-example}
 \end{figure}
 
-Die Interaktive CLI basiert auf einem ``question and answer model''
+Das Interaktive CLI basiert auf einem ``question and answer model''
 \parencite[42]{Spolsky_2001}. Dem Nutzer werden kontinuierlich Fragen gestellt
 auf dieser er antwortet (siehe Abbildung \ref{fig:interactive-example}.) Durch
 die hilfreichen Fragen entfällt der Bedarf sich an Kommandos erinnern zu müssen
@@ -585,7 +570,7 @@ gefragt werden. Auch komplexeres wie dem Auswählen aus einer Liste oder
 \label{sec:weiterentwicklung-ausser}
 
 Historisch wurde die grafische Benutzeroberfläche als Lösung für die Probleme
-der CLI gesehen (vgl. Kap. \ref{sec:historic-context}.) So wurden dem Nutzer die
+des CLI gesehen (vgl. Kap. \ref{sec:historic-context}.) So wurden dem Nutzer die
 möglichen Optionen grafisch präsentiert, anstatt diese nachschauen zu müssen.
 (vgl. \hyperref[prob:cr]{`Command Recall'}.)
 
@@ -593,14 +578,14 @@ möglichen Optionen grafisch präsentiert, anstatt diese nachschauen zu müssen.
 
 Es vollzog sich damit ein Wechsel von der Funktions-orientierten
 Kommandozeile hin zum Objekt-orientierten GUI \parencite{nielson1993}. Die
-Funktions-orientiertheit drückt sich etwa durch die in `single-command' CLI's
+Funktions-orientiertheit drückt sich etwa durch die in `single-command' CLI Apps
 häufig vertretene Verb-Nomen Struktur aus. Beispielsweise in \codeinline{rm
 FILE} oder \codeinline{cat FILE}. In der Objekt-orientierten Welt gehen alle
 Aktionen vom Objekt aus. So wird eine Datei in den Papierkorb gezogen (vgl.
 \codeinline{rm FILE}) oder per Doppelklick angezeigt (vgl. \codeinline{cat
 FILE}). Semantische Probleme (wie mit \codeinline{mv} die Reihenfolge
 durcheinander zu bringen) sind damit passé. Und von der Textform befreit sind es
-auch die in der CLI prävalenten \hyperref[prob:ss]{Syntaxfehler}.
+auch die in der Kommandozeile prävalenten \hyperref[prob:ss]{Syntaxfehler}.
 
 \smallskip
 
@@ -717,7 +702,7 @@ dem Kommando \codeinline{v} nutzbar.
 
 \smallskip
 
-Man stelle sich vor ein CLI App nimmt ein eine Anzahl von Stunden und ein Datum:
+Man stelle sich vor eine CLI App nimmt ein eine Anzahl von Stunden und ein Datum:
 
 \begin{code}
   \begin{shellcode}
@@ -907,9 +892,9 @@ Damit der Nutzer von ihnen nicht überrascht wird.
 
 \section{Interaktives Nachfragen bei fehlendem Parameter}
 
-Man stelle sich folgendes Szenario vor. Eine CLI hat ein Kommando welches einen
-Parameter erfordert. Normalerweise erfolgt bei nicht-Übergabe dieses Parameters
-eine Fehlermeldung welche darauf hinweist.
+Man stelle sich folgendes Szenario vor. Eine CLI App hat ein Kommando welches
+einen Parameter erfordert. Normalerweise erfolgt bei nicht-Übergabe dieses
+Parameters eine Fehlermeldung welche darauf hinweist.
 
 \begin{code}
   \begin{shellcode}
@@ -927,7 +912,7 @@ For more information try --help
   \medskip
 \end{code}
 
-Die CLI weiß aber bereits was der Nutzer tun möchte und könnte anstatt
+Die Anwendung weiß aber bereits was der Nutzer tun möchte und könnte anstatt
 der Fehlermeldung dem Nutzer mit einer Eingabeaufforderung (interaktivem
 Nachfragen, vgl. Kapitel \ref{sec:def-interactive}) nach dem fehlenden
 Parameter fragen \parencite{12factor}. Oder, je nach Kontext, diesem sogar
@@ -946,7 +931,7 @@ Enter location country code:
   \medskip
 \end{code}
 
-Fairerweise ist zu bemerken das die mullvad CLI dies auch, an anderer Stelle,
+Fairerweise ist zu bemerken das die mullvad CLI App dies auch, an anderer Stelle,
 genau so handhabt. Bei \codeinline{mullvad account login} wird nach der
 fehlenden Accountnummer gefragt.
 
@@ -1090,7 +1075,7 @@ anderer (Sub-) Kommandos) zu informieren. Für den gegebenen `Flow' könnte
 also \codeinline{mkdir} mit einer Nachricht à la \codeinline{Also look at -
 cd, ls} versehen werden. Diese Vorschläge können als Erinnerung dienen oder
 den Nutzer dazu Auffordern sich die Vorschläge einmal näher anzuschauen. Bei
-`multi-command' CLI's mit vielen Subkommandos, wo der Nutzer nicht weiß wo er
+`multi-command' CLI Apps mit vielen Subkommandos, wo der Nutzer nicht weiß wo er
 anfangen soll, sind diese Vorschläge besonders wertvoll.
 
 \methbox{command_recommendations}{Schlage dem Nutzer andere relevante
@@ -1193,7 +1178,7 @@ betreffen.
 \smallskip
 
 Node.js wurde als Programmiersprache gewählt, weil der Author damit vertraut
-war, eine Vielzahl von Libraries zum Bauen von CLI's existieren und der
+war, eine Vielzahl von Libraries zum Bauen von CLI Apps existieren und der
 Paketveröffentlichungsprozess mit npm relativ simpel ist. Weiterhin wurden noch
 Typescript - für Typisierung - und Eslint - für gleichmäßigen Code Style -
 verwendet.
@@ -1338,7 +1323,7 @@ vervollständigt wird. Andere in Erwägung gezogene Varianten waren
 
 \begin{code}
   \medskip
-  \captionof{listing}{Das Hilfsmenu der CLI App}
+  \captionof{listing}{Das Hilfsmenu der CLI App.}
   \label{code:oraclett-help}
   \begin{shellcode}
 $ oraclett --help
@@ -1748,7 +1733,7 @@ sich aufgrund des zeitlichen Rahmens dagegen entschieden wurde.
 
 \methref{command_recommendations} hat in der App keine Anwendung gefunden. Wie
 auch in der Erklärung wiedergegeben spricht \textcite{dutta} diese Empfehlung in
-Hinsicht auf CLI's mit sehr vielen (Sub-) Kommandos aus. Die implementierte
+Hinsicht auf CLI Apps mit sehr vielen (Sub-) Kommandos aus. Die implementierte
 Anwendung umfasst nur eine sehr limitierte Anzahl von Subkommandos. Aufgrund
 dieser bereits gegebenen Übersichtlichkeit wurde sich gegen direkte Vorschläge
 entschieden.
@@ -1780,9 +1765,9 @@ Es wurde die implementierte CLI App der existierenden GUI Webapp gegenüber
 gestellt. Die Teilnehmer haben in beiden Apps Aufgabenstellungen erfüllt und
 dann die Attraktivität der Applikation bewertet. Das Ziel war es zu sehen
 welchen Effekt die entwickelten und implementierten Methoden auf die Nutzbarkeit
-der CLI hatten. Ob die, der Kommandozeile inhärente, Nutzungsschwelle abgesenkt
+des CLI hatten. Ob die, der Kommandozeile inhärente, Nutzungsschwelle abgesenkt
 werden konnte. Die existierende GUI Webapp diente dazu als Maßstab gegen welchen
-es die Usability und Performance der CLI zu vergleichen galt.
+es die Usability und Performance des CLI zu vergleichen galt.
 
 \subsection{Rahmenbedingungen}
 
@@ -1804,15 +1789,15 @@ mit geteiltem Bildschirm.
 
 \medskip
 
-Die Teilnehmer arbeiteten das erste Mal mit der CLI. Um Erlernbarkeit zu
-testen und trotzdem vergleichbare Performancemetriken zu erhalten wurde den
-Teilnehmer eine Einführung in die CLI gegeben. In welcher alle Funktionalität
-gezeigt und beschrieben wurde. Inklusive dem Auffinden von Hilfe und Shell
-Basics wie \codeinline{CTRL+c} zum unterbrechen von interaktiver Eingabe
-und Anführungszeichen um gruppieren von Text (\codeinline{-d "next monday"}
-$\leftrightarrow$ \codeinline{-d next monday}, letzteres führt zu einem Fehler.)
-Alles um zu gewährleisten das der Teilnehmer ohne das Eingreifen des Testleiters
-die gegebene Aufgabe lösen kann.
+Die Teilnehmer arbeiteten das erste Mal mit der CLI App. Um Erlernbarkeit
+zu testen und trotzdem vergleichbare Performancemetriken zu erhalten wurde
+den Teilnehmer eine Einführung in die Anwendung gegeben. In welcher alle
+Funktionalität gezeigt und beschrieben wurde. Inklusive dem Auffinden von Hilfe
+und Shell Basics wie \codeinline{CTRL+c} zum unterbrechen von interaktiver
+Eingabe und Anführungszeichen um gruppieren von Text (\codeinline{-d "next
+monday"} $\leftrightarrow$ \codeinline{-d next monday}, letzteres führt zu einem
+Fehler.) Alles um zu gewährleisten das der Teilnehmer ohne das Eingreifen des
+Testleiters die gegebene Aufgabe lösen kann.
 
 \subsection{Aufgabenstellungen}
 \label{aufgaben}
@@ -1876,12 +1861,12 @@ Die Anzahl von Aufgaben welche pro Subkommando erledigt werden:
 
 Um das Spielfeld etwas zu ebnen, wurde nicht immer der gleiche Wortlaut für
 Verben wie `remove' verwendet. Sondern auch das synonyme `delete'. Die CLI
-verwendet das Verb \codeinline{remove} als Subkommando. Und dies führte,
-u.a. durch Verwendung von `delete', dazu das Teilnehmer versuchten etwa
+App verwendet aber das Verb \codeinline{remove} als Subkommando. Und dies
+führte, u.a. durch Verwendung von `delete', dazu das Teilnehmer versuchten etwa
 \codeinline{hour delete} zu nutzen. Andere Beispiele für diese Synonyme sind
 `describe' $\leftrightarrow$ `add', `change` $\leftrightarrow$ `edit' und `log'
 $\leftrightarrow$ `add'. Die Sätze meinen immer noch dasselbe, fordern die
-Teilnehmer bei der Verwendung der CLI aber etwas mehr heraus.
+Teilnehmer bei der Verwendung des CLI aber etwas mehr heraus.
 
 Aufgrund der unterschiedlichen Einschränkungen der beiden User Interfaces waren
 manche Aufgaben mit dem einen oder anderen theoretisch einfacher zu erledigen.
