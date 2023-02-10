@@ -857,7 +857,7 @@ Damit der Nutzer von ihnen nicht überrascht wird.
 
 \section{Interaktives Nachfragen bei fehlendem Parameter}
 
-Man stelle sich folgendes Szenario vor. Eine CLI App hat ein Kommando welches
+Man stelle sich folgendes Szenario vor. Eine CLI App hat ein Subkommando welches
 einen Parameter erfordert. Normalerweise erfolgt bei nicht-Übergabe dieses
 Parameters eine Fehlermeldung welche darauf hinweist.
 
@@ -1490,9 +1490,9 @@ exakte Implementation. Und einmal als Weiterführung im Sinne der Methode.
   \medskip
 \end{code}
 
-Obiger Auszug aus dem Hilfsmenü von \codeinline{hour list} kommuniziert das
-die \codeinline{--date} Flagge wenn nicht übergeben den Wert \codeinline{this
-week} annimmt. Wird das Kommando \codeinline{hour list} ohne Flaggen aufgerufen
+Obiger Auszug aus dem Hilfsmenü von \codeinline{hour list} kommuniziert das die
+\codeinline{--date} Flagge wenn nicht übergeben den Wert \codeinline{this week}
+annimmt. Wird das Subkommando \codeinline{hour list} ohne Flaggen aufgerufen
 werden die Stunden der aktuellen Woche angezeigt. Natürlich kann auch ein
 anderer Zeitraum übergeben werden, die aktuelle Woche wird aber am relevantesten
 für die meisten Nutzer sein.
@@ -1772,7 +1772,7 @@ Projekt/Task Detail genau gemeint war.
 \end{enumerate}
 
 Das Hinzufügen zum System spielt die Hauptrolle. In der echten Verwendung wäre
-das \codeinline{add} Kommando auch das meist verwendete.
+das \codeinline{add} Subkommando auch das meist verwendete.
 
 \label{text:anzahl-aufgaben}
 Die Anzahl von Aufgaben welche pro Subkommando erledigt werden:
