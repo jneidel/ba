@@ -1107,15 +1107,12 @@ leisten muss und nicht zu simpel sein kann. Aber auch nicht zu komplex um die
 Umsetzbarkeit innerhalb des Zeitrahmens zu gewährleisten.
 
 \subsection{Konzept}
-\subsubsection{Problem}
 
 Bei Endava\footnote{Der Firma in welcher diese Bachelorarbeit geschrieben
-wurde.} werden die Arbeitsstunden über eine interne Webapp (ein Oracle
-System) festgehalten. Dieses glänzt nicht in Usability\footnote{Wie die
-Attraktivitätsumfrage in der Auswertung (Kap. \ref{sec:auswertung}) auch
-untermauert.}, es führt aber kein Weg dran vorbei. Diese Webapp wird im Laufe
-der Arbeit als \textbf{Oracle} bezeichnet\footnote{Unter diesem Namen ist das
-System auch firmenintern bekannt.}.
+wurde.} werden die Arbeitsstunden über eine interne Webapp (ein Oracle System)
+festgehalten. Diese Webapp wird im Laufe der Arbeit als \textbf{Oracle}
+bezeichnet\footnote{Unter diesem Namen ist das System auch firmenintern
+bekannt.}.
 
 \begin{figure}[H]
   \centering
@@ -1123,14 +1120,14 @@ System auch firmenintern bekannt.}.
   \caption{Idealtypische Oracle `Timecard'.}
 \end{figure}
 
-Idealerweise werden am Ende der Arbeitswoche die Arbeitsstunden der vergangen
-Woche in einer sogenannten `Timecard' festgehalten. Dabei wird angegeben an
-welchen Wochtage wieviele Stunden an welchen Projekten gearbeitet wurde.
-Wenn man eine 40 Stundenwoche an einem einzigen Projekt arbeitet ist das
-trivial. Wenn man aber als Werkstudent an mehreren Projekten mit schwankenden
-Stundenzahlen arbeitet wird es schnell komplizierter. Und wenn dazu noch
-dokumentiert werden soll woran gearbeitet wurde noch umso mehr. In der Praxis
-heißt das: die ‘Timecard’ muss täglich in Oracle aktualisiert werden.
+Am Ende der Arbeitswoche werden die Arbeitsstunden der vergangen Woche in
+einer sogenannten `Timecard' festgehalten. Dabei wird angegeben an welchen
+Wochtage wieviele Stunden an welchen Projekten gearbeitet wurde. Wenn nur an
+einem einzigen Projekt mit gleichbleibenden 40 Stundenwoche gearbeitet wird ist
+dieser Prozess trivial. Wenn man aber als Werkstudent an mehreren Projekten mit
+schwankenden Stundenzahlen arbeitet wird es schnell komplizierter. Und wenn dazu
+noch dokumentiert werden soll woran gearbeitet wurde noch umso mehr. Dies heißt
+praktisch das die ‘Timecard’ täglich in Oracle aktualisiert werden muss.
 
 \begin{figure}[H]
   \centering
@@ -1138,17 +1135,15 @@ heißt das: die ‘Timecard’ muss täglich in Oracle aktualisiert werden.
   \caption{Eine weniger idealtypische `Timecard'.}
 \end{figure}
 
-\subsubsection{Lösungsansatz}
-
-Die entworfene Lösung ist eine Kommandozeilen App, welche das tägliche loggen
-der Arbeitszeiten erleichtert. Auch Notizen zu den bearbeiteten Aufgaben
-können schnell festgehalten werden. Diese Daten werden dann zum wöchentlichen
-Übertragen in Oracle in strukturierter Form ausgegeben\footnote{Eine mögliche,
-direkte Übertragung an Oracle selbst würde den Rahmen der Arbeit sprengen,
-ohne dem Thema dienlich zu sein. Weshalb davon abgesehen wurde.}. Dadurch wird
-erreicht nur das erforderliche Mindestmaß der Zeit mit Oracle zu verbringen,
-dessen Workflow im übrigen auch am besten funktioniert wenn alles in einem
-Rutsch erledigt wird.
+Um eine Alternative zur Webapp zu schaffen wurde eine Kommandozeilen App
+entworfen, welche praktisch die gleichen Kapazitäten anbietet. Es können täglich
+die Arbeitszeiten sowie Notizen dazu woran gearbeitet wurde festgehalten
+werden. Um eine sinnvolle Alternative darzustellen sind auch die Kapazitäten
+zum Verwalten von Projekten und dem Übertragen der Daten zu Oracle notwendig
+\footnote{Eine mögliche, direkte Übertragung an Oracle selbst würde den Rahmen
+der Arbeit sprengen, ohne dem Thema dienlich zu sein. Weshalb davon abgesehen
+wurde.}. Ohne Projektverwaltung würde die Zuordnung erschwert. Und ohne explizit
+unterstütztes Übertragen wäre die Anwendung weit weniger hilfreich.
 
 \subsection{Anforderungen}
 
@@ -1188,7 +1183,7 @@ Vordergrund, weshalb hier u.a. die Akzeptanzkriterien der User Stories,
 Implementationsdetails wie Datenpersistierung, etc. nicht weiter beschrieben
 werden.
 
-\section{Technisches}
+\section{Technische Aspekte}
 \subsection{Fundament}
 
 Das Fundament der App stellen die zugrundelegenden technologischen Aspekte dar,
