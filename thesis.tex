@@ -7,6 +7,7 @@
 % \setmainfont
 \setsansfont{SFNS Display}
 \setmonofont{FuraCode Nerd Font Mono}
+% see: jneidel.com/dot/.fonts
 
 \usepackage[
 backend=biber,
@@ -71,11 +72,9 @@ autocite=footnote
 % \titleformat{\subsection}[block]{\large}{\thesubsection.}{1em}{} % Change the look of the section titles
 
 \usepackage{fancyhdr} % Headers and footers
-\pagestyle{fancy} % All pages have headers and footers
+% \pagestyle{fancy} % All pages have headers and footers
 \fancyhead{} % Blank out the default header
 \fancyfoot{} % Blank out the default footer
-% \fancyhead[C]{Ethics in Progress (EiP) $\bullet$ 2019 } % Custom header text
-% \fancyfoot[RO,LE]{\thepage} % Custom footer text
 
 \usepackage{titling} % Customizing the title section
 
@@ -137,8 +136,7 @@ Datum
 {\Huge Danksagung}\\
 \vspace*{1.6cm} \\
 
-% Kopfzeilen (automatisch erzeugt)
-%\pagestyle{headings}
+%\pagestyle{headings} % Kopfzeilen (automatisch erzeugt)
 
 [Text der Danksagung]
 % - Endava für die Möglichkeit die Arbeit im Betrieb zu schreiben.
@@ -147,7 +145,6 @@ Datum
 % - Francis und Mama für moralischen Support
 % - Sven Proofreading
 
-% Seite mit Abstracts
 \newpage
 \thispagestyle{empty}
 \section*{Zusammenfassung}
@@ -156,21 +153,13 @@ Datum
 \section*{Abstract}
 [Summary of the thesis]
 
-
 \clearpage
-%Seite 1
 \pagenumbering{roman}
-%\setcounter{page}{1}
-
 \tableofcontents
 .
 \newpage
 
 \pagenumbering{arabic}
-% \setcounter{page}{1} % setzt Seitenzaehlung auf 1
-
-% \footnote{Erg\"anzende Informationen k\"onnen Sie auch in eine Fu"snote auslagern. Hier wird die Fu"snote dazu genutzt, um Ihnen bei Interesse am Thema Zitation vertiefende Quellen (z.B. \autocite{balzert2011} oder \autocite{franck2013}) anzubieten.}
-
 \chapter{Einleitung}
 \label{sec:einleitung}
 
@@ -184,6 +173,8 @@ Damit einher gehen Probleme und Schwächen.
 
 \section{Problem- und Zielstellung (Scope)}
 % [Beschreibung der Problemstellung sowie der sich daraus ergebenden Teilprobleme,-ziele und Forschungsfrage(n), welche Sie mit Ihrer Arbeit addressieren]
+
+\section{sec:problem}
 
 Das Kommandozeilen-Interface ist heutzutage ein wenig verbreitetes
 Anwendungs-Interface. Besonders in der allgemeinen Bevölkerung, aber selbst
@@ -2028,70 +2019,82 @@ Der subjektive Vergleich ist ziemlich eindeutig. Die Abbildung
 überflüssig. Auch auf Abbildung \ref{fig:attrak-wortpaare} liegt das CLI in
 allen Punkten signifikant vorne.
 
+\subsection{Beobachtungen aus der Evaluation}
+
+% TODO: erlernbarkeit?
+
+In der Nutzung beider Interfaces traten bei manchen Teilnehmern Momente auf in
+denen sie nicht wussten wie vorzugehen war. In der CLI App sind die Teilnehmer
+als Reaktion darauf zur Hilfsseite zurückgekehrt und haben versucht sich
+erneut zu orientieren und den Fehler in ihrem letzten Befehl zu finden. Dabei
+wurde sich nicht an den Versuchsleiter gewendet. Den Teilnehmern war bewusst
+das sie dieses Problem alleine lösen können. Bei Aussetzern von Oracle (aus
+unerfindlichen Gründen) herrschte immer Verwirrung. Das Interface teilte nichts
+mit und tat einfach seinen Dienst nicht. An dieser Stelle wurde immer die Hilfe
+des Versuchsleiters gesucht.
+
 \chapter{Zusammenfassung}
 \label{sec:zusammenfassung}
-
 % [Aggregierte retrograde Kurzbeschreibung der Arbeit]
+
+Nach Analyse grundlegenden Probleme der Kommandozeile, wurden neun Methoden zur
+Verbesserung der Usability für Kommandozeile-Interfaces erarbeitet. Diese wurden
+in einer CLI App implementiert und mit einer grafischen Anwendung mit gleicher
+Funktionalität verglichen. Die Teilnehmer bevorzugten das CLI über das GUI, bei
+gleichauf liegender Performance.
+
 \section{Schlussfolgerungen}
 % [Beschreibung der insgesamt zu konstatierenden Schlussfolgerungen im Zusammenhang mit der Arbeit]
+
+Es wurde gezeigt, dass in der Kommandozeile, unter Anwendung der erarbeiteten
+Methoden, Usability erreicht werden kann die es mit grafischen Anwendungen
+aufnimmt.
+
 \section{Limitationen}
 % [Beschreibung der Ergebnisse einer kritischen Reflektion und Begr\"undung dessen, was die Arbeit nicht zu leisten vermag]
+
+Es war im Rahmen der Arbeit nicht möglich den Effekt einzelner Methoden isoliert
+festzustellen. Es konnte also nur eine Aussage über alle implementieren Methoden
+zusammen getroffen werden.
+
 \section{Ausblick}
 \subsection{Entwicklung und Strukturierung von Methoden}
 
 Die Methoden könnten in stärker strukturierter Form und außerhalb des Kontextes
 dieser Arbeit für sich stehend formuliert werden. Zusammen mit einer englischen
 Übersetzung wären sie dadurch dann leichter referenzier- und implementierbar.
-\\
+
 Auch könnten noch weitere Methoden entwickelt werden.
+
+\subsection{Vergleich mit CLI App}
+
+Anstatt des Vergleiches mit einer GUI App, würde der Vergleich mit einer
+baugleichen CLI App, welche die Methoden nicht implementiert, eine stärkere
+Aussagekraft bezüglich des Effektes der Methoden haben. Auch wäre es damit
+möglich nur eine Methode auf einmal zu testen. Mit identischen Apps A und B,
+aber B hat noch die zu untersuchende Methode implementiert.
 
 \subsection{Verbesserung der Implementation}
 
-Die Implementierung hat noch einige Schwächen. Neben Versäumnissen etwa wie bei
-der Autovervollständigung (vgl. Kap. \ref{sec:impl-autocomplete}), dem Menü
-Interface (vgl. Kap. \ref{sec:impl-menu}) oder den fehlenden Synonymen (vgl.
-Kap. \ref{sec:sol-natural-lang}) gibt es noch einige kleiner Fehler und Features
-die anzugehen sind.
+In der Evaluation wurden noch einige Schwächen der Implementation entdeckt,
+welche noch auszubessern sind. Auch die Versäumnissen etwa wie bei der
+Autovervollständigung (vgl. Kap. \ref{sec:impl-autocomplete}), dem Menü
+Interface (vgl. Kap. \ref{sec:impl-menu}) oder die fehlenden Synonymen (vgl.
+Kap. \ref{sec:sol-natural-lang}) bieten noch Verbesserungsbedarf.
 
 Eine Anbindung an Oracle selbst war im Rahmen dieser Arbeit nicht vorgesehen,
 weil der Fokus auf den Methoden lag. Als zukünftige Verbesserung der App wäre
 dies aufgrund der Zeitersparnis aber sinnvoll.
 
-%%% possible modules
-% \section{Kontext}
-% \subsection{Domain}
-% \subsection{Technologien}
-% \subsection{Methoden und Konzepte}
-% \section{...}
-% \subsection{...}
-% \subsection{...}
-% \chapter{Anforderungserhebung und -analyse}
-% \section{Nutzer- und Systemanforderungen}
-% \subsection{Funktionale Anforderungen}
-% \subsubsection{Obligatorisch (MUSS)}
-% \subsubsection{Fakultativ (Kann)}
-% \subsection{Nicht-funktionale Anforderungen}
-% \subsubsection{Obligatorisch (MUSS)}
-% \subsubsection{Fakultativ (Kann)}
-% \section{...}
-% \chapter{Konzeption \& Entwurf}
-% [Beschreibung des Entwurfs auf Basis der Methodologie / der geplanten Vorgehensweise zur Probleml\"osung im Kontext der Anforderungen (i.A. der Art der Arbeit)]
-% \section{Prozess}
-% \section{Systemarchitektur}
-% \section{Softwarearchitektur}
-% \section{Schnittstellen}
-% \section{Datenmanagement}
-% \section{...}
-% \chapter{Implementierung}
-% [Beschreibung der Implementierung\footnotemark auf Basis des Entwurfs und der Methodologie / der geplanten Vorgehensweise zur Probleml\"osung im Kontext der Anforderungen. Hier ist Raum f\"ur Listings, wie z.B. das nun Folgende: Umfangreicher Quell-Code sollte in den Anhang ausgelagert werden.]
-% \chapter{Test}
-% [Beschreibung, wie Sie auf Basis des geplanten Testvorgehens was mit welchen Kriterien und Technologien getestet haben]
-% \chapter{Darstellung und Bewertung der Ergebnisse}
-% [Beschreibung der Ergebnisse aus allen voran gegangenen Kapiteln sowie der zuvor generierten Ergebnisartefakte mit Bewertung, wie diese einzuordnen sind]
+\subsection{Bearbeiten der Problemstellung in anderer Herangehensweise}
 
-% \bibliographystyle{apalike}
-% \bibliographystyle{ksfh_nat} % ein anderer Stil
-% \bibliography{science}
+Die zu Beginn gestellte, offene Problemstellung war: Wie Entwicklern oder der
+Allgemeintheit das CLI näher gebracht werden kann. Neben dem Verbessern der
+Nutzbarkeit von CLI Applikationen, sind noch andere Herangehensweisen möglich.
+Etwa das Terminal-Ökosystem zugänglicher und verständlicher zu machen. Oder
+die Zugänglichkeit der Werkzeuge für nicht technisch-fokussierte Personen
+verbessern. Vieles ist möglich.
+
 \printbibliography[
 heading=bibintoc,
 title={Quellenverzeichnis}
@@ -2105,23 +2108,7 @@ title={Quellenverzeichnis}
 \chapter{Appendix}
 
 % \section{Quell-Code}
-%
-% \section{Tipps zum Schreiben Ihrer Abschlussarbeit}
-%
-% \begin{itemize}
-% \item Achten Sie auf eine neutrale, fachliche Sprache. Keine \glqq{}Ich\grqq{}-Form.
-% \item Zitieren Sie zitierf\"ahige und -w\"urdige Quellen (z.B. wissenschaftliche Artikel und Fachb\"ucher; nach M\"oglichkeit keine Blogs und keinesfalls Wikipedia.
-% \item Zitieren Sie korrekt und homogen.
-% \item Verwenden Sie keine Fu{\ss}noten f\"ur die Literaturangaben.
-% \item Recherchieren Sie ausf\"uhrlich den Stand der Wissenschaft und Technik.
-% \item Achten Sie auf die Qualit\"at der Ausarbeitung (z.B. auf Rechtschreibung).
-% \item Informieren Sie sich ggf. vorab dar\"uber, wie man wissenschaftlich arbeitet bzw. schreibt:
-% \begin{itemize}
-% \item Mittels Fachliteratur\footnote{Z.B. \autocite{balzert2011}, \autocite{franck2013}}, oder
-% \item Beim Lernzentrum\footnote{Weitere Informationen zum Schreibcoaching finden sich hier: \url{https://www.htw-berlin.de/studium/lernzentrum/studierende/schreibcoaching/}; letzter Zugriff: 13 VI 19.}.
-% \end{itemize}
-% \end{itemize}
-%
+
 \newpage
 \thispagestyle{empty}
 \noindent
