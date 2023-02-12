@@ -20,7 +20,7 @@ autocite=footnote
 
 \usepackage{graphicx}
 \graphicspath{ {images/} }
-\usepackage{float}
+\usepackage{float} % [H] on images to have them 'here'
 
 \usepackage[newfloat]{minted}
 \usepackage[hang, small,labelfont=bf,up,textfont=it,up]{caption}
@@ -60,16 +60,6 @@ autocite=footnote
 \usepackage{lettrine} % The lettrine is the first enlarged letter at the beginning of the text
 \usepackage{enumitem} % Customized lists
 \setlist[itemize]{noitemsep} % Make itemize lists more compact
-
-% \usepackage{abstract} % Allows abstract customization
-% \renewcommand{\abstractnamefont}{\normalfont\bfseries} % Set the "Abstract" text to bold
-% \renewcommand{\abstracttextfont}{\normalfont\small\itshape} % Set the abstract itself to small italic text
-
-% \usepackage{titlesec} % Allows customization of titles
-%\renewcommand\thesection{\Roman{section}} % Roman numerals for the sections
-%\renewcommand\thesubsection{\roman{subsection}} % roman numerals for subsections
-% \titleformat{\section}[block]{\large\scshape\centering}{\thesection.}{1em}{} % Change the look of the section titles
-% \titleformat{\subsection}[block]{\large}{\thesubsection.}{1em}{} % Change the look of the section titles
 
 \usepackage{fancyhdr} % Headers and footers
 % \pagestyle{fancy} % All pages have headers and footers
@@ -119,12 +109,12 @@ Studiengang \textit{Angewandte Informatik}
 \linebreak[4]
 \linebreak[4]
 \linebreak[4]
-Eingereicht von Jonathan Neidel [573619]
+Eingereicht von Jonathan Neidel \textit{(573619)}
 \linebreak[4]
 \linebreak[4]
 \linebreak[4]
 \linebreak[4]
-Datum
+13. Februar 2023
 
 \end{center}
 \end{titlepage}
@@ -138,12 +128,19 @@ Datum
 
 %\pagestyle{headings} % Kopfzeilen (automatisch erzeugt)
 
-[Text der Danksagung]
-% - Endava für die Möglichkeit die Arbeit im Betrieb zu schreiben.
-% - Moritz für das Engagement
-% - Herr Israel der mir bei Fragen zur Seite stand.
-% - Francis und Mama für moralischen Support
-% - Sven Proofreading
+An Endava für die Möglichkeit die Arbeit im Betrieb zu schreiben.
+
+\medskip
+
+An Moritz der dies ermöglicht hat und mir helfend zur Seite stand.
+
+\medskip
+
+An Herr Israel für die Beantwortung aller aufkommenden Fragen.
+
+\medskip
+
+An Francis und meine Mutter für den moralischen Support.
 
 \newpage
 \thispagestyle{empty}
@@ -189,7 +186,7 @@ Damit einher gehen Probleme und Schwächen.
 \section{Problem- und Zielstellung}
 % [Beschreibung der Problemstellung sowie der sich daraus ergebenden Teilprobleme,-ziele und Forschungsfrage(n), welche Sie mit Ihrer Arbeit addressieren]
 
-\section{sec:problem}
+\label{sec:problem}
 
 Das Kommandozeilen-Interface ist heutzutage ein wenig verbreitetes
 Anwendungs-Interface. Besonders in der allgemeinen Bevölkerung, aber selbst
@@ -1262,24 +1259,21 @@ const { whatToEdit } = await inquirer.prompt( [ {
 
 \section{Implementierte Anwendung}
 
-% TODO: texts look to disjointed?
-
 Es folgt eine grobe Vorstellung der implementierten App. Es geht darum ein
 Verständnis für den Kontext schaffen in welchem die Methoden implementiert
 wurden. Diese werden dann im nächsten Schritt (im nächsten Kapitel) vorgestellt.
 
-Der Name der App `oraclett' ist kurz für `Oracle time tracker'. Gewählt wurde
-dieser weil er 1) kurz und prägnant als auch 2) mit Autovervollständigung leicht
-zu finden ist. Intern ist die Platform zu festhalten der Arbeitszeiten als
-`Oracle` bekannt, deshalb sollte der Name des Programmes mit \codeinline{oracle}
-beginnen damit beim drücken von TAB dann zu \codeinline{oraclett}
-vervollständigt wird. Andere in Erwägung gezogene Varianten waren
-\codeinline{oracle-time-tracker} oder \codeinline{ott}.
+`oraclett' wurde als Name für die App gewählt. Der Name wurde in Anlehnung
+an das interne Werkzeug zum Festhalten der Arbeitszeiten benannt (bekannt
+als `Oracle') und steht für `Oracle time tracker'. Der Name sollte
+1) kurz und prägnant als auch 2) mit Autovervollständigung leicht zu
+vervollständigen sein. Mit \codeinline{oracle} beginnend ist die Assoziation
+mit dem intern Tool hergestellt und kann beim drücken von TAB dann zu
+\codeinline{oraclett} vervollständigt wird. Andere in Erwägung gezogene
+Varianten waren \codeinline{oracle-time-tracker} oder \codeinline{ott}. Diese
+waren aber zu lang bzw. kryptisch.
 
 \begin{code}
-  \medskip
-  \captionof{listing}{Das Hilfsmenu der CLI App.}
-  \label{code:oraclett-help}
   \begin{shellcode}
 $ oraclett --help
 Oracle time tracker
@@ -1300,17 +1294,12 @@ COMMANDS
   help      Display help for oraclett.
   timecard  Generate a report for filling out timecards.
   \end{shellcode}
+  \captionof{listing}{Das Hilfsmenu der CLI App.}
+  \label{lst:oraclett-help}
+  \medskip
 \end{code}
 
-\label{text:noun-verb} Die Subkommandos sind nach dem `noun verb' Prinzip
-\parencite{clig} strukturiert. Auf das Nomen, in unserem Fall etwa die Stunde
-(\codeinline{hour}), folgt ein Verb wie hinzufügen, bearbeiten, entfernen oder
-auflisten. Diese Verben sind bei allen Kommandos einheitlich. Zu bearbeiten
-eines Projekt wird ebenso \codeinline{edit} verwendet wie beim bearbeiten einer
-Notiz.
-
 \begin{code}
-  \label{code:hours-help}
   \begin{shellcode}
 $ oraclett hour --help
 Log and manage hours.
@@ -1324,30 +1313,30 @@ COMMANDS
   hour list    List all logged hours.
   hour remove  Remove logged hours interactively.
   \end{shellcode}
-  \captionof{listing}{Hilfsseite des `hour' Kommandos}
+  \captionof{listing}{Hilfsseite des \codeinline{hour} Subkommandos}
+  \label{lst:hour-help}
   \medskip
 \end{code}
 
-Die vorgesehene Nutzungsflow wäre wie folgt. Wenn man einem neuen Projekt
+\label{text:noun-verb} Die Subkommandos sind nach dem `noun verb'
+Prinzip \parencite{clig} strukturiert. Die Nomen sind dem ersten Listing
+\ref{lst:oraclett-help} zu entnehmen: \codeinline{hour}, \codeinline{note},
+\codeinline{project} und \codeinline{timecard}. Auf eines Nomen, im
+obenstehenden Listing \ref{lst:hour-help} etwa die Stunde (\codeinline{hour}),
+folgt ein Verb wie \codeinline{add}, \codeinline{edit}, \codeinline{remove}
+oder \codeinline{list}. Diese Verben sind über alle Kommandos hinweg
+einheitlich\footnote{Außer bei \codeinlinefn{timecard}, welches keine
+Subkommandos hat.}. Zum Bearbeiten eines Projektes wird ebenso das Verb
+\codeinline{edit} verwendet wie beim Bearbeiten einer Notiz.
+
+Der vorgesehene Nutzungsflow wäre wie folgt. Wenn man einem neuen Projekt
 zugewiesen wird fügt man dieses \codeinline{oraclett} mit \codeinline{project
 add} hinzu.
-
-Im normalen Arbeitsalltag würde man gearbeitete Stunden mit \codeinline{hour
-add} festhalten. Auch Notizen dazu woran gearbeitet wurde würden im Moment
-selbst mit \codeinline{note add} dokumentiert werden.
-
-Am Ende Arbeitswoche würde mit \codeinline{timecard} ein Report erstellt, dessen
-Daten dann in das interne Oracle System übertragen werden. Womit die Woche
-abgeschlossen wäre.
-
-Zum Verwalten oder Ausbessern der Daten im System gibt es jetzt noch die
-\codeinline{edit} und \codeinline{remove} Subkommandos. Diese stehen falls
-benötigt zur Verfügung, sind aber nicht teil des normalen Workflows.
 
 \begin{figure}[H]
   \centering
   \includegraphics[scale=0.5]{project-add.png}
-  \caption{Interaktives hinzufügen eines Projektes.}
+  \caption{Interaktives Hinzufügen von einem Projekt.}
   \label{fig:project-add}
 \end{figure}
 
@@ -1358,77 +1347,23 @@ benötigt zur Verfügung, sind aber nicht teil des normalen Workflows.
   \label{fig:project-list}
 \end{figure}
 
-Die Farben für verschiedene Daten sind einheitlich über alle `list' Kommandos.
-So sind die Codes die Referenzcodes Projekte und `Task Details' Grün
-bzw. Blau. Dies ist u.a. in den Abbildungen \ref{fig:project-list} und
-\ref{fig:note-list} zu sehen. Notizen werden mit Gelb markiert, etwa auf der
-Abbildung \ref{fig:note-list}. Und Stundenanzahl sowie Wochentage werden mit
-Magenta hervorgehoben, wie zu sehen in Abbildungen \ref{fig:hours-list} und
-\ref{fig:timecard}.
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[scale=0.5]{note-add.png}
-  \caption{Hinzufügen von Notizen auf interaktivem und normalem Wege.}
-  \label{fig:note-add}
-\end{figure}
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[scale=0.5]{note-list.png}
-  \caption{Die Auflistung der Notizen einer gewählten Woche.}
-  \label{fig:note-list}
-\end{figure}
-
-Die Anwendung ist über npm\footnote{Den `Node Package Manager'.} verfügbar: `npm
-install -g oraclett'. Und funktioniert auch problemlos unter Windows.
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[scale=0.5]{hours-add.png}
-  \caption{Loggen von Stunden. Beim Weglassen von Flaggen werden diese interaktiv erfragt.}
-  \label{fig:hours-add}
-\end{figure}
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[scale=0.5]{hours-list-real.png}
-  \caption{Auflistung der festgehaltenen Stunden.}
-  \label{fig:hours-list}
-\end{figure}
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[scale=0.5]{timecard-real.png}
-  \caption{Ein die ganze Woche zusammenfassender Report, welcher in seiner Struktur dafür ausgelegt ist in die Web-Oberfläche des internen Tools übertragen zu werden.}
-  \label{fig:timecard}
-\end{figure}
-
-\chapter{Implementation der Methoden}
-\label{sec:implementation}
-
-Dieses Kapitel dient dazu zu dokumentieren wie die zuvor formulierten Methoden
-angewandt wurden. Die Anwendung dient als ein Beispiel dafür wie die Methoden
-implementiert werden könnten. Es wird ein besonderer Augenmerk auf Probleme
-gelegt welche das anwenden der Methoden erschwerten.
-
-\section{Flaggen anstatt Argumenten}
-
-\methref{flags_over_arguments} wurde implementiert. Die Kommandos zum Hinzufügen
-von Objekten haben zwischen 2-4 Werten die übergeben werden sollen.
+Im normalen Arbeitsalltag würden dann die gearbeiteten Stunden mit
+\codeinline{hour add} festhalten werden.
 
 \begin{code}
   \begin{shellcode}
-\$ oraclett hour add --help
-
-Log working hours.
+$ orcalett hour add --help
+  Log working hours.
 
 USAGE
-  \$ oraclett hour add [-t <value>] [-p <value>] [-d <value>] [-H <value>]
+  $ oraclett hour add [-t <value>] [-p <value>] [-d <value>] [-H
+    <value>]
 
 FLAGS
-  -H, --hour=<value>        The number of hours to log. (1h: 1, 30min: 0.5, etc.)
-  -d, --date=<value>        [default: today] The date for which to log (can be human-readable)
+  -H, --hours=<value>       The number of hours to log. (1h: 1, 30min: 0.5,
+                            etc.)
+  -d, --date=<value>        [default: today] The date for which to log (can be
+                            human-readable)
   -p, --project=<value>     A project code (it it's short version)
   -t, --taskDetail=<value>  The task details (in it's short version, e.g. 01)
 
@@ -1437,33 +1372,117 @@ DESCRIPTION
 
   Passing no arguments will start an interactive session.
 
-  This will add to existing hours, if this command is run twice the hours logged will be doubly.
+  This command will add to existing hours. If run twice the hours will be
+  logged doubly.
 
 EXAMPLES
-  \$ oraclett hour add
-  \$ oraclett hour add -H 3
-  \$ oraclett hour add -H 3 -p INTPD999DXD -t 01
-  \$ oraclett hour add -H 3 -p INTPD999DXD -t 01 --date yesterday
-  \$ oraclett hour add -H 10 -p INTPD999DXD -t 01 -d today --force
+  $ oraclett hour add
+  $ oraclett hour add -H 3
+  $ oraclett hour add -H 3 -p INTPD999DXD -t 01
+  $ oraclett hour add -H 3 -p INTPD999DXD -t 01 --date yesterday
   \end{shellcode}
-  \captionof{listing}{Hilfsmenü von \codeinline{hour add}}
+  \captionof{listing}{Hilfsmenü von von \codeinline{hour add}.}
   \medskip
 \end{code}
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.55]{hours-add.png}
+  \caption{Loggen von Stunden. Beim Weglassen von Flaggen werden die Werte interaktiv erfragt.}
+  \label{lst:hour-add}
+  \label{fig:hours-add}
+\end{figure}
+
+Auch Notizen, dazu woran gearbeitet wurde, können unkompliziert mit
+\codeinline{note add} niedergeschrieben werden.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.5]{note-add.png}
+  \caption{Hinzufügen von Notizen. Beim Weglassen von Flaggen werden die Werte auch hier interaktiv erfragt.}
+  \label{fig:note-add}
+\end{figure}
+
+Zum Abschluss der Arbeitswoche würde mit \codeinline{timecard} ein Report
+erstellt, dessen Daten dann in das interne Oracle System übertragen werden.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.6]{timecard-ideal.png}
+  \caption{Ein die ganze Woche zusammenfassender Report. Die Struktur ist darauf optimiert in die Web-Oberfläche von Oracle übertragen zu werden.}
+  \label{fig:timecard}
+\end{figure}
+
+Zum Verwalten oder Ausbessern der Daten im System gibt es jetzt noch die
+\codeinline{edit} und \codeinline{remove} Subkommandos. Diese stehen falls
+benötigt zur Verfügung, sind aber nicht Teil des normalen Workflows.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.5]{note-remove.png}
+  \caption{Das Löschen einer Notiz}
+  \label{fig:note-remove}
+\end{figure}
+
+Die Farben für verschiedene Daten sind über alle \codeinline{list} Subkommandos
+einheitlich gehalten. So sind die Referenzcode von Projekte und `Task
+Details' Grün bzw. Blau\footnote{Siehe Abbildungen \ref{fig:project-add},
+\ref{fig:project-list}, \ref{fig:note-add}, \ref{fig:timecard},
+\ref{fig:note-list} und \ref{fig:hour-list}.}. Notizen sind in Gelb
+markiert\footnote{Siehe Abbildungen \ref{fig:note-add}, \ref{fig:timecard}
+und \ref{fig:note-list}.} und die Anzahl von Stunden sowie Wochentage werden
+mit Magenta hervorgehoben\footnote{Siehe Abbildungen \ref{fig:hours-add},
+\ref{fig:note-add}, \ref{fig:timecard}, \ref{fig:note-list} und
+\ref{fig:hour-list}.}.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.65]{note-list.png}
+  \caption{Die Auflistung der Notizen einer gewählten Woche.}
+  \label{fig:note-list}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.55]{hour-list.png}
+  \caption{Die Auflistung aller geloggten Stunden für die aktuelle Woche.}
+  \label{fig:hour-list}
+\end{figure}
+
+Die Anwendung ist über npm\footnote{Den `Node Package Manager'.} als
+\href{https://www.npmjs.com/package/oraclett}{Paket verfügbar}: \codeinline{npm
+install -g oraclett}. Und funktioniert auch problemlos unter Windows.
+
+\chapter{Implementation der Methoden}
+\label{sec:implementation}
+
+Die im Kapitel \ref{sec:methods} erarbeiteten Methoden wurden in der, im
+vorherigen Kapitel vorgestellten, `Time tracking` Anwendung implementiert.
+Dieses Kapitel hebt hervor wie die Methoden implementiert werden können und
+welche Probleme ggf. zu beachten sind.
+
+\section{Flaggen anstatt Argumenten}
+\label{sec:impl_flags_over_args}
+
+Wie schon im Hilfsmenü von \codeinline{hour add} zu sehen war (vgl. Listing
+\ref{lst:hour-add}) werden alle Werte als Flaggen erwartet.
+
 Neben dem Wegfallen der Reihenfolge sind die Flaggen auch elementar für das
 Zusammenspiel mit anderen Methoden. Wenn der Nutzer von Defaultwerten Gebrauch
-machen oder fehlende Werte interaktiv ergänzen will, kann die spezifische Flagge
-einfach weg gelassen werden. Mit Argumenten wäre dies nicht so möglich gewesen.
+machen will oder nach fehlenden Werte interaktiv gefragt werden will, kann die
+spezifische Flagge einfach weg gelassen werden. Mit Argumenten wäre dies so
+nicht möglich gewesen.
 
 \section{Unterstützung aller Hilfs- und Versionsflaggen}
 
-Im Bezug auf \methref{support_all_help_version} ist zu sagen das natürlich alle
-gängigen Varianten verwendbar sind.
+Bezüglich \methref{support_all_help_version} wurden alle gängigen Varianten
+unterstützt.
 
-Mit oclif war dies sogar sehr einfach:
+Mit oclif war dies sogar sehr einfach (\codeinline{--help} und
+\codeinline{--version} sind standardmäßig unterstützt):
 \begin{code}
   \begin{javascriptcode}
-...
+..
 "oclif": {
   "additionalHelpFlags": [
     "-h",
@@ -1472,59 +1491,65 @@ Mit oclif war dies sogar sehr einfach:
   "additionalVersionFlags": [
     "-v",
     "-V",
+    "-version"
     "version"
   ],
-  ...
+  ..
   \end{javascriptcode}
-  \captionof{listing}{Konfiguration von Hilfs- und Versionsflaggen für oclif in der \codeinline{package.json}.}
+  \captionof{listing}{Konfiguration von Hilfs- und Versionsflaggen für oclif in der \codeinlinefn{package.json}.}
   \medskip
 \end{code}
 
 \section{Relevante Standardwerte}
 \label{sec:impl_defaults}
 
-% TODO: methbox nochmal hier?
+\methref{relevant_defaults} wurde auf zwei Wegen implementiert. Einmal exakt wie
+vorgesehen und einmal als Weiterführung im Sinne der Methode.
 
-Die \methref{relevant_defaults} wurde auf zwei Wegen implementiert. Einmal als
-exakte Implementation. Und einmal als Weiterführung im Sinne der Methode.
-
+\medskip
+\smallskip
 \begin{code}
   \begin{shellcode}
--d, --date=<value>  [default: this week] A date to specify the week (can be human-readable)
+-d, --date=<value>  [default: this week] A date to specify the week
+                    (can be human-readable)
   \end{shellcode}
-  \captionof{listing}{Die mit default versehene \codeinline{--date} Flagge.}
+  \captionof{listing}{Eine mit Default versehene \codeinline{--date} Flagge.}
   \medskip
 \end{code}
 
-Obiger Auszug aus dem Hilfsmenü von \codeinline{hour list} kommuniziert das die
-\codeinline{--date} Flagge wenn nicht übergeben den Wert \codeinline{this week}
-annimmt. Wird das Subkommando \codeinline{hour list} ohne Flaggen aufgerufen
-werden die Stunden der aktuellen Woche angezeigt. Natürlich kann auch ein
-anderer Zeitraum übergeben werden, die aktuelle Woche wird aber am relevantesten
-für die meisten Nutzer sein.
+Der Überstehende Auszug aus dem Hilfsmenü von \codeinline{hour list}
+kommuniziert das die \codeinline{--date} Flagge, sollte diese nicht übergeben
+werden, den Wert \codeinline{this week} annimmt. Wird das Subkommando
+\codeinline{hour list} ohne Flaggen aufgerufen, werden die Stunden der aktuellen
+Woche angezeigt. Natürlich kann auch ein anderer Zeitraum angegeben werden, aber
+die aktuelle Woche wird für die meisten Nutzer am relevantesten sein.
 
-\medskip
+\bigskip
 
-\begin{figure}
+In manchen Fällen besteht nur eine Auswahlmöglichkeit. Diese wird dann
+automatisch ausgewählt ohne den Nutzer interaktiv danach zu fragen. Natürlich
+muss dieser darüber auch informiert werden. Am Beispiel von \codeinline{hour
+edit} in der Abbildung \ref{fig:hours-edit-defaults} gestaltet sich das wie
+folgt: Der Standardwert für das Datum ist \codeinline{today}. In diesem Falle
+wurden `heute' nur Stunden für eine einzige Projekt-`Task Detail' Kombination
+festgehalten und diese wird deshalb direkt ausgewählt.
+
+\begin{figure}[H]
   \centering
-  \includegraphics[scale=0.5]{hours-edit-defaults.png}
-  \caption{Wenn nur eine Option zur Verfügung steht wird diese automatisch verwendet.}
+  \includegraphics[scale=0.6]{hours-edit-defaults.png}
+  \caption{Wenn nur eine Option zur Auswahl steht wird diese automatisch verwendet.}
   \label{fig:hours-edit-defaults}
 \end{figure}
 
-Wenn nur eine Option besteht wird diese automatisch gewählt und der Nutzer
-darüber informiert. Am Beispiel von \codeinline{hour edit} in der Abbildung
-\ref{fig:hours-edit-defaults} sieht das wie folgt aus. Der Standardwert für
-das Datum ist \codeinline{today}. Wenn heute nur Stunden für eine einzige
-Projekt-Task Detail Kombination festgehalten wurden ist dieses gemeint. Und
-am gewählten Tag keine Stunden oder Notizen festgehalten wurden, wird in den
-Wochenmodus gewechselt. Dieser erlaubt, wie auch in Abb. \ref{fig:day-week-mode}
-zu sehen, das Auswählen eines Wochentages für etwas im System vorliegt.
+Und wenn am gewählten Tag keine Stunden (oder Notizen) festgehalten wurden,
+wird in den Wochenmodus gewechselt. Dieser erlaubt, wie auch in Abb.
+\ref{fig:day-week-mode} zu sehen, das Auswählen eines Wochentages für den
+Stunden vorhanden sind.
 
-\begin{figure}
+\begin{figure}[H]
   \centering
-  \includegraphics[scale=0.5]{day-week-mode.png}
-  \caption{Wechsel vom Tagesmodus, in den Wochenmodus welcher aus Wochentagen mit vorliegenden Daten auswählen lässt.}
+  \includegraphics[scale=0.6]{day-week-mode.png}
+  \caption{Wechseln vom Tagesmodus in den Wochenmodus, welcher aus Wochentagen mit vorliegenden Daten auswählen lässt.}
   \label{fig:day-week-mode}
 \end{figure}
 
@@ -1536,37 +1561,47 @@ Bank (keinem kommerziellen Projekt zugeordnet).
 
 \section{Interaktives Nachfragen bei fehlendem Parameter}
 
-Wie schon in Abbildung \ref{fig:hours-add} zu sehen wurde die
-\methref{interactive_missing_param} konsequent implementiert. So ist in der
-Abbildung zu sehen wie die fehlenden Stunden- und Datumsangaben erfragt werden.
+Wie schon in Abbildung \ref{fig:hours-add} und \ref{fig:note-add} zu
+sehen, wurde \methref{interactive_missing_param} konsequent umgesetzt.
+So werden, wie auf den Abbildungen zu sehen, die fehlenden Angaben
+erfragt. Wie schon angesprochen ist das so aber nur im Zusammenspiel mit
+\methref{flags_over_arguments} (vgl. Kap. \ref{sec:impl_flags_over_args})
+möglich.
 
-% TODO: besonders das auswähle aus der Liste hervorheben
+Es wurde insbesondere vom Auswählen aus einer Liste von Werten Gebrauch gemacht
+(wie in Abb. \ref{fig:hours-add} zu sehen), da es sehr intuitiv ist.
 
 \section{Natürliche Sprache}
 \label{sec:sol-natural-lang}
 
-Die \methref{human_language} wurde primär durch die Eingabe von Daten in
-natürlicher Sprache implementiert. So kann anstatt starrer Formate wie
-\codeinline{MM/DD/YY} einfach \codeinline{Monday} geschrieben werden wenn
-der Montag dieser Woche gemeint ist.
+% TODO: write impl wit libraby (Keine Empfehlung)
+
+Die \methref{human_language} wurde primär durch das Verarbeiten von
+Datumsangaben in natürlicher Sprache implementiert. So kann anstatt starrer
+Formate wie \codeinline{MM/DD/YY} einfach \codeinline{Monday} geschrieben
+werden, wenn der Montag dieser Woche gemeint ist.
 
 \begin{code}
-  \medskip
-  \captionof{listing}{Unterstützte Varianten der Datumsangabe.}
   \begin{shellcode}
-  mon, last monday, monday two weeks ago, today, yesterday, tomorrow, aug 15
+  mon, last monday, monday two weeks ago, today, yesterday, tomorrow, aug 14
   \end{shellcode}
+  \captionof{listing}{Unterstützte Varianten der Datumsangabe.}
+  \medskip
 \end{code}
 
-Eingaben wie \codeinline{Monday} oder \codeinline{yesterday} sind
-keine absoluten Datumsangaben, sondern steht immer im Kontext dazu wann der
-Befehl ausgeführt wird. Da aber der Fokus der Anwendung auf der aktuellen und
-vergangenen Woche liegt besteht darin kein Problem (vgl. gewählte Standardwerte
-beschrieben in Kap. \ref{sec:impl_defaults}). In der Evaluation zeigten sich die
-Nutzer auch zufrieden damit auf diesem Wege Zeitpunkte zu beschreiben. Absolute
-Datumsangaben werden aber natürlich auch unterstützt.
+Eingaben wie \codeinline{Monday} oder \codeinline{yesterday} sind keine
+absoluten Datumsangaben, sondern steht immer im Kontext dazu wann der Befehl
+ausgeführt wird. Da aber der Fokus der Anwendung auf der aktuellen bzw. der
+vergangenen Woche liegt besteht darin kein Problem. In der Evaluation zeigten
+sich die Nutzer zufrieden damit auf diesem Wege Daten zu beschreiben. Absolute
+Datumsangaben werden aber natürlich auch unterstützt. Umgesetzt wurde das
+Ganze mit der Library \href{https://sugarjs.com/dates/}{sugar.js} (keine
+Empfehlung\footnote{Keine Updates seit 4 Jahren. Auch sind im späteren Teil des
+Bauens ein paar `Edgecase' Fehler aufgefallen.}).
 
-Auch sollten Synonyme für Subkommandos ``erkannt'' werden. Gedacht war das
+\bigskip
+
+Auch sollten Synonyme für Subkommandos ``erkannt'' werden. Angedacht war das
 Einrichten von alternativen Namen bzw. Aliasen. So sollten Subkommandos
 wie \codeinline{hour} auch als \codeinline{hours} erkannt werden. Oder
 \codeinline{remove} als \codeinline{delete}, etc. Leider wurde dies von oclif
@@ -1575,8 +1610,6 @@ einem Alias versehen werden. Auch Kommandos haben diese Option, dabei würde abe
 folgendes heraus kommen:
 
 \begin{code}
-  \medskip
-  \captionof{listing}{Auszug aus dem Hilfsmenü von \codeinline{hour}. Subkommandos \codeinline{add} und \codeinline{log} teilen die gleiche Beschreibung.}
   \begin{minted}[
     linenos,
     numbersep=6pt,
@@ -1592,85 +1625,90 @@ folgendes heraus kommen:
   hour log     Log working hours.
   hour remove  Remove logged hours interactively.
   \end{minted}
+  \captionof{listing}{Auszug aus dem Hilfsmenü von \codeinlinefn{hour}. Subkommandos \codeinlinefn{add} und \codeinlinefn{log} teilen die gleiche Beschreibung.}
+  \medskip
 \end{code}
 
 Kommandos die als Alias markiert sind tauchen immer in den Hilfsseiten auf.
-Dadurch wird die Liste weniger übersichtlich. Und der Nutzer weiß nicht was
-der Unterschied ist. Es gibt aber von oclif keinen Wege diese zu verstecken.
-Wessenwegen sich gegen diese potenziell Frustrationssparenden Aliase entschieden
-wurde.
+Dadurch wird die Liste weniger übersichtlich und hilfreich. Der Nutzer weiß
+nicht was der Unterschied ist. Es gibt aber von oclif aus keinen Weg diese zu
+verstecken. Weshalb sich gegen diese potenziell frustrationssparenden Aliase
+entschieden wurde.
 
 \section{Fehlerkorrektur}
 
-\begin{figure}
+\begin{figure}[H]
   \centering
-  \includegraphics[scale=0.5]{did-you-mean.png}
+  \includegraphics[scale=0.6]{did-you-mean.png}
   \caption{Beispiel der `Meintest du ..' Fehlerkorrektur.}
   \label{fig:did-you-mean}
 \end{figure}
 
-Um bei Tippfehler dem Nutzer aber trotzdem einen schnellen Weg zum ausführen des
-richtigen Befehls zu geben wurde im Bezug auf \methref{typos} eine suggestive
-Fehlerkorrektur eingebaut (siehe Abbildung \ref{fig:did-you-mean}.) Diese kommt
-mitgeliefert als Plugin für oclif.
+Um dem Nutzer bei Tippfehler trotzdem einen schnellen Weg zum
+Ausführen des richtigen Befehls zu geben, wurde im Bezug auf
+\methref{typos} eine suggestive Fehlerkorrektur eingebaut (siehe
+Abb. \ref{fig:did-you-mean}.) Diese kommt mitgeliefert als
+\href{https://www.npmjs.com/package/@oclif/plugin-not-found}{Plugin} für oclif.
 
-Synonyme wie die in Kap. \ref{sec:sol-natural-lang} genannten \codeinline{hour}
-$\leftrightarrow$ \codeinline{hours} die sich sehr ähnlich sind können
-durch auch die Fehlerkorrektur verbessert werden (siehe Abbildung
-\ref{fig:did-you-mean}.) Weiter entfernte wie \codeinline{remove}
+\bigskip
+
+Synonyme wie die im letzten Kapitel (\ref{sec:sol-natural-lang}) besprochenen
+\codeinline{hour} $\leftrightarrow$ \codeinline{hours} die sich sehr ähnlich
+sind können durch auch die Fehlerkorrektur verbessert werden (siehe Abb.
+\ref{fig:did-you-mean}.) Weiter entfernte Synonyme wie \codeinline{remove}
 $\leftrightarrow$ \codeinline{delete} funktionieren leider nicht. Da dem System
 wahrscheinlich auch keine Synonymdatenbank unterliegt.
 
 \section{Autovervollständigung}
 \label{sec:impl-autocomplete}
 
-Die \methref{autocomplete} und die damit verbundene Autovervollständigung ist
-technisch gesehen implementiert, praktisch ist diese aber nicht nutzbar.
+Die \methref{autocomplete} und die damit verbundene Autovervollständigung sind
+technisch gesehen implementiert, praktisch aber nicht nutzbar:
 
-\begin{figure}
+\begin{figure}[H]
   \centering
-  \includegraphics[scale=0.5]{apps-autocomplete.png}
+  \includegraphics[scale=0.42]{apps-autocomplete.png}
   \caption{Problematisches Autovervollständigungsmenü der App}
   \label{fig:apps-autocomplete}
 \end{figure}
 
-Wie auf der Abbildung \ref{fig:apps-autocomplete} zu sehen ist bestehen einige
-Probleme. Am offensichtlichsten sind die Doppelpunkte (`:`) zum Trennen
-der Kommandos anstatt von Leerzeichen. Dies ist eine Konvention welche
-so durch oclif vorgegeben wir (obwohl Leerzeichen viel weiter verbreitet
-sind.) In der letzten Zeile wird als Beschreibung etwas von ``If a day is
-specified [..]'' geschrieben. Es wurde nicht die Zusammenfassung verwendet
-sondern ein Schnipsel aus dem Hilfsmenü. Welcher an dieser Stelle nur
-verwirrend für den Nutzer ist. Und zu letzt wird in der Beschreibung der
-ersten Zeile der Beginn des Satzes nicht großgeschrieben und in der zweiten
-Zeile wird der Template String nicht evaluiert. Alle dieser Dinge sind nicht
-konfigurierbar. Für eine ordentliche Vervollständigung müsste diese also
-selbst gebaut werden. oclif erschwert dies aber für andere Libraries wie
+Wie auf der Abbildung \ref{fig:apps-autocomplete} zu sehen ist existieren
+einige Probleme. Am offensichtlichsten sind die Doppelpunkte (`:') zum Trennen
+der Subkommandos anstatt von Leerzeichen. Das ist eine von oclif vorgegebene
+Konvention und obwohl der Rest der Anwendung Leerzeichen nutzt (die auch
+viel weiter verbreitet sind), sind die Doppelpunkte an dieser Stelle nicht
+konfigurierbar. In der letzten Zeile wird als Beschreibung etwas von ``If a
+day is specified [..]'' geschrieben. Es wurde unerklärlicherweise nicht die
+Zusammenfassung verwendet sondern ein Schnipsel aus dem Hilfsmenü. Welcher
+an dieser Stelle nur verwirrend für den Nutzer ist. Und zuletzt wird in der
+Beschreibung der ersten Zeile der Beginn des Satzes nicht großgeschrieben und
+in der zweiten Zeile der Template String nicht evaluiert. Alle dieser Dinge
+sind nicht konfigurierbar. Für eine ordentliche Vervollständigung müsste diese
+also selbst gebaut werden. oclif erschwert dies aber für externe Libraries wie
 \href{https://github.com/f/omelette/issues/52}{omelette}. Und die Completion
-Dateien selbst in Shell zu schreiben, ohne den Zugriff auf die Quelldateien
+Dateien selbst in Shell zu schreiben, ohne den Zugriff auf die Quellcode Dateien
 welche die Struktur und Inhalte vorgeben, wäre sehr fehleranfällig.
 
 Die geringe Qualität dieser Autovervollständigung war beim initialen Testen
 des Frameworks und dem Lesen der Dokumentation noch nicht ersichtlich.
 Und nach der Implementation war es zu spät zu einem anderen Framework zu
-wechseln\footnote{Mögliche Alternativen wurden im Kapitel zu oclif aufgeführt
-(\ref{sec:oclif}.)}, bei welchem möglicherweise eine bessere Autocompletion
-möglich gewesen wäre.
+wechseln\footnote{Mögliche Alternativen wurden im Kapitel \ref{sec:oclif}
+aufgeführt.}, bei welchem möglicherweise eine bessere Autocompletion möglich
+gewesen wäre.
 
-Um Verwirrung bei den Endnutzer zu Vermeiden wurde die Funktionalität wieder aus
-der App entfernt. Es ist leider enttäuschend von dieser Methode keinen Gebrauch
-machen zu können.
+Um Verwirrung bei den Endnutzern zu vermeiden wurde die Funktionalität wieder aus
+der App entfernt.
 
 \section{Menü-basiertes Interface}
 \label{sec:impl-menu}
 
-Bei der \methref{menu} zum Menü wurde sich gegen eine Implementierung
-entschieden. Die Anforderungen hätten aber durchaus als Menü abgebildet werden
-können. Das Interface wäre aber von dem Kommandozeilen-Interface gänzlich
-abgetrennt. Die Implementation und eine über beide Interfaces hinweg eine
-konsistente Nutzungserfahrung zu gewährleisten würde einen, im Vergleich zum
-Rest der App, unverhältnismäßigen Programmieraufwand mit sich bringen. Weshalb
-sich aufgrund des zeitlichen Rahmens dagegen entschieden wurde.
+Bei \methref{menu} wurde sich aufgrund des zeitlichen Rahmens gegen
+eine Implementierung entschieden. Das Interface wäre von dem primären
+Kommandozeilen-Interface gänzlich abgetrennt. Die Implementation und das
+gewährleisten einer einheitlichen Nutzungserfahrung die über beide Interfaces
+hinweg würde einen, im Vergleich zum Rest der App, unverhältnismäßigen Aufwand
+mit sich bringen. Die Anforderungen hätten aber durchaus als Menü abgebildet
+werden können.
 
 \section{Relevante Kommandovorschläge}
 
@@ -1678,24 +1716,26 @@ sich aufgrund des zeitlichen Rahmens dagegen entschieden wurde.
 auch in der Erklärung wiedergegeben spricht \textcite{dutta} diese Empfehlung in
 Hinsicht auf CLI Apps mit sehr vielen (Sub-) Kommandos aus. Die implementierte
 Anwendung umfasst nur eine sehr limitierte Anzahl von Subkommandos. Aufgrund
-dieser bereits gegebenen Übersichtlichkeit wurde sich gegen direkte Vorschläge
-entschieden.
+dieser bereits gegebenen Übersichtlichkeit wurde sich gegen die direkten
+Vorschläge entschieden.
 
-In Fehlermeldungen wurde der Geiste der Methode aber angewandt. So verweist ein fehlendes Projekt etwa auf das Hinzufügen und Auflisten von Projekten hin (vgl. Abb. \ref{fig:recommendation-invalid-project}.)
+In den Fehlermeldungen wurde der Geiste der Methode aber angewandt. So verweist
+ein fehlendes Projekt etwa auf das Hinzufügen und Auflisten von Projekten hin
+(siehe nachstehende Abbildung.)
 
-\begin{figure}
+\begin{figure}[H]
   \centering
   \includegraphics[scale=0.5]{recommendation-invalid-project.png}
-  \caption{Vorschläge zum Hinzufügen und Auflisten von Projekten bei Angabe eines Invalides Projektnamens.}
+  \caption{Vorschläge zum Hinzufügen und Auflisten von Projekten bei Angabe eines invalides Projektnamens.}
   \label{fig:recommendation-invalid-project}
 \end{figure}
 
 \chapter{Evaluation}
 \label{sec:evaluation}
 
-Im Rahmen der Studie bezieht GUI App oder das GUI immer auf die Oracle Webapp.
-Gleichermaßen ist mit CLI App oder dem CLI immer die im Rahmen der Arbeit
-gebaute `oraclett' Anwendung gemeint.
+Im Rahmen der Studie beziehen sich GUI oder GUI App immer auf die Oracle Webapp.
+Gleichermaßen steht es um CLI oder CLI App, mit welchem immer die im Rahmen der
+Arbeit gebaute \codeinline{oraclett} Anwendung gemeint.
 
 \section{Design der Studie}
 
@@ -1712,47 +1752,44 @@ es die Usability und Performance des CLI zu vergleichen galt.
 
 \subsection{Rahmenbedingungen}
 
-Die Teilnehmer der Studie waren ebenso wie der Author Mitarbeiter bei der
-Firma Endava. Dies war Voraussetzung um die Zugriffsrechte für die Nutzung der
-interne Platform, mit welcher verglichen werden sollte, zu gewährleisten. Die
-Teilnehmer waren mehr oder weniger mit dem zum Vergleich stehenden Webseite
-vertraut. Und hatten diese schon für die zu testenden Tätigkeiten verwendet. Das
-Verständnis der Anwendungsdomäne der Apps war gegeben. Alle Teilnehmer waren
-Software Entwickler oder Entwicklungsnah. Expertise mit der Kommandozeile war
-zwischen ``wird nur benutzt wenn es nicht anders geht'' und ``wird regelmäßig
-verwendet''.
-
-Insgesamt wurden 6 Personen getestet. Laut \cite[11]{Spolsky_2001} ist ``[..]
-five or six users [..] all you need.''. Durchgeführt wurde dieser via Videoanruf
-mit geteiltem Bildschirm.
-
-Die Teilnehmer arbeiteten das erste Mal mit der CLI App. Um Erlernbarkeit
-zu testen und trotzdem vergleichbare Performancemetriken zu erhalten wurde
-den Teilnehmer eine Einführung in die Anwendung gegeben. In welcher alle
-Funktionalität gezeigt und beschrieben wurde. Inklusive dem Auffinden von Hilfe
-und Shell Basics wie \codeinline{CTRL+c} zum unterbrechen von interaktiver
-Eingabe und Anführungszeichen um gruppieren von Text (\codeinline{-d "next
-monday"} $\leftrightarrow$ \codeinline{-d next monday}, letzteres führt zu einem
-Fehler.) Alles um zu gewährleisten das der Teilnehmer ohne das Eingreifen des
-Testleiters die gegebene Aufgabe lösen kann.
+Die Teilnehmer der Studie waren alle Mitarbeiter der Firma Endava. Dies
+war eine Voraussetzung um die Zugriffsrechte für die Nutzung der internen
+Oracle Platform, mit welcher verglichen werden sollte, zu gewährleisten.
+Die Teilnehmer waren mehr oder weniger mit dem zum Vergleich stehenden GUI
+System vertraut\footnote{Von mehreren Jahren bei Endava bis zu wenigen
+Wochen.}. Und hatten dieses schon für die zu testenden Tätigkeiten verwendet.
+Das Verständnis der Anwendungsdomäne der Apps war also gegeben. Alle
+Teilnehmer waren Software Entwickler oder Entwicklungsnah. Expertise mit der
+Kommandozeile war zwischen ``wird nur benutzt wenn es nicht anders geht'' und
+``wird regelmäßig verwendet''. Insgesamt wurden 6 Personen getestet. Laut
+\textcite[11]{Spolsky_2001} ist ``[..] five or six users [..] all you need.''.
+Durchgeführt wurde der Test via Videoanruf mit geteiltem Bildschirm. Die
+Teilnehmer arbeiteten das erste Mal mit der CLI App. Um Erlernbarkeit zu testen
+und trotzdem vergleichbare Performancemetriken zu erhalten wurde den Teilnehmern
+eine Einführung in die Anwendung gegeben. In welcher alle Funktionalität gezeigt
+und beschrieben wurde. Inklusive einem `Refresher' zum Auffinden von Hilfe
+und Shell Basics wie \codeinline{CTRL+c}\footnote{Unterbricht die interaktive
+Eingabe.} und Anführungszeichen um gruppieren von Text\footnote{Text mit
+Leerzeichen muss in der Shell gruppiert werden: \codeinlinefn{-d "next monday"}
+$\leftrightarrow$ \codeinlinefn{-d next monday}. Der zweite Aufruf führt zu
+einem Fehler, weil die App denkt \codeinlinefn{monday} wäre als Argument
+übergegen.}. Alles um zu gewährleisten das die Teilnehmer, ohne das Eingreifen
+des Testleiters, die gegebenen Aufgaben lösen können.
 
 \subsection{Aufgabenstellungen}
 \label{aufgaben}
 
-Es sollten die selben Aufgaben in beiden System erledigt werden. Um die beiden
-Apps vergleichbar zu machen wurde die Schnittmenge der Funktionalitäten
-genommen. Also nur solche die von beiden angeboten wird. Die zu testende
-Funktionalität wurde also das Verwalten von Stunden und Notizen beschränkt.
+Es sollten die gleichen Aufgaben in beiden System erledigt werden. Um die beiden
+Apps vergleichbar zu machen, wurde nur die Schnittmenge der Funktionalitäten
+beim Erstellen der Aufgaben berücksichtigt. Die zu testende Funktionalität
+wurde dementsprechend auf das Verwalten von Stunden und Notizen beschränkt. In
+Hinsicht auf die Erlernbarkeit wurde auf Anraten von Prof. Israel eine Menge von
+20 Aufgaben gewählt.
 
-% TODO: Erlernbarkeit
-Auf Anratens von Prof. Israel wurde deshalb eine
-Menge von 20 Aufgaben gewählt.
-
-Die Studie wurde auf Englisch durchgeführt. Deshalb sind die Aufgaben hier
-auch im originalen Wortlaut wiedergegeben. Der Einfachheit halber wurden die
-Projekt/Task Detail angaben hier weggelassen. Diese sahen in etwa so aus:
-`(INTET999DXD - Germany DU Bench Time / 01 - Bench)' und bezeichneten welche
-Projekt/Task Detail genau gemeint war.
+Die Studie wurde auf Englisch durchgeführt. Um die sprachlichen Feinheiten nicht
+zu vertuschen, wurden die Aufgaben hier im originalen Wortlaut wiedergegeben.
+Die Teilnehmer hatten zu jeder Aufgabe auch noch Informationen dazu, auf welche
+Projekte-`Task-Details' Kombination die Aufgabe Bezug nimmt.
 
 \begin{enumerate}
   \item Add 8 hours for today on the Bench.
@@ -1777,40 +1814,40 @@ Projekt/Task Detail genau gemeint war.
   \item Show and tell Jonathan how many hours you logged for the Bench next week.
 \end{enumerate}
 
-Das Hinzufügen zum System spielt die Hauptrolle. In der echten Verwendung wäre
-das \codeinline{add} Subkommando auch das meist verwendete.
+Die Häufigkeit der einzelnen Subkommandos basiert darauf wie häufig diese circa
+in realer Nutzung auch auftreten würden.
 
+Die Auflistung nach Häufigkeit:
 \label{text:anzahl-aufgaben}
-Die Anzahl von Aufgaben welche pro Subkommando erledigt werden:
 \begin{itemize}
-  \item 8: \codeinline{hour add}
-  \item 3: \codeinline{note add}
-  \item 3: \codeinline{hour edit}
-  \item 2: \codeinline{hour remove}
-  \item 2: \codeinline{hour list}
-  \item 1: \codeinline{note edit}
-  \item 1: \codeinline{note remove}
+  \item 8x: \codeinline{hour add}
+  \item 3x: \codeinline{note add}
+  \item 3x: \codeinline{hour edit}
+  \item 2x: \codeinline{hour remove}
+  \item 2x: \codeinline{hour list}
+  \item 1x: \codeinline{note edit}
+  \item 1x: \codeinline{note remove}
 \end{itemize}
 
 Um das Spielfeld etwas zu ebnen, wurde nicht immer der gleiche Wortlaut für
-Verben wie `remove' verwendet. Sondern auch das synonyme `delete'. Die CLI
-App verwendet aber das Verb \codeinline{remove} als Subkommando. Und dies
-führte, u.a. durch Verwendung von `delete', dazu das Teilnehmer versuchten etwa
-\codeinline{hour delete} zu nutzen. Andere Beispiele für diese Synonyme sind
-`describe' $\leftrightarrow$ `add', `change` $\leftrightarrow$ `edit' und `log'
-$\leftrightarrow$ `add'. Die Sätze meinen immer noch dasselbe, fordern die
-Teilnehmer bei der Verwendung des CLI aber etwas mehr heraus.
+Verben wie `remove' verwendet. Sondern auch das synonyme `delete'. Die CLI App
+verwendet aber das Verb \codeinline{remove} als Subkommando. Und dies führte
+dazu das Teilnehmer u.a. versuchten \codeinline{hour delete} zu nutzen. Andere
+Beispiele für diese Synonyme sind `describe' $\leftrightarrow$ `add', `change`
+$\leftrightarrow$ `edit' und `log' $\leftrightarrow$ `add'. Die Sätze meinen
+immer noch dasselbe, fordern die Teilnehmer bei der Verwendung des CLI aber
+etwas mehr heraus.
 
 Aufgrund der unterschiedlichen Einschränkungen der beiden User Interfaces waren
 manche Aufgaben mit dem einen oder anderen theoretisch einfacher zu erledigen.
 In der Auswertung wird auf diese Effekte bei spezifischen Aufgaben genauer
 eingegangen.
 
-\subsection{Erhobene Daten}
+\subsection{Zu erhebende Daten}
 
 \subsubsection{Performance}
 
-Um die Performance zu messen wurde aufgezeichnet wie lange ein Benutzer benötigt
+Um die Performance zu messen wurde festgehalten wie lange ein Benutzer benötigt
 um eine gegebene Aufgabe zu erfüllen. Dazu wurden die Sitzungen aufgezeichnet
 und danach mit Zeitmarken versehen. Der Zeitstempel zum Start wurde nach dem
 Lesen der Aufgabe (bei erster Interaktion mit dem Interface) gesetzt und der
@@ -1818,12 +1855,12 @@ Zeitstempel zum Ende nach Erfüllung der Aufgabe.
 
 \subsubsection{Attraktivität}
 
-Um eine subjektive Bewertung der Interfaces zu erhalten wurde eine
+Um eine subjektive Bewertung des Interfaces zu erhalten wurde eine
 Attraktivitätsumfrage nach \textcite{attrakdiff} durchgeführt. Es wurde nach
 dem Durcharbeiten der Aufgaben für ein Interface eine Einschätzung über
-dessen Attraktivität erfragt. Wie auf Abbildung \ref{fig:survey-values}
+dessen Attraktivität eingeholt. Wie auf Abbildung \ref{fig:survey-values}
 zu sehen bewerteten die Teilnehmer dabei das Interface bezüglich mehrerer
-gegenüberliegender Adjektive.
+entgegengesetzter Adjektivpaare.
 
 \begin{figure}[H]
   \centering
@@ -1837,20 +1874,18 @@ gegenüberliegender Adjektive.
 Nach einer generellen Einführung und Installation der App auf der Maschine des
 Teilnehmers begann der Teilnehmer entweder mit der GUI Webapp oder der CLI
 Applikation. 50\% der Teilnehmer begannen mit der einen, die andere Hälfte mit
-der anderen. Vor der Verwendung der CLI App gab es eine Einführung, welche
-dazu diente den Teilnehmer mit dem System und dessen Möglichkeiten vertraut
-zu machen. Als Ausgleich dafür das die Teilnehmer alle schon mit der GUI
-Anwendung vertraut waren. Mit dem Hinweis darauf, dass der Versuchsleiter keine
-Hilfestellung leisten würde, ging es mit der Bearbeitung der Aufgaben los.
-Die Checkliste der Aufgaben waren eine nach der anderen zu bewältigen. Nach
-Erledigung der Aufgaben für ein Interface folgte die Attraktivitätsumfrage,
-gefolgt von der Bearbeitung derselben Aufgaben für das anderen Interface, sowie
-erneuter Umfrage.
+der anderen. Vor der Verwendung der CLI App gab es die erläuterte Einführung.
+Mit dem Hinweis darauf, dass der Versuchsleiter keine Hilfestellung leisten
+würde, ging es mit der Bearbeitung der Aufgaben los. Die Checkliste der Aufgaben
+waren eine nach der anderen zu bewältigen. Nach Erledigung der Aufgaben für
+ein Interface folgte die Attraktivitätsumfrage, gefolgt von der Bearbeitung
+derselben Aufgaben für das anderen Interface, sowie erneuter Umfrage.
 
 \section{Hypothesen}
 
 \newcounter{hypo}
 \newcommand{\hypodef}[1]{
+  \medskip
   \medskip
   \fbox{\parbox{\linewidth}{
     \refstepcounter{hypo}
@@ -1865,32 +1900,32 @@ erneuter Umfrage.
   }}
 }
 
-Mit den erhobenen Daten sollte auf folgende Hypothesen eingegangen werden:
+Mit den erhobenen Daten sollten folgende Hypothesen adressiert werden:
 
 \hypodef{Das CLI hat im Durchschnitt eine ähnliche Performance wie das GUI.}
-
+\\
 Die \hyperref[sec:cli-problems]{Probleme der Kommandozeile} werden dazu führen
 das Performance eingebüßt wird. Diese Probleme zu mitigieren und minimieren war
 aber Zweck der Methoden. Weshalb unter Anwendung der Methoden zumindest eine
-ähnliche Performance wie die einer grafischen Anwendung erwartet wurde.
+ähnliche Performance wie die einer grafischen Anwendung erwartet wird.
 
 Nun waren die Nutzer schon mehr mit der GUI App vertraut. Gleiche Performance
-bei ungleichen Startbedingungen würde sogar auf einen Performanceüberschuss bei
-gleichen Bedingungen hindeuten (i.e. wenn die Teilnehmer mit beiden Anwendungen
-gleich vertraut sind.)
+bei ungleichen Startbedingungen würde sogar auf einen Performanceüberschuss
+bei gleichen Startbedingungen hindeuten (i.e. wenn die Teilnehmer mit beiden
+Anwendungen gleich vertraut sind.)
 
 \hypodef{Die Performance des CLI verbessert sich im Verlaufe der Aufgaben.}
-
+\\
 Von einer erlernbaren Anwendung wäre zu erwarten das sich deren Performance
 steigert wenn man den Teilnehmer genug Zeit gibt diese zu erlernen.
 
-Zu betrachten wäre die Performance ähnlicher Aufgabestellungen.
+Zu betrachten ist die Performance ähnlicher Aufgabestellungen.
 
 \hypodef{Das CLI wird dem GUI subjektiv vorgezogen.}
-
-Bei \textcite{Westerman_1997} wurde das CLI bei Wahl des Interface deutlich weniger
-gewählt. Die Bevorzugung des CLI gegenüber dem GUI unter den Teilnehmern würde
-also den Effekt der Methoden auf die Usability aufzeigen.
+\\
+Bei \textcite{Westerman_1997} wurde das CLI bei freier Wahl des Interface
+deutlich weniger gewählt. Die Bevorzugung des CLI gegenüber dem GUI unter den
+Teilnehmern würde also den Effekt der Methoden auf die Usability aufzeigen.
 
 \section{Auswertung}
 \label{sec:auswertung}
@@ -1921,35 +1956,37 @@ schwer zu lösen waren.
   \label{fig:performance-diff}
 \end{figure}
 
-Auch die Performance Differenz zwischen zwischen den beiden Anwendungen (vgl.
-Abbildung \ref{fig:performance-diff}) schwankt. Was seine Gründe darin hat das
-ein Interface die Aufgabe effizienter erledigen kann. Für das Kommandozeilen
-Interface spielt noch mit hinein das bei neuen Aufgabenstellungen (solche die
-ein neues Subkommando oder eine neue Flagge erfordern) dem Nutzer nicht klar
-ist wie vorzugehen ist. Und dort Zeit für das Lesen von Hilfsmenüs aufgewendet
-werden muss. Was aber in der Natur des CLI liegt.
+Auch die Performance Differenz zwischen den beiden Anwendungen schwankt
+(vgl. Abbildung \ref{fig:performance-diff}.) Was seine Gründe darin hat das
+die Aufgabe durch ein Interface effizienter erledigt werden konnte. Für das
+Kommandozeilen Interface spielt noch mit hinein das bei neuen Aufgabenstellungen
+(solche die ein neues Subkommando oder eine neue Flagge erfordern) dem Nutzer
+nicht klar ist, wie vorzugehen ist. Und dort Zeit für das Lesen von Hilfsmenüs
+aufgewendet werden muss. Was aber in der Natur des CLI liegt.
 
-Das Nachschauen im Hilfsmenü beispielsweise auch wie das CLI bei der zweiten
-Aufgabe die dreifache Zeit zur Erfüllung brauchte. Es stellte die erste
-Verwendung von \codeinline{note add} dar. Hinzu kommt, dass da Hinzufügen von
-Notizen im GUI relativ unkompliziert ist. Verglichen mit der zweiten Verwendung
-in Aufgabe 8 bleibt die Performance des GUI fast gleich während das CLI zulegt
-(etwa $30\%$\footnote{Im Vergleich zur GUI Performance. Von $225\%$ schneller
-Erledigung zu $160\%$.} schneller als zuvor.)
+Das Nachschauen im Hilfsmenü ist einer der Faktoren weshalb das CLI
+beispielsweise bei der zweiten Aufgabe die dreifache Zeit zur Erfüllung
+brauchte. Es stellte die erste Verwendung von \codeinline{note add} dar. Hinzu
+kommt, dass das Hinzufügen von Notizen im GUI relativ unkompliziert ist.
+Verglichen mit der zweiten Verwendung in Aufgabe 8 bleibt die Performance des
+GUI fast gleich während das CLI zulegt (etwa $30\%$\footnote{Im Vergleich zur
+GUI Performance. Von $225\%$ schneller Erledigung zu $160\%$.} schneller als
+zuvor.)
 
-Ebenso sind auch die Ergebnisse von Aufgabe 19 und 20 zu erklären. Das erste
-bzw. zweite Mal das \codeinline{hour list} verwendet wurde. Von $355\%$
+Ebenso sind auch die Differenzen der Aufgaben 19 und 20 zu erklären. Das
+erste bzw. zweite Mal das \codeinline{hour list} verwendet wurde. Von $355\%$
 schnellerer GUI Performance zum gleichauf sein in der nächsten Aufgabe.
 
-Die extremste Differenz ist bei Aufgabe 12 entstanden. Bei den Aufgaben 11
-und 12 werden vier Stunden für dasselbe Projekt auf verschieden Task Details
-festgehalten. Im GUI bleibt der Aufwand fast gleich während er sich für
-das CLI halbiert und im Vergleich zum GUI zu $500\%$ schneller Performance
-führt. Bei optimaler Verwendendung kann im Kommandozeilen-Interface der
-gleiche Befehl\footnote{Der optimale Befehl ist: \codeinlinefn{hour add -H 4 -d
-today -p INTDS999DXD} und es wird nur das richtige Task Detail aus der Liste
-ausgewählt. Alternativ wäre auch das Spezifizieren von \codeinlinefn{-t 08} bzw.
-\codeinlinefn{-t 12} ähnlich schnell.} für beide Aufgaben wiederverwendet werden.
+Die extremste Differenz ist bei Aufgabe 12 entstanden. Bei den Aufgaben 11 und
+12 werden vier Stunden für dasselbe Projekt auf verschieden `Task Details'
+festgehalten. Im GUI bleibt der Aufwand fast gleich während er sich für das
+CLI halbiert und im Vergleich zum GUI zu $500\%$ schneller Performance führt.
+Bei optimaler Verwendendung kann im Kommandozeilen-Interface der gleiche
+Befehl für beide Aufgaben wiederverwendet werden \footnote{Der optimale Befehl
+ist: \codeinlinefn{hour add -H 4 -d today -p INTDS999DXD} und es wird nur
+das richtige Task Detail aus der Liste ausgewählt. Alternativ wäre auch das
+Spezifizieren von \codeinlinefn{-t 08} bzw. \codeinlinefn{-t 12} ähnlich
+schnell.}.
 
 Aufgabe 16 stellt den letzten der Extremfälle dar und ist das einzige Auftritt
 des \codeinline{edit} Subkommandos\footnote{Wie in Kap. \ref{text:noun-verb}
@@ -1988,8 +2025,8 @@ die Substantive \codeinlinefn{project}, \codeinlinefn{hour} und
   \end{minipage}
 \end{figure}
 
-Wie in Abbildung \ref{fig:attrak-mittelwerte} zu sehen sind die Anwendungen in
-allen Kategorien über $3.5$ Punkte auseinander. Auf einer Skala die nur $7$
+Wie in Abbildung \ref{fig:attrak-mittelwerte} zu sehen ist, sind die Anwendungen
+in allen Kategorien über $3.5$ Punkte auseinander. Auf einer Skala die nur $7$
 Punkte breit ist, ist das eine Menge.
 
 In Abbildung \ref{fig:attrak-portfolio} ``spiegelt das Konfidenz-Rechteck
@@ -2002,33 +2039,33 @@ unterschiedlicher wird das Produkt bewertet.'' - \textcite{attrakdiff} via
 
 \subsubsection{Hypothese 1}
 \hyporef{1}{Das CLI hat im Durchschnitt eine ähnliche Performance wie das GUI.}
-
+\\
 Der Performance Durchschnitt über alle Aufgaben aufsummiert liegt bei
-$-2.76$, das CLI ist also um \~3 Sekunden schneller. Wie in Abbildung
+$-2.76 s$, das CLI ist also um \~3 Sekunden schneller. Wie in Abbildung
 \ref{fig:performance-diff} zu sehen ähnelt sich die Performance beider
-Anwendungen. Nur bei sechs Aufgaben war ein Interface mehr als $100\%$
-schneller, also mehr als doppelt so schnell als das andere. Auf diese
-Extremfälle wurde aber bereits einleitend eingegangen.
+Anwendungen. Keine der beiden ist konsistent schneller als die andere. Es wurden
+nur bei sechs Aufgaben mehr als $100\%$ Performance Differenz festgestellt,
+also das ein Interface mehr als doppelt so schnell als das andere. Auf diese
+Extremfälle wurde auch bereits einleitend eingegangen.
 
 \subsubsection{Hypothese 2}
 \hyporef{2}{Die Performance des CLI verbessert sich im Verlaufe der Aufgaben.}
-
-Bei Betrachtung der Performance des CLI (Abbildung \ref{fig:performance-cli})
-hinsichtlich der Erlernbarkeit ist zu beachten sind die Aufgabenstellungen zu
-beachten. So werden die Aufgaben mit der Zeit schwieriger: Es werden Projekte
-mit mehr als einem Task Detail verwendet (ab 7.), das Datum wandert zu anderen
-Wochentagen (ab 6.) und in die nächste Woche (ab 14.). Es werden zuvor einzelne
-Aufgaben gebündelt (ab 13.), etwa das hinzufügen mehrerer Stunden an verschieden
+\\
+Bei Betrachtung der Performance des CLI (Abb. \ref{fig:performance-cli})
+hinsichtlich der Erlernbarkeit sind die Aufgabenstellungen zu beachten. So
+werden die Aufgaben mit der Zeit schwieriger: Es werden Projekte mit mehr als
+einem Task Detail verwendet (ab 7.), das Datum wandert zu anderen Wochentagen
+(ab 6.) und in die nächste Woche (ab 14.). Es werden zuvor einzelne Aufgaben
+gebündelt (ab 13.), etwa das hinzufügen mehrerer Stunden an verschieden
 Tagen als Teil einer Aufgabe. Auch werden kontinuierlich neue Subkommando
 Kombinationen gefordert\footnote{Siehe die Auflistung der Anzahl von Aufgaben
 pro Subkommando in Kapitel \ref{text:anzahl-aufgaben}.}.
 
-Trotz all dieser erschwerenden Faktoren ist trotzdem ein fallender Trend zu
-erkennen.
+Trotz all dieser erschwerenden Faktoren ist ein fallender Trend zu erkennen.
 
 \subsubsection{Hypothese 3}
 \hyporef{3}{Das CLI wird dem GUI subjektiv vorgezogen.}
-
+\\
 Der subjektive Vergleich ist ziemlich eindeutig. Die Abbildung
 \ref{fig:attrak-portfolio} beschreibt die CLI App als begehrt und Oracle als
 überflüssig. Auch auf Abbildung \ref{fig:attrak-wortpaare} liegt das CLI in
@@ -2036,37 +2073,32 @@ allen Punkten signifikant vorne.
 
 \subsection{Beobachtungen aus der Evaluation}
 
-% TODO: erlernbarkeit?
-
 In der Nutzung beider Interfaces traten bei manchen Teilnehmern Momente auf in
 denen sie nicht wussten wie vorzugehen war. In der CLI App sind die Teilnehmer
 als Reaktion darauf zur Hilfsseite zurückgekehrt und haben versucht sich
-erneut zu orientieren und den Fehler in ihrem letzten Befehl zu finden. Dabei
-wurde sich nicht an den Versuchsleiter gewendet. Den Teilnehmern war bewusst
-das sie dieses Problem alleine lösen können. Bei Aussetzern von Oracle (aus
+neu zu orientieren und den Fehler in ihrem letzten Befehl zu finden. Dabei
+wurde sich nicht an den Versuchsleiter gewendet. Den Teilnehmern war bewusst,
+dass sie dieses Problem allein lösen können. Bei Aussetzern von Oracle (aus
 unerfindlichen Gründen) herrschte immer Verwirrung. Das Interface teilte nichts
 mit und tat einfach seinen Dienst nicht. An dieser Stelle wurde immer die Hilfe
 des Versuchsleiters gesucht.
 
 \chapter{Zusammenfassung}
 \label{sec:zusammenfassung}
-% [Aggregierte retrograde Kurzbeschreibung der Arbeit]
 
-Nach Analyse grundlegenden Probleme der Kommandozeile, wurden neun Methoden zur
-Verbesserung der Usability für Kommandozeile-Interfaces erarbeitet. Diese wurden
-in einer CLI App implementiert und mit einer grafischen Anwendung mit gleicher
-Funktionalität verglichen. Die Teilnehmer bevorzugten das CLI über das GUI, bei
-gleichauf liegender Performance.
+Nach Analyse der grundlegenden Probleme der Kommandozeile, wurden neun Methoden
+zur Verbesserung der Usability für Kommandozeile-Interfaces erarbeitet. Diese
+wurden in einer CLI App implementiert und mit einer grafischen Anwendung mit
+gleichem Funktionsumfang verglichen. Die Teilnehmer bevorzugten das CLI über das
+GUI, bei gleichauf liegender Performance.
 
 \section{Schlussfolgerungen}
-% [Beschreibung der insgesamt zu konstatierenden Schlussfolgerungen im Zusammenhang mit der Arbeit]
 
 Es wurde gezeigt, dass in der Kommandozeile, unter Anwendung der erarbeiteten
 Methoden, Usability erreicht werden kann die es mit grafischen Anwendungen
 aufnimmt.
 
 \section{Limitationen}
-% [Beschreibung der Ergebnisse einer kritischen Reflektion und Begr\"undung dessen, was die Arbeit nicht zu leisten vermag]
 
 Es war im Rahmen der Arbeit nicht möglich den Effekt einzelner Methoden isoliert
 festzustellen. Es konnte also nur eine Aussage über alle implementieren Methoden
@@ -2078,7 +2110,6 @@ zusammen getroffen werden.
 Die Methoden könnten in stärker strukturierter Form und außerhalb des Kontextes
 dieser Arbeit für sich stehend formuliert werden. Zusammen mit einer englischen
 Übersetzung wären sie dadurch dann leichter referenzier- und implementierbar.
-
 Auch könnten noch weitere Methoden entwickelt werden.
 
 \subsection{Vergleich mit CLI App}
@@ -2087,15 +2118,15 @@ Anstatt des Vergleiches mit einer GUI App, würde der Vergleich mit einer
 baugleichen CLI App, welche die Methoden nicht implementiert, eine stärkere
 Aussagekraft bezüglich des Effektes der Methoden haben. Auch wäre es damit
 möglich nur eine Methode auf einmal zu testen. Mit identischen Apps A und B,
-aber B hat noch die zu untersuchende Methode implementiert.
+aber B hat zusätzlich die zu untersuchende Methode implementiert.
 
 \subsection{Verbesserung der Implementation}
 
 In der Evaluation wurden noch einige Schwächen der Implementation entdeckt,
 welche noch auszubessern sind. Auch die Versäumnissen etwa wie bei der
 Autovervollständigung (vgl. Kap. \ref{sec:impl-autocomplete}), dem Menü
-Interface (vgl. Kap. \ref{sec:impl-menu}) oder die fehlenden Synonymen (vgl.
-Kap. \ref{sec:sol-natural-lang}) bieten noch Verbesserungsbedarf.
+Interface (vgl. Kap. \ref{sec:impl-menu}) oder die fehlenden Synonyme (vgl. Kap.
+\ref{sec:sol-natural-lang}) bieten noch Verbesserungsbedarf.
 
 Eine Anbindung an Oracle selbst war im Rahmen dieser Arbeit nicht vorgesehen,
 weil der Fokus auf den Methoden lag. Als zukünftige Verbesserung der App wäre

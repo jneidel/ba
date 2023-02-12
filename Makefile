@@ -52,4 +52,4 @@ recompute: bibliography.bib
 
 # cleanup
 clean:
-	rm thesis.aux thesis.bcf thesis.lof thesis.log thesis.lol thesis.lot thesis.run.xml thesis.toc 2>/dev/null # thesis.bbl thesis.blg
+	rm thesis.aux thesis.bcf thesis.lof thesis.lol thesis.lot thesis.run.xml thesis.toc thesis.out *.bbl *.blg *.log _minted-thesis 2>/dev/null
