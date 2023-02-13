@@ -128,7 +128,7 @@ Eingereicht von Jonathan Neidel \textit{(573619)}
 
 %\pagestyle{headings} % Kopfzeilen (automatisch erzeugt)
 
-An Endava für die Möglichkeit die Arbeit im Betrieb zu schreiben.
+An Endava für die Möglichkeit diese Arbeit im Betrieb zu schreiben.
 
 \medskip
 
@@ -137,6 +137,10 @@ An Moritz der dies ermöglicht hat und mir helfend zur Seite stand.
 \medskip
 
 An Herr Israel für die Beantwortung aller aufkommenden Fragen.
+
+\medskip
+
+An Sven für die kurzfristige Hilfe mit dem Abstract.
 
 \medskip
 
@@ -296,6 +300,7 @@ zugute. Abstrakte Konzepte wie Marxismus lassen sich nur schwer bis gar nicht in
 Bildern beschreiben \parencite{Raskin_2008}, sind aber als Wort sehr umgänglich.
 
 \section{Die Terminal Umgebung}
+\label{sec:term_umgegebung}
 
 Die moderne Kommandozeile existiert nicht mehr in Isolation. Um auf diese in
 einem grafischen Fenstersystem zugreifen zu können, wird ein \textbf{Terminal
@@ -305,7 +310,6 @@ aber der Vorteil die Maus zum Klicken oder Markieren verwenden zu können. In
 diesem Terminal läuft eine Shell. So nennt man das Programm, welches die Befehle
 entgegennimmt und deren Resultate ermittelt und ausgibt. Am weitesten verbreitet
 sind Unix Shells wie \codeinline{bash} oder \codeinline{zsh}.
-% TODO: Unix?
 Die Sprache der Shell gesprochen ist `Shell Script'. Dessen Funktionsumfang
 variiert je nach Shell-Dialekt. Die meisten Unix Shells implementieren aber den
 POSIX Standard und teilen deshalb eine gewisse Grundfunktionalität. DOS und
@@ -314,15 +318,13 @@ noch Core Utilities mit den Unix Shells. Die \codeinline{coreutils} sind
 Grundlegende Werkzeuge zur Datei- und Textmanipulation \parencite{coreutils},
 wie z.B. \codeinline{ls}, \codeinline{cat} oder \codeinline{rm}.
 
-% TODO: more citations
-% TODO: unix philsophy here
-
 Neben der Shell gibt es noch andere Kommandozeilen Umgebungen. So gibt es
 für viele Programmiersprachen eine Kommandozeile (z.B. für Node.js, Python
 oder Scala). In diesen können dann nach gleichem REPL Schema Befehle in der
 Programmiersprache interaktiv geschrieben und ausgeführt werden.
 
 \section{Begrifflichkeiten der Kommandozeile}
+\label{sec:begriffe}
 
 Für ein Verständnis des CLI sind ein paar Begriffe zu definieren. Ein Shell
 Befehl kann auf seine Einzelteile herunter gebrochen werden:
@@ -359,6 +361,25 @@ Funktionell sind beide Flaggenvarianten identisch. Flaggen die keinen Parameter
 erfordern, werden als Boolean Flagge bezeichnet, deren An- oder Abwesenheit
 meist etwas an- oder abschaltet. Die Reihenfolge der Flaggen untereinander ist
 irrelevant (\textcite{nagarajan2018}, \textcite{clig}.)
+
+\section{Usability}
+\label{sec:usability}
+
+\textcite[26]{nielsen1993} definiert Usability als eine Kombination aus mehreren
+Attributen:
+
+\begin{enumerate}
+  \item \textbf{Erlernbarkeit}:
+    Das System sollte einfach erlernbar sein, sodass Nutzer schnell produktiv damit arbeiten können.
+  \item \textbf{Effizienz}:
+    Sobald der Nutzer das System erlernt hat sollte ein hohes Maß an Produktivität möglich sein.
+  \item \textbf{Erinnerbarkeit}:
+    Das System sollte einfach zu erinnern sein. Nach einem Zeitraum des nicht Nutzens sollte das System nicht erneut erlernt werden müssen.
+  \item \textbf{Fehler}:
+    Das System sollte eine geringe Fehlerquote haben. Das heißt der Nutzer macht wenig Fehler und kann bei deren Auftreten gut mit ihnen umgehen.
+  \item \textbf{Befriedigung}:
+    Das System sollte angenehm zu nutzen sein. Die Nutzer sind subjektiv befriedigt.
+\end{enumerate}
 
 \chapter{Probleme des Kommandozeilen-Interface}
 \label{sec:cli-problems}
@@ -583,8 +604,6 @@ getarnte Kommandozeile die mit Rechtschreibfehlern und Synonymen umgehen kann.
 
 \chapter{Entwicklung von Methoden}
 \label{sec:methods}
-% TODO: intro here
-% Methoden beziehen sich direkt auf ein Problem welches adressiert werden soll.
 
 \section{Methodologie}
 
@@ -619,8 +638,6 @@ gelöst/gemindert werden beziehen. Und begründet darstellen, warum dieser Effek
 eintreten wird.
 
 Nachfolgend nun die erarbeiteten Methoden.
-
-% TODO: unterliegende philosophie/prinzipien hier
 
 \newcounter{meth}
 \newcommand{\methbox}[2]{
@@ -1569,8 +1586,6 @@ Es wurde insbesondere vom Auswählen aus einer Liste von Werten Gebrauch gemacht
 \section{Natürliche Sprache}
 \label{sec:sol-natural-lang}
 
-% TODO: write impl wit libraby (Keine Empfehlung)
-
 Die \methref{human_language} wurde primär durch das Verarbeiten von
 Datumsangaben in natürlicher Sprache implementiert. So kann anstatt starrer
 Formate wie \codeinline{MM/DD/YY} einfach \codeinline{Monday} geschrieben
@@ -1842,7 +1857,7 @@ eingegangen.
 
 \subsubsection{Performance}
 
-Um die Performance zu messen wurde festgehalten wie lange ein Benutzer benötigt
+Um die Effizienz zu messen wurde festgehalten wie lange ein Benutzer benötigt
 um eine gegebene Aufgabe zu erfüllen. Dazu wurden die Sitzungen aufgezeichnet
 und danach mit Zeitmarken versehen. Der Zeitstempel zum Start wurde nach dem
 Lesen der Aufgabe (bei erster Interaktion mit dem Interface) gesetzt und der
@@ -1850,7 +1865,7 @@ Zeitstempel zum Ende nach Erfüllung der Aufgabe.
 
 \subsubsection{Attraktivität}
 
-Um eine subjektive Bewertung des Interfaces zu erhalten wurde eine
+Um die subjektive Befriedigung der Nutzer zu messen wurde eine
 Attraktivitätsumfrage nach \textcite{attrakdiff} durchgeführt. Es wurde nach
 dem Durcharbeiten der Aufgaben für ein Interface eine Einschätzung über
 dessen Attraktivität eingeholt. Wie auf Abbildung \ref{fig:survey-values}
@@ -1900,7 +1915,7 @@ Mit den erhobenen Daten sollten folgende Hypothesen adressiert werden:
 \hypodef{Das CLI hat im Durchschnitt eine ähnliche Performance wie das GUI.}
 \\
 Die \hyperref[sec:cli-problems]{Probleme der Kommandozeile} werden dazu führen
-das Performance eingebüßt wird. Diese Probleme zu mitigieren und minimieren war
+das Effizienz eingebüßt wird. Diese Probleme zu mitigieren und minimieren war
 aber Zweck der Methoden. Weshalb unter Anwendung der Methoden zumindest eine
 ähnliche Performance wie die einer grafischen Anwendung erwartet wird.
 
@@ -2144,11 +2159,62 @@ title={Quellenverzeichnis}
 \newpage
 \chapter{Glossar}
 
+\textbf{CLI}: `Command-line Interface`, Kommandozeilen-Interface. Siehe Kapitel \ref{sec:historic-context}.
+\\
+\textbf{Flagge}: Siehe Kapitel \ref{sec:begriffe}.
+\\
+\textbf{GUI}: `Grafical User Interface`, grafisches Interface. Siehe Kapitel \ref{sec:weiterentwicklung-ausser}.
+\\
+\textbf{Interaktiv}: Siehe Kapitel \ref{sec:def-interactive}.
+\\
+\textbf{Kommando}: Siehe Kapitel \ref{sec:begriffe}.
+\\
+\textbf{Menü}: Siehe Kapitel \ref{sec:def-menu}.
+\\
+\textbf{Oracle}: Im Kontext der Arbeit ist die interne Platform zum Festhalten von Arbeitszeiten gemeint.
+\\
+\textbf{Task Details}: Zum Loggen von Zeit in Oracle muss ein Projekt und eine Tätigkeit innerhalb des Projektes (die `Task Details') angegeben werden.
+\\
+\textbf{Unix}: Ein frühes Betriebssystem, welches u.a. Standard für POSIX definierte. Mehr in Kap. \ref{sec:term_umgegebung}.
+\\
+\textbf{Usability}: Siehe Kapitel \ref{sec:usability}.
+
 \pagenumbering{roman}
 \begin{appendix}
 \chapter{Appendix}
 
-% \section{Quell-Code}
+\section{Quell-Code}
+
+Der Quelle-Code für die Beispielanwendung ist auf GitHub zu finden:
+
+\href{https://github.com/jneidel/oraclett}{https://github.com/jneidel/oraclett}
+
+\section{Rohdaten}
+
+Nachfolgend die in der Evaluation erhobenen Performancedaten. Diese wurden mit
+Octave verarbeitet und dargestellt.
+
+\inputminted[
+  linenos,
+  numbersep=6pt,
+  frame=lines,
+  framesep=2mm,
+  fontsize=\footnotesize
+]{matlab}{script.octave}
+
+\newpage
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.55]{data-gui.png}
+  \caption{Daten der Attraktivitätsumfrage: GUI}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.55]{data-cli.png}
+  \caption{Daten der Attraktivitätsumfrage: CLI}
+\end{figure}
 
 \newpage
 \thispagestyle{empty}
