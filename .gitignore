@@ -13,3 +13,4 @@
 *.sum
 *.pyg
 _minted*
+*.vrb
