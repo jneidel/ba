@@ -24,13 +24,14 @@ background, sources and implementation notes see the thesis itself.
 8. Offer a menu-based interface.
 9. Suggest other relevant (sub-) commandos to the user.
 
-## Dependencies
+## Latex
+### Dependencies
 
 ```sh
 yay -S texlive-core texlive-latexextra minted biber
 ```
 
-Additinal packages: `csquotes lettrine enumitem minifp fancyhdr titling`
+Additional packages: `csquotes lettrine enumitem minifp fancyhdr titling`
 
 To install one:
 ```sh
@@ -38,12 +39,18 @@ tllocalmgr install NAME
 sudo texhash
 ```
 
-## Build
+### Build
 
-To build once:
+To build the thesis:
 
 ```sh
 make
+```
+
+To build the slides:
+
+```sh
+make slides
 ```
 
 For watch mode (rebuild on change) and other shenanigans check out the
