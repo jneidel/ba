@@ -55,3 +55,12 @@ make slides
 
 For watch mode (rebuild on change) and other shenanigans check out the
 [Makefile](Makefile).
+
+## Bibliography management
+
+I managed my bibliography with [pubs](https://github.com/pubs/pubs). I used it to:
+- create the bibtex for biber from a DOI
+- store the sources pdf file
+- attach notes to the sources
+
+See [my aliases](https://github.com/jneidel/dotfiles/blob/c62a8bf65285a27dd672ed0df6128be09544a977/.zsh/apps.zsh#L226) for usage.
